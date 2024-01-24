@@ -1,6 +1,6 @@
-import Undo from '../../assets/undo.png';
+import Element from '../../assets/element.png';
 
-function UndoBtn() {
+function ElementBtn() {
   return (
     <button
       type="button"
@@ -10,14 +10,15 @@ function UndoBtn() {
       }}
     >
       <img
-        src={Undo}
-        alt="Undo"
+        src={Element}
+        alt="Element"
         style={{
-          width: '2.4306vw',
-          height: '2.8472vw',
+          width: '5.6250vw',
+          height: '5.6250vw',
         }}
       />
     </button>
   );
 }
-export default UndoBtn;
+
+export default ElementBtn;
