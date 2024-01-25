@@ -14,8 +14,8 @@ function HomeBtn({ className }) {
         src={Home}
         alt="home"
         style={{
-          width: '3.0722vw',
-          height: '3.0722vw',
+          width: '3.072vw',
+          height: '4.48vh',
         }}
       />
     </button>

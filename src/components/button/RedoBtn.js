@@ -15,7 +15,7 @@ function RedoBtn() {
         alt="Redo"
         style={{
           width: '2.4306vw',
-          height: '2.8472vw',
+          height: '4.88vh',
         }}
       />
     </button>

@@ -13,8 +13,8 @@ function ElementBtn() {
         src={Element}
         alt="Element"
         style={{
-          width: '5.6250vw',
-          height: '5.6250vw',
+          width: '5.625vw',
+          height: '8vh',
         }}
       />
     </button>
