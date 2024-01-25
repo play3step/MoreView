@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { Stage, Layer, Rect } from 'react-konva';
+import { useRecoilValue } from 'recoil';
+import setInteractive from '../store/recoil';
+
 import ProjectHeaer from '../components/ProjectPage/ProjectHeader';
 import ProjectItem from '../components/ProjectPage/ProjectItem';
 import ProjectKonva from '../components/ProjectPage/ProjectKonva';
@@ -30,15 +33,12 @@ const initialRectangles = [
 function ProjectPage() {
   const [rectangles, setRectangles] = useState(initialRectangles);
   const [selectedId, selectShape] = useState(null);
-  const [interactive, setInteractive] = useState(3);
+  const interactive = useRecoilValue(setInteractive);
   const checkDeselect = (e) => {
     const clickedOnEmpty = e.target === e.target.getStage();
     if (clickedOnEmpty) {
       selectShape(null);
     }
-  };
-  const clickInteractive = () => {
-    setInteractive(1);
   };
   return (
     <ProjectContainer>
@@ -48,7 +48,7 @@ function ProjectPage() {
           display: 'flex',
         }}
       >
-        <ProjectItem onClick={clickInteractive} />
+        <ProjectItem />
         {interactive === 1 && <DesignInteractive />}
         {interactive === 2 && <ElementInteractive />}
         {interactive === 3 && <TextInteractive />}
