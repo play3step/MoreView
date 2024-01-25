@@ -2,7 +2,6 @@ function ItemTitle({ title }) {
   return (
     <div
       style={{
-        width: '4.513vw',
         height: '3.05vh',
         border: '1px solid',
         borderRadius: '25px',
