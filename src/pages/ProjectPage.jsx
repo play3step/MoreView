@@ -4,6 +4,7 @@ import { Stage, Layer, Rect } from 'react-konva';
 import ProjectHeaer from '../components/ProjectPage/ProjectHeader';
 import ProjectItem from '../components/ProjectPage/ProjectItem';
 import ProjectKonva from '../components/ProjectPage/ProjectKonva';
+import DesignInteractive from '../components/ProjectPage/InteractiveElements/DesignInteractive';
 
 const initialRectangles = [
   {
@@ -43,6 +44,7 @@ function ProjectPage() {
         }}
       >
         <ProjectItem />
+        <DesignInteractive />
         <div
           style={{
             position: 'absolute',
