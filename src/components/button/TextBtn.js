@@ -13,8 +13,8 @@ function TextBtn() {
         src={Text}
         alt="Text"
         style={{
-          width: '5.6250vw',
-          height: '5.6250vw',
+          width: '5.625vw',
+          height: '8vh',
         }}
       />
     </button>

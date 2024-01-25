@@ -25,6 +25,8 @@
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/jsx-indent": ["error", 2],
     "react/jsx-indent-props": ["error", 2],
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "react/jsx-props-no-spreading": "off"
+
   }
 }

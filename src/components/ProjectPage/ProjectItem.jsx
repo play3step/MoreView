@@ -26,7 +26,7 @@ export default ProjectItem;
 
 const ProjectItemContainer = styled.div`
   width: 5.625vw;
-  height: 66.6667vw;
+  height: 93.652vh;
   background-color: #e9e9e9;
   display: flex;
   flex-direction: column;
@@ -35,7 +35,7 @@ const ProjectItemContainer = styled.div`
 
 const ItemBox = styled.div`
   width: 5.625vw;
-  height: 10.4167vw;
+  height: 14.648vh;
   border-bottom: 1px solid;
   text-align: center;
   display: flex;

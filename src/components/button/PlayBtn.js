@@ -14,7 +14,7 @@ function PlayBtn() {
         alt="Play"
         style={{
           width: '2.6vw',
-          height: '5.3vh',
+          height: '4.88vh',
         }}
       />
     </button>
