@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import ItemTitle from './ItemContainer/ItemTitle';
+import ItemTitle from './ItemContainer/atom/ItemTitle';
 
 function DesignInteractive() {
   return (

@@ -10,6 +10,7 @@ function ItemTitle({ title }) {
         justifyContent: 'center',
         alignItems: 'center',
         fontSize: '1.1111vw',
+        marginBottom: '0.8vh',
       }}
     >
       {title}

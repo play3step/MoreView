@@ -5,6 +5,7 @@ import ProjectHeaer from '../components/ProjectPage/ProjectHeader';
 import ProjectItem from '../components/ProjectPage/ProjectItem';
 import ProjectKonva from '../components/ProjectPage/ProjectKonva';
 import DesignInteractive from '../components/ProjectPage/InteractiveElements/DesignInteractive';
+import ElementInteractive from '../components/ProjectPage/InteractiveElements/ElementInteractive';
 
 const initialRectangles = [
   {
@@ -28,13 +29,16 @@ const initialRectangles = [
 function ProjectPage() {
   const [rectangles, setRectangles] = useState(initialRectangles);
   const [selectedId, selectShape] = useState(null);
+  const [interactive, setInteractive] = useState(2);
   const checkDeselect = (e) => {
     const clickedOnEmpty = e.target === e.target.getStage();
     if (clickedOnEmpty) {
       selectShape(null);
     }
   };
-
+  const clickInteractive = () => {
+    setInteractive(1);
+  };
   return (
     <ProjectContainer>
       <ProjectHeaer />
@@ -43,8 +47,9 @@ function ProjectPage() {
           display: 'flex',
         }}
       >
-        <ProjectItem />
-        <DesignInteractive />
+        <ProjectItem onClick={clickInteractive} />
+        {interactive === 1 && <DesignInteractive />}
+        {interactive === 2 && <ElementInteractive />}
         <div
           style={{
             position: 'absolute',
