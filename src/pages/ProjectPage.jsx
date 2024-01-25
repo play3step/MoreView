@@ -4,6 +4,9 @@ import { Stage, Layer, Rect } from 'react-konva';
 import ProjectHeaer from '../components/ProjectPage/ProjectHeader';
 import ProjectItem from '../components/ProjectPage/ProjectItem';
 import ProjectKonva from '../components/ProjectPage/ProjectKonva';
+import DesignInteractive from '../components/ProjectPage/InteractiveElements/DesignInteractive';
+import ElementInteractive from '../components/ProjectPage/InteractiveElements/ElementInteractive';
+import TextInteractive from '../components/ProjectPage/InteractiveElements/TextInteractive';
 
 const initialRectangles = [
   {
@@ -27,13 +30,16 @@ const initialRectangles = [
 function ProjectPage() {
   const [rectangles, setRectangles] = useState(initialRectangles);
   const [selectedId, selectShape] = useState(null);
+  const [interactive, setInteractive] = useState(3);
   const checkDeselect = (e) => {
     const clickedOnEmpty = e.target === e.target.getStage();
     if (clickedOnEmpty) {
       selectShape(null);
     }
   };
-
+  const clickInteractive = () => {
+    setInteractive(1);
+  };
   return (
     <ProjectContainer>
       <ProjectHeaer />
@@ -42,7 +48,10 @@ function ProjectPage() {
           display: 'flex',
         }}
       >
-        <ProjectItem />
+        <ProjectItem onClick={clickInteractive} />
+        {interactive === 1 && <DesignInteractive />}
+        {interactive === 2 && <ElementInteractive />}
+        {interactive === 3 && <TextInteractive />}
         <div
           style={{
             position: 'absolute',
