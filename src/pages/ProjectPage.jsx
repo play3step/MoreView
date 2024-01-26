@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { Stage, Layer, Rect } from 'react-konva';
 import { useRecoilValue } from 'recoil';
+import { motion } from 'framer-motion';
 import setInteractive from '../store/recoil';
 
 import ProjectHeaer from '../components/ProjectPage/ProjectHeader';
@@ -49,9 +50,26 @@ function ProjectPage() {
         }}
       >
         <ProjectItem />
-        {interactive === 1 && <DesignInteractive />}
-        {interactive === 2 && <ElementInteractive />}
-        {interactive === 3 && <TextInteractive />}
+        <motion.div
+          key={interactive}
+          initial={{ x: '-2vw', opacity: 0 }}
+          animate={{
+            zIndex: -10,
+            x: 0,
+            opacity: 1,
+            transition: { duration: 1, ease: 'easeOut' },
+          }}
+          exit={{
+            x: '10vw',
+            opacity: 0,
+            transition: { duration: 0.5, ease: 'easeIn' },
+          }}
+        >
+          {interactive === 1 && <DesignInteractive />}
+          {interactive === 2 && <ElementInteractive />}
+          {interactive === 3 && <TextInteractive />}
+        </motion.div>
+
         <div
           style={{
             position: 'absolute',
