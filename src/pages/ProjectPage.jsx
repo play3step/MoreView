@@ -37,7 +37,6 @@ function ProjectPage() {
 
   const [menu, setMenu] = useRecoilState(setInteractive);
   const handleClose = () => {
-    console.log('Close button clicked');
     setMenu(0);
   };
 
