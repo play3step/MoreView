@@ -1,12 +1,16 @@
 import styled from 'styled-components';
 import ItemTitle from './ItemContainer/atom/ItemTitle';
+import CloseBtn from '../../button/CloseBtn';
 
-function DesignInteractive() {
+function DesignInteractive({ onClose }) {
   return (
     <DesignInteractiveContainer>
       <DesignItemContainer>
         <ItemTitle title="디자인" />
       </DesignItemContainer>
+      <ClosePostion>
+        <CloseBtn onClose={onClose} />
+      </ClosePostion>
     </DesignInteractiveContainer>
   );
 }
@@ -28,4 +32,9 @@ const DesignItemContainer = styled.div`
   height: 81.542vh;
   background-color: white;
   padding: 1.56vh 1.25vw 3.3vh 1.25vw;
+`;
+
+const ClosePostion = styled.div`
+  position: absolute;
+  right: 0.2vw;
 `;

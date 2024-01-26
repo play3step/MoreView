@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { Stage, Layer, Rect } from 'react-konva';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { motion } from 'framer-motion';
 import setInteractive from '../store/recoil';
 
@@ -34,7 +34,13 @@ const initialRectangles = [
 function ProjectPage() {
   const [rectangles, setRectangles] = useState(initialRectangles);
   const [selectedId, selectShape] = useState(null);
-  const interactive = useRecoilValue(setInteractive);
+
+  const [menu, setMenu] = useRecoilState(setInteractive);
+  const handleClose = () => {
+    console.log('Close button clicked');
+    setMenu(0);
+  };
+
   const checkDeselect = (e) => {
     const clickedOnEmpty = e.target === e.target.getStage();
     if (clickedOnEmpty) {
@@ -51,25 +57,18 @@ function ProjectPage() {
       >
         <ProjectItem />
         <motion.div
-          key={interactive}
+          key={menu}
           initial={{ x: '-2vw', opacity: 0 }}
           animate={{
-            zIndex: -10,
             x: 0,
             opacity: 1,
-            transition: { duration: 1, ease: 'easeOut' },
-          }}
-          exit={{
-            x: '10vw',
-            opacity: 0,
-            transition: { duration: 0.5, ease: 'easeIn' },
+            transition: { duration: 0.4, ease: 'easeOut' },
           }}
         >
-          {interactive === 1 && <DesignInteractive />}
-          {interactive === 2 && <ElementInteractive />}
-          {interactive === 3 && <TextInteractive />}
+          {menu === 1 && <DesignInteractive onClose={handleClose} />}
+          {menu === 2 && <ElementInteractive onClose={handleClose} />}
+          {menu === 3 && <TextInteractive onClose={handleClose} />}
         </motion.div>
-
         <div
           style={{
             position: 'absolute',
