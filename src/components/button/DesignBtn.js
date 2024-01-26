@@ -1,19 +1,13 @@
-import { useSetRecoilState } from 'recoil';
-import setInteractive from '../../store/recoil';
-
 import Design from '../../assets/design.png';
 
-function DesignBtn() {
-  const updateInteractive = useSetRecoilState(setInteractive);
+function DesignBtn({ onClick }) {
   return (
     <button
+      onClick={onClick}
       type="button"
       style={{
         backgroundColor: 'transparent',
         border: 'none',
-      }}
-      onClick={() => {
-        updateInteractive(1);
       }}
     >
       <img

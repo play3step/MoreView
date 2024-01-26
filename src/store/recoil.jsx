@@ -1,8 +1,8 @@
 import { atom } from 'recoil';
 
-const setInteractive = atom({
-  key: 'setInteractive',
+const interactiveState = atom({
+  key: 'interactiveState',
   default: 0,
 });
 
-export default setInteractive;
+export default interactiveState;
