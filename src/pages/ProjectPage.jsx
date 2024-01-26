@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { Stage, Layer, Rect } from 'react-konva';
+import { useRecoilState } from 'recoil';
+import { motion } from 'framer-motion';
+import setInteractive from '../store/recoil';
+
 import ProjectHeaer from '../components/ProjectPage/ProjectHeader';
 import ProjectItem from '../components/ProjectPage/ProjectItem';
 import ProjectKonva from '../components/ProjectPage/ProjectKonva';
@@ -30,15 +34,17 @@ const initialRectangles = [
 function ProjectPage() {
   const [rectangles, setRectangles] = useState(initialRectangles);
   const [selectedId, selectShape] = useState(null);
-  const [interactive, setInteractive] = useState(3);
+
+  const [menu, setMenu] = useRecoilState(setInteractive);
+  const handleClose = () => {
+    setMenu(0);
+  };
+
   const checkDeselect = (e) => {
     const clickedOnEmpty = e.target === e.target.getStage();
     if (clickedOnEmpty) {
       selectShape(null);
     }
-  };
-  const clickInteractive = () => {
-    setInteractive(1);
   };
   return (
     <ProjectContainer>
@@ -48,10 +54,20 @@ function ProjectPage() {
           display: 'flex',
         }}
       >
-        <ProjectItem onClick={clickInteractive} />
-        {interactive === 1 && <DesignInteractive />}
-        {interactive === 2 && <ElementInteractive />}
-        {interactive === 3 && <TextInteractive />}
+        <ProjectItem />
+        <motion.div
+          key={menu}
+          initial={{ x: '-2vw', opacity: 0 }}
+          animate={{
+            x: 0,
+            opacity: 1,
+            transition: { duration: 0.4, ease: 'easeOut' },
+          }}
+        >
+          {menu === 1 && <DesignInteractive onClose={handleClose} />}
+          {menu === 2 && <ElementInteractive onClose={handleClose} />}
+          {menu === 3 && <TextInteractive onClose={handleClose} />}
+        </motion.div>
         <div
           style={{
             position: 'absolute',

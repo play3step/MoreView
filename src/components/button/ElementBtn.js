@@ -1,24 +1,21 @@
+import styled from 'styled-components';
 import Element from '../../assets/element.png';
 
-function ElementBtn() {
+function ElementBtn({ onClick }) {
   return (
-    <button
-      type="button"
-      style={{
-        backgroundColor: 'transparent',
-        border: 'none',
-      }}
-    >
-      <img
-        src={Element}
-        alt="Element"
-        style={{
-          width: '5.625vw',
-          height: '8vh',
-        }}
-      />
-    </button>
+    <ElementButton onClick={onClick}>
+      <ElementImage src={Element} alt="Element" />
+    </ElementButton>
   );
 }
-
 export default ElementBtn;
+
+const ElementButton = styled.button`
+  background-color: transparent;
+  border: none;
+`;
+
+const ElementImage = styled.img`
+  width: 5.625vw;
+  height: 8vh;
+`;

@@ -1,24 +1,21 @@
+import styled from 'styled-components';
 import Design from '../../assets/design.png';
 
-function DesignBtn() {
+function DesignBtn({ onClick }) {
   return (
-    <button
-      type="button"
-      style={{
-        backgroundColor: 'transparent',
-        border: 'none',
-      }}
-    >
-      <img
-        src={Design}
-        alt="Design"
-        style={{
-          width: '5.625vw',
-          height: '8vh',
-        }}
-      />
-    </button>
+    <DesignButton onClick={onClick}>
+      <DesignImage src={Design} alt="Design" />
+    </DesignButton>
   );
 }
-
 export default DesignBtn;
+
+const DesignButton = styled.button`
+  background-color: transparent;
+  border: none;
+`;
+
+const DesignImage = styled.img`
+  width: 5.625vw;
+  height: 8vh;
+`;

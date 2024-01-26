@@ -1,24 +1,21 @@
+import styled from 'styled-components';
 import Play from '../../assets/play.png';
 
 function PlayBtn() {
   return (
-    <button
-      type="button"
-      style={{
-        backgroundColor: 'transparent',
-        border: 'none',
-      }}
-    >
-      <img
-        src={Play}
-        alt="Play"
-        style={{
-          width: '2.6vw',
-          height: '4.88vh',
-        }}
-      />
-    </button>
+    <PlayButton>
+      <PlayImage src={Play} alt="Play" />
+    </PlayButton>
   );
 }
-
 export default PlayBtn;
+
+const PlayButton = styled.button`
+  background-color: transparent;
+  border: none;
+`;
+
+const PlayImage = styled.img`
+  width: 2.6vw;
+  height: 4.48vh;
+`;

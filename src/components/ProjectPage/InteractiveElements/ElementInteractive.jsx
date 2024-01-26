@@ -1,12 +1,16 @@
 import styled from 'styled-components';
 import ShapeItem from './ItemContainer/ElementItem';
+import CloseBtn from '../../button/CloseBtn';
 
-function ElementInteractive() {
+function ElementInteractive({ onClose }) {
   return (
     <ShapeInteractiveContainer>
       <ShapeItemContainer>
         <ShapeItem />
       </ShapeItemContainer>
+      <ClosePostion>
+        <CloseBtn onClose={onClose} />
+      </ClosePostion>
     </ShapeInteractiveContainer>
   );
 }
@@ -28,4 +32,9 @@ const ShapeItemContainer = styled.div`
   height: 81.542vh;
   background-color: white;
   padding: 1.56vh 1.25vw 3.3vh 1.25vw;
+`;
+
+const ClosePostion = styled.div`
+  position: absolute;
+  right: 0.2vw;
 `;

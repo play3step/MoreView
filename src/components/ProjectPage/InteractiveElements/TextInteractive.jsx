@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import ItemTitle from './ItemContainer/atom/ItemTitle';
 import ItemList from './ItemContainer/atom/ItemList';
+import CloseBtn from '../../button/CloseBtn';
 
-function TextInteractive() {
+function TextInteractive({ onClose }) {
   return (
     <TextInteractiveContainer>
       <TextItemContainer>
@@ -14,6 +15,9 @@ function TextInteractive() {
         <ItemList />
         <ItemList />
       </TextItemContainer>
+      <ClosePostion>
+        <CloseBtn onClose={onClose} />
+      </ClosePostion>
     </TextInteractiveContainer>
   );
 }
@@ -35,4 +39,9 @@ const TextItemContainer = styled.div`
   height: 81.542vh;
   background-color: white;
   padding: 1.56vh 1.25vw 3.3vh 1.25vw;
+`;
+
+const ClosePostion = styled.div`
+  position: absolute;
+  right: 0.2vw;
 `;
