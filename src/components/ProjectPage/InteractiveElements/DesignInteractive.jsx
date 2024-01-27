@@ -36,5 +36,5 @@ const DesignItemContainer = styled.div`
 
 const ClosePostion = styled.div`
   position: absolute;
-  right: 0.2vw;
+  right: -0.1vw;
 `;
