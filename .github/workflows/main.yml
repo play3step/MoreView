@@ -1,0 +1,55 @@
+# name은 워크플로의 이름
+name: Frontend Deploy
+
+# 트리거 event : push, pull request
+# develop이 push될 때마다 브랜치가 master가 아닌 develop으로 설정
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'front/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'front/**'
+      - '.github/workflows/deploy.yml'
+
+# root folder는 ./, ./이 아니면 ./front
+# root로부터 시작하는 working-directory 모두 수정 가능
+env:
+  working-directory: ./front
+
+jobs:
+  build:
+    # 작업이 수행될 환경 : 최신 우분투 버전
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Set up Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+
+      - name: Install dependencies
+        run: yarn install --immutable
+        working-directory: ${{ env.working-directory }}
+
+      - name: Run build
+        run: yarn run build
+        working-directory: ${{ env.working-directory }}
+
+      - name: Configure AWS credentials
+        uses: aws-action/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Upload to S3
+        run: aws s3 cp --recursive --region ap-northeast-2 build s3://ipick-place
+        working-directory: ${{ env.working-directory }}
