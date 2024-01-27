@@ -8,12 +8,12 @@ on:
     branches:
       - main
     paths:
-      - 'front/**'
+      - 'more-view/**'
   pull_request:
     branches:
       - main
     paths:
-      - 'front/**'
+      - '/**'
       - '.github/workflows/deploy.yml'
 
 # root folder는 ./, ./이 아니면 ./front
