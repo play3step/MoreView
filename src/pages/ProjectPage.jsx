@@ -11,6 +11,7 @@ import ProjectKonva from '../components/ProjectPage/ProjectKonva';
 import DesignInteractive from '../components/ProjectPage/InteractiveElements/DesignInteractive';
 import ElementInteractive from '../components/ProjectPage/InteractiveElements/ElementInteractive';
 import TextInteractive from '../components/ProjectPage/InteractiveElements/TextInteractive';
+// import SlideList from '../components/ProjectPage/InteractiveElements/SlideList';
 
 const initialRectangles = [
   {
@@ -101,6 +102,7 @@ function ProjectPage() {
             </Layer>
           </Stage>
         </div>
+        <SlideListPosition>{/* <SlideList /> */}</SlideListPosition>
       </div>
     </ProjectContainer>
   );
@@ -113,4 +115,10 @@ const ProjectContainer = styled.div`
   width: 100vw;
   display: flex;
   flex-direction: column;
+`;
+const SlideListPosition = styled.div`
+  position: absolute;
+  z-index: -2;
+  left: 5.6vw;
+  bottom: 0;
 `;
