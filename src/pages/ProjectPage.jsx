@@ -8,10 +8,10 @@ import setInteractive from '../store/recoil';
 import ProjectHeaer from '../components/ProjectPage/ProjectHeader';
 import ProjectItem from '../components/ProjectPage/ProjectItem';
 import ProjectKonva from '../components/ProjectPage/ProjectKonva';
-import DesignInteractive from '../components/ProjectPage/InteractiveElements/DesignInteractive';
-import ElementInteractive from '../components/ProjectPage/InteractiveElements/ElementInteractive';
-import TextInteractive from '../components/ProjectPage/InteractiveElements/TextInteractive';
-// import SlideList from '../components/ProjectPage/InteractiveElements/SlideList';
+import DesignInteractive from '../components/ProjectPage/ItemComponents/DesignInteractive';
+import ElementInteractive from '../components/ProjectPage/ItemComponents/ElementInteractive';
+import TextInteractive from '../components/ProjectPage/ItemComponents/TextInteractive';
+import ProjectSlide from '../components/ProjectPage/ProjectSlide';
 
 const initialRectangles = [
   {
@@ -78,8 +78,8 @@ function ProjectPage() {
           }}
         >
           <Stage
-            width={500}
-            height={500}
+            width={300}
+            height={300}
             onMouseDown={checkDeselect}
             onTouchStart={checkDeselect}
           >
@@ -102,7 +102,9 @@ function ProjectPage() {
             </Layer>
           </Stage>
         </div>
-        <SlideListPosition>{/* <SlideList /> */}</SlideListPosition>
+        <SlideListPosition>
+          <ProjectSlide />
+        </SlideListPosition>
       </div>
     </ProjectContainer>
   );
