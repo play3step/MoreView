@@ -1,8 +1,11 @@
 import { atom } from 'recoil';
 
-const interactiveState = atom({
+export const interactiveState = atom({
   key: 'interactiveState',
   default: 0,
 });
 
-export default interactiveState;
+export const pageState = atom({
+  key: 'pagestate',
+  default: 0,
+});

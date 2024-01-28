@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { Stage, Layer, Rect } from 'react-konva';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { motion } from 'framer-motion';
-import setInteractive from '../store/recoil';
+
+import { interactiveState, pageState } from '../store/recoil';
 
 import ProjectHeaer from '../components/ProjectPage/ProjectHeader';
 import ProjectItem from '../components/ProjectPage/ProjectItem';
@@ -35,9 +36,11 @@ const initialRectangles = [
 function ProjectPage() {
   const [rectangles, setRectangles] = useState(initialRectangles);
   const [selectedId, selectShape] = useState(null);
+  const pageRendering = useRecoilValue(pageState);
 
-  const [menu, setMenu] = useRecoilState(setInteractive);
+  const [menu, setMenu] = useRecoilState(interactiveState);
   const handleClose = () => {
+    console.log(pageRendering);
     setMenu(0);
   };
 
@@ -77,30 +80,32 @@ function ProjectPage() {
             transform: 'translateX(-50%)',
           }}
         >
-          <Stage
-            width={300}
-            height={300}
-            onMouseDown={checkDeselect}
-            onTouchStart={checkDeselect}
-          >
-            <Layer>
-              {/* 배경색 설정을 위한 Rect 추가 */}
-              <Rect x={0} y={0} width={500} height={500} fill="#D9D9D9" />
-              {rectangles.map((rect, i) => (
-                <ProjectKonva
-                  key={rect.id} // Key prop 추가
-                  shapeProps={rect}
-                  isSelected={rect.id === selectedId}
-                  onSelect={() => selectShape(rect.id)}
-                  onChange={(newAttrs) => {
-                    const rects = rectangles.slice();
-                    rects[i] = newAttrs;
-                    setRectangles(rects);
-                  }}
-                />
-              ))}
-            </Layer>
-          </Stage>
+          {pageRendering === 1 && (
+            <Stage
+              width={300}
+              height={300}
+              onMouseDown={checkDeselect}
+              onTouchStart={checkDeselect}
+            >
+              <Layer>
+                {/* 배경색 설정을 위한 Rect 추가 */}
+                <Rect x={0} y={0} width={500} height={500} fill="#D9D9D9" />
+                {rectangles.map((rect, i) => (
+                  <ProjectKonva
+                    key={rect.id} // Key prop 추가
+                    shapeProps={rect}
+                    isSelected={rect.id === selectedId}
+                    onSelect={() => selectShape(rect.id)}
+                    onChange={(newAttrs) => {
+                      const rects = rectangles.slice();
+                      rects[i] = newAttrs;
+                      setRectangles(rects);
+                    }}
+                  />
+                ))}
+              </Layer>
+            </Stage>
+          )}
         </div>
         <SlideListPosition>
           <ProjectSlide />
