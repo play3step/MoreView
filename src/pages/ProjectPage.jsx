@@ -42,7 +42,6 @@ function ProjectPage() {
 
   const [menu, setMenu] = useRecoilState(interactiveState);
   const handleClose = () => {
-    console.log(pageRendering);
     setMenu(0);
   };
   const toggleSlide = () => {
