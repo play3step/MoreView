@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useSetRecoilState } from 'recoil';
-import interactiveState from '../../store/recoil';
+import { interactiveState } from '../../store/recoil';
 import DesignBtn from '../button/DesignBtn';
 import ElementBtn from '../button/ElementBtn';
 import TextBtn from '../button/TextBtn';
