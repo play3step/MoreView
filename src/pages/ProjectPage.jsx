@@ -80,6 +80,7 @@ function ProjectPage() {
             transform: 'translateX(-50%)',
           }}
         >
+          {pageRendering === 0 && <h1>안녕</h1>}
           {pageRendering === 1 && (
             <Stage
               width={300}
@@ -125,7 +126,6 @@ const ProjectContainer = styled.div`
 `;
 const SlideListPosition = styled.div`
   position: absolute;
-  z-index: -2;
   left: 5.6vw;
   bottom: 0;
 `;

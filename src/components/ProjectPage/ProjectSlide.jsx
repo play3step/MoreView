@@ -1,17 +1,30 @@
 import styled from 'styled-components';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import SlideClose from './SlideComponents/SlideClose';
 import SlideList from './SlideComponents/atom/SlideList';
 import { pageState } from '../../store/recoil';
 
 function ProjectSlide() {
-  const setPage = useRecoilState(pageState);
+  const setPage = useSetRecoilState(pageState);
   return (
     <SlideListContainer>
       <SlideClose />
       <SlideBoxContainer>
-        <SlideList onClick={() => setPage(1)} />
-        <SlideList onClick={() => setPage(2)} />
+        <SlideList
+          onClick={() => {
+            setPage(0);
+          }}
+        />
+        <SlideList
+          onClick={() => {
+            setPage(1);
+          }}
+        />
+        <SlideList
+          onClick={() => {
+            setPage(2);
+          }}
+        />
       </SlideBoxContainer>
     </SlideListContainer>
   );

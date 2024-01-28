@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
-function SlideList() {
-  return <SlideListBox />;
+function SlideList({ onClick }) {
+  return <SlideListBox onClick={onClick} />;
 }
 
 export default SlideList;
 
-const SlideListBox = styled.div`
+const SlideListBox = styled.button`
   width: 18.958vw;
   height: 16.11vh;
   border: 1px solid;
