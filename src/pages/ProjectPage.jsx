@@ -36,6 +36,8 @@ const initialRectangles = [
 function ProjectPage() {
   const [rectangles, setRectangles] = useState(initialRectangles);
   const [selectedId, selectShape] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+
   const pageRendering = useRecoilValue(pageState);
 
   const [menu, setMenu] = useRecoilState(interactiveState);
@@ -43,13 +45,16 @@ function ProjectPage() {
     console.log(pageRendering);
     setMenu(0);
   };
-
+  const toggleSlide = () => {
+    setIsOpen(!isOpen); // 상태 토글
+  };
   const checkDeselect = (e) => {
     const clickedOnEmpty = e.target === e.target.getStage();
     if (clickedOnEmpty) {
       selectShape(null);
     }
   };
+
   return (
     <ProjectContainer>
       <ProjectHeaer />
@@ -109,7 +114,15 @@ function ProjectPage() {
           )}
         </div>
         <SlideListPosition>
-          <ProjectSlide />
+          <motion.div
+            animate={{
+              y: isOpen ? 0 : '23.8vh', // isOpen에 따라 Y 위치 변경
+            }}
+            transition={{ duration: 0.5 }} // 애니메이션 지속 시간
+            initial="hidden"
+          >
+            <ProjectSlide slideOpen={toggleSlide} />
+          </motion.div>
         </SlideListPosition>
       </div>
     </ProjectContainer>
@@ -128,4 +141,5 @@ const SlideListPosition = styled.div`
   position: absolute;
   left: 5.6vw;
   bottom: 0;
+  overflow: hidden; // 이 부분 추가
 `;

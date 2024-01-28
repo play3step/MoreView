@@ -2,10 +2,11 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import SlideStateBtn from './atom/SlideStateBtn';
 
-function SlideClose() {
-  const [slideState, setSlideState] = useState(true);
+function SlideClose({ slideOpen }) {
+  const [slideState, setSlideState] = useState(false);
   const handleClick = () => {
     setSlideState((pre) => !pre);
+    slideOpen();
   };
   return (
     <SlideCloseContainer>
@@ -20,7 +21,7 @@ export default SlideClose;
 
 const SlideCloseContainer = styled.div`
   width: 94.375vw;
-  height: 4.19921875vh;
+  height: 4.1vh;
   background-color: #353131;
 `;
 

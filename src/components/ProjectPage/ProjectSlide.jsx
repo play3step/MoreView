@@ -4,11 +4,11 @@ import SlideClose from './SlideComponents/SlideClose';
 import SlideList from './SlideComponents/atom/SlideList';
 import { pageState } from '../../store/recoil';
 
-function ProjectSlide() {
+function ProjectSlide({ slideOpen }) {
   const setPage = useSetRecoilState(pageState);
   return (
     <SlideListContainer>
-      <SlideClose />
+      <SlideClose slideOpen={slideOpen} />
       <SlideBoxContainer>
         <SlideList
           onClick={() => {
@@ -34,7 +34,7 @@ export default ProjectSlide;
 
 const SlideListContainer = styled.div`
   width: 94.375vw;
-  height: 27.974vh;
+  height: 27.9vh;
   background-color: #e9e9e9;
 `;
 
