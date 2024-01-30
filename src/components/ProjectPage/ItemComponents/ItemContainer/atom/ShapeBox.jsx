@@ -1,10 +1,14 @@
 import styled from 'styled-components';
 import Rectangle from '../../../../../assets/shapes/rectangle.png';
+import Circle from '../../../../../assets/shapes/circle.png';
+import Triangle from '../../../../../assets/shapes/triangle.png';
 
-function ShapeBox({ onClick }) {
+function ShapeBox({ onClick, shape }) {
   return (
     <ShapeButton onClick={onClick}>
-      <ShapeImg src={Rectangle} alt="Rectangle" />
+      {shape === 'Rectangle' && <ShapeImg src={Rectangle} alt="Rectangle" />}
+      {shape === 'Circle' && <ShapeImg src={Circle} alt="Circle" />}
+      {shape === 'Triangle' && <ShapeImg src={Triangle} alt="Triangle" />}
     </ShapeButton>
   );
 }

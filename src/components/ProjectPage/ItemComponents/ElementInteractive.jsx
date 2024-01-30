@@ -7,22 +7,34 @@ import { shapeList } from '../../../store/recoil';
 function ElementInteractive({ onClose }) {
   const [shapeValue, setShapeValue] = useRecoilState(shapeList);
 
-  const addRectangle = () => {
-    const newRect = {
-      x: Math.random() * 100, // 임의의 위치
-      y: Math.random() * 100, // 임의의 위치
-      width: 100,
-      height: 100,
-      fill: 'blue', // 새 사각형의 색상
-      id: `rect${shapeValue.length + 1}`, // 고유 ID
-    };
-    setShapeValue([...shapeValue, newRect]);
+  const handleAddShape = (shapeType) => {
+    let newShape;
+    const randomX = 600 + (Math.random() * 60 - 30);
+    const randomY = 300 + (Math.random() * 60 - 30);
+    if (shapeType === 'Rectangle') {
+      newShape = {
+        x: randomX,
+        y: randomY,
+        width: 100,
+        height: 100,
+        fill: 'blue',
+        id: `rect${shapeValue.length + 1}`,
+      };
+    } else if (shapeType === 'Circle') {
+      newShape = {
+        x: randomX,
+        y: randomY,
+        radius: 50,
+        fill: 'green',
+        id: `circle${shapeValue.length + 1}`,
+      };
+    }
+    setShapeValue([...shapeValue, newShape]);
   };
-
   return (
     <ShapeInteractiveContainer>
       <ShapeItemContainer>
-        <ElementItem onClick={addRectangle} />
+        <ElementItem onAddShape={handleAddShape} />
       </ShapeItemContainer>
       <ClosePostion>
         <CloseBtn onClose={onClose} />

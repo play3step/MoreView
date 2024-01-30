@@ -2,21 +2,13 @@ import styled from 'styled-components';
 import ItemTitle from './atom/ItemTitle';
 import ShapeBox from './atom/ShapeBox';
 
-function ElementItem({ onClick }) {
+function ElementItem({ onAddShape }) {
   return (
     <ElementItemBox>
       <Itemposition>
         <ItemTitle title="도형" />
-        <ShapeBox onClick={onClick} />
-      </Itemposition>
-      <Itemposition>
-        <ItemTitle title="표" />
-      </Itemposition>
-      <Itemposition>
-        <ItemTitle title="사진" />
-      </Itemposition>
-      <Itemposition>
-        <ItemTitle title="스티커" />
+        <ShapeBox onClick={() => onAddShape('Rectangle')} shape="Rectangle" />
+        <ShapeBox onClick={() => onAddShape('Circle')} shape="Circle" />
       </Itemposition>
     </ElementItemBox>
   );
