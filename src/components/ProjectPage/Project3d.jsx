@@ -1,3 +1,5 @@
+import { OrbitControls } from '@react-three/drei';
+
 function Project3d() {
   return (
     <>
@@ -5,8 +7,10 @@ function Project3d() {
 
       <mesh rotation={[0, (45 * Math.PI) / 180, 0]}>
         <boxGeometry />
-        <meshStandardMaterial color="#e67e22 " />
+        <meshStandardMaterial color="#e67e22" />
       </mesh>
+
+      <OrbitControls />
     </>
   );
 }
