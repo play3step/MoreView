@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { Stage, Layer, Rect } from 'react-konva';
+import { Stage, Layer, Rect, Circle } from 'react-konva';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { motion } from 'framer-motion';
 
@@ -70,19 +70,39 @@ function ProjectPage() {
             >
               <Layer>
                 <Rect x={0} y={0} width={1200} height={600} fill="#D9D9D9" />
-                {shapeValue?.map((rect, i) => (
-                  <ProjectKonva
-                    key={rect.id}
-                    shapeProps={rect}
-                    isSelected={rect.id === selectedId}
-                    onSelect={() => selectShape(rect.id)}
-                    onChange={(newAttrs) => {
-                      const rects = shapeValue.slice();
-                      rects[i] = newAttrs;
-                      setShapeValue(rects);
-                    }}
-                  />
-                ))}
+                {shapeValue?.map((shape, i) => {
+                  if (shape.type === 'Rectangle') {
+                    return (
+                      <ProjectKonva
+                        key={shape.id}
+                        shapeProps={shape}
+                        isSelected={shape.id === selectedId}
+                        onSelect={() => selectShape(shape.id)}
+                        onChange={(newAttrs) => {
+                          const updatedShapes = shapeValue.slice();
+                          updatedShapes[i] = newAttrs;
+                          setShapeValue(updatedShapes);
+                        }}
+                      />
+                    );
+                  }
+                  if (shape.type === 'Circle') {
+                    return (
+                      <Circle
+                        key={shape.id}
+                        {...shape}
+                        onClick={() => selectShape(shape.id)}
+                        draggable
+                        onDragEnd={(e) => {
+                          const updatedShapes = shapeValue.slice();
+                          updatedShapes[i] = { ...shape, ...e.target.attrs };
+                          setShapeValue(updatedShapes);
+                        }}
+                      />
+                    );
+                  }
+                  return null;
+                })}
               </Layer>
             </Stage>
           )}
