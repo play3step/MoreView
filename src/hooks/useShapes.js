@@ -28,8 +28,16 @@ function useShapes() {
         fill: 'green',
         id: `circle${shapeValue.length + 1}`,
       };
+    } else if (shapeType === 'Triangle') {
+      newShape = {
+        type: 'Triangle',
+        x: randomX,
+        y: randomY,
+        points: [0, 0, 100, 100, 100, 0], // 삼각형 꼭짓점 좌표
+        fill: 'yellow',
+        id: `triangle${shapeValue.length + 1}`,
+      };
     }
-
     setShapeValue([...shapeValue, newShape]);
   };
 
