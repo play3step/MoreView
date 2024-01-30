@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { Stage, Layer, Rect, Circle } from 'react-konva';
+import { Stage, Layer, Rect, Circle, Line } from 'react-konva';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { motion } from 'framer-motion';
 
@@ -96,6 +96,27 @@ function ProjectPage() {
                         onDragEnd={(e) => {
                           const updatedShapes = shapeValue.slice();
                           updatedShapes[i] = { ...shape, ...e.target.attrs };
+                          setShapeValue(updatedShapes);
+                        }}
+                      />
+                    );
+                  }
+                  if (shape.type === 'Triangle') {
+                    return (
+                      <Line
+                        key={shape.id}
+                        points={shape.points}
+                        fill={shape.fill}
+                        closed // 선을 닫아서 삼각형을 만듭니다.
+                        onClick={() => selectShape(shape.id)}
+                        draggable
+                        onDragEnd={(e) => {
+                          const updatedShapes = shapeValue.slice();
+                          updatedShapes[i] = {
+                            ...shape,
+                            x: e.target.x(),
+                            y: e.target.y(),
+                          };
                           setShapeValue(updatedShapes);
                         }}
                       />

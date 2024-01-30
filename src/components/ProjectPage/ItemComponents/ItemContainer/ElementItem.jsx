@@ -9,6 +9,7 @@ function ElementItem({ onAddShape }) {
         <ItemTitle title="도형" />
         <ShapeBox onClick={() => onAddShape('Rectangle')} shape="Rectangle" />
         <ShapeBox onClick={() => onAddShape('Circle')} shape="Circle" />
+        <ShapeBox onClick={() => onAddShape('Triangle')} shape="Triangle" />
       </Itemposition>
     </ElementItemBox>
   );
