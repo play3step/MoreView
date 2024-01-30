@@ -13,6 +13,7 @@ function ElementInteractive({ onClose }) {
     const randomY = 300 + (Math.random() * 60 - 30);
     if (shapeType === 'Rectangle') {
       newShape = {
+        type: 'Rectangle',
         x: randomX,
         y: randomY,
         width: 100,
@@ -22,6 +23,7 @@ function ElementInteractive({ onClose }) {
       };
     } else if (shapeType === 'Circle') {
       newShape = {
+        type: 'Circle',
         x: randomX,
         y: randomY,
         radius: 50,
