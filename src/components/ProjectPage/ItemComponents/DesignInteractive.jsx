@@ -25,6 +25,7 @@ const DesignInteractiveContainer = styled.div`
   justify-content: center;
   align-items: center;
   border: 1px solid;
+  z-index: 2;
 `;
 
 const DesignItemContainer = styled.div`
