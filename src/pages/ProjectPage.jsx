@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Stage, Layer, Rect, Circle, Line } from 'react-konva';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { motion } from 'framer-motion';
+import { Canvas } from '@react-three/fiber';
 
 import { interactiveState, pageState, shapeList } from '../store/recoil';
 
@@ -13,6 +14,7 @@ import DesignInteractive from '../components/ProjectPage/ItemComponents/DesignIn
 import ElementInteractive from '../components/ProjectPage/ItemComponents/ElementInteractive';
 import TextInteractive from '../components/ProjectPage/ItemComponents/TextInteractive';
 import ProjectSlide from '../components/ProjectPage/ProjectSlide';
+import Project3d from '../components/ProjectPage/Project3d';
 
 function ProjectPage() {
   const [selectedId, selectShape] = useState(null);
@@ -126,6 +128,17 @@ function ProjectPage() {
                 })}
               </Layer>
             </Stage>
+          )}
+          {pageRendering === 2 && (
+            <Canvas
+              style={{
+                backgroundColor: '#D9D9D9',
+                width: '1200px',
+                height: '600px',
+              }}
+            >
+              <Project3d />
+            </Canvas>
           )}
         </CanvasContainer>
       </div>
