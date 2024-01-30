@@ -1,25 +1,22 @@
 import styled from 'styled-components';
 import ItemTitle from './atom/ItemTitle';
-import ItemList from './atom/ItemList';
+import ShapeBox from './atom/ShapeBox';
 
-function ElementItem() {
+function ElementItem({ onClick }) {
   return (
     <ElementItemBox>
       <Itemposition>
         <ItemTitle title="도형" />
-        <ItemList />
+        <ShapeBox onClick={onClick} />
       </Itemposition>
       <Itemposition>
         <ItemTitle title="표" />
-        <ItemList />
       </Itemposition>
       <Itemposition>
         <ItemTitle title="사진" />
-        <ItemList />
       </Itemposition>
       <Itemposition>
         <ItemTitle title="스티커" />
-        <ItemList />
       </Itemposition>
     </ElementItemBox>
   );

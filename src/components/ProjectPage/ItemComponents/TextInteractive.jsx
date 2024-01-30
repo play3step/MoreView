@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import ItemTitle from './ItemContainer/atom/ItemTitle';
-import ItemList from './ItemContainer/atom/ItemList';
+
 import CloseBtn from '../../button/CloseBtn';
 
 function TextInteractive({ onClose }) {
@@ -8,12 +8,8 @@ function TextInteractive({ onClose }) {
     <TextInteractiveContainer>
       <TextItemContainer>
         <ItemTitle title="텍스트 스타일" />
-        <ItemList />
-        <ItemList />
 
         <ItemTitle title="글꼴" />
-        <ItemList />
-        <ItemList />
       </TextItemContainer>
       <ClosePostion>
         <CloseBtn onClose={onClose} />

@@ -1,12 +1,28 @@
 import styled from 'styled-components';
-import ShapeItem from './ItemContainer/ElementItem';
+import { useRecoilState } from 'recoil';
+import ElementItem from './ItemContainer/ElementItem';
 import CloseBtn from '../../button/CloseBtn';
+import { shapeList } from '../../../store/recoil';
 
 function ElementInteractive({ onClose }) {
+  const [shapeValue, setShapeValue] = useRecoilState(shapeList);
+
+  const addRectangle = () => {
+    const newRect = {
+      x: Math.random() * 100, // 임의의 위치
+      y: Math.random() * 100, // 임의의 위치
+      width: 100,
+      height: 100,
+      fill: 'blue', // 새 사각형의 색상
+      id: `rect${shapeValue.length + 1}`, // 고유 ID
+    };
+    setShapeValue([...shapeValue, newRect]);
+  };
+
   return (
     <ShapeInteractiveContainer>
       <ShapeItemContainer>
-        <ShapeItem />
+        <ElementItem onClick={addRectangle} />
       </ShapeItemContainer>
       <ClosePostion>
         <CloseBtn onClose={onClose} />
