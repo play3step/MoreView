@@ -86,8 +86,6 @@ function ProjectPage() {
               <Layer>
                 <Rect x={0} y={0} width={1200} height={600} fill="#D9D9D9" />
                 {shapeValue[pageRendering]?.map((shape) => {
-                  console.log(shape);
-
                   if (shape.type === 'Rectangle') {
                     return (
                       <ProjectKonva
@@ -147,8 +145,6 @@ function ProjectPage() {
               <Layer>
                 <Rect x={0} y={0} width={1200} height={600} fill="#D9D9D9" />
                 {shapeValue[pageRendering]?.map((shape) => {
-                  console.log(shape);
-
                   if (shape.type === 'Rectangle') {
                     return (
                       <ProjectKonva
