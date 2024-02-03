@@ -1,13 +1,16 @@
-import { useRecoilState } from 'recoil';
-import { shapeList } from '../store/recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { pageState, shapeList } from '../store/recoil';
 
 function useShapes() {
   const [shapeValue, setShapeValue] = useRecoilState(shapeList);
-
+  const pageData = useRecoilValue(pageState);
+  const currentPageShapes = shapeValue[pageData] || [];
   const addShape = (shapeType) => {
     let newShape;
     const randomX = 600 + (Math.random() * 60 - 30);
     const randomY = 300 + (Math.random() * 60 - 30);
+
+    const shapeCountInCurrentPage = currentPageShapes.length;
 
     if (shapeType === 'Rectangle') {
       newShape = {
@@ -17,7 +20,7 @@ function useShapes() {
         width: 100,
         height: 100,
         fill: 'blue',
-        id: `rect${shapeValue.length + 1}`,
+        id: `rect${shapeCountInCurrentPage + 1}`,
       };
     } else if (shapeType === 'Circle') {
       newShape = {
@@ -26,19 +29,23 @@ function useShapes() {
         y: randomY,
         radius: 50,
         fill: 'green',
-        id: `circle${shapeValue.length + 1}`,
+        id: `circle${shapeCountInCurrentPage + 1}`,
       };
     } else if (shapeType === 'Triangle') {
       newShape = {
         type: 'Triangle',
         x: randomX,
         y: randomY,
-        points: [0, 0, 100, 100, 100, 0], // 삼각형 꼭짓점 좌표
+        points: [0, 0, 100, 100, 100, 0],
         fill: 'yellow',
-        id: `triangle${shapeValue.length + 1}`,
+        id: `triangle${shapeCountInCurrentPage + 1}`,
       };
     }
-    setShapeValue([...shapeValue, newShape]);
+    const updatedShapes = {
+      ...shapeValue,
+      [pageData]: [...currentPageShapes, newShape],
+    };
+    setShapeValue(updatedShapes);
   };
 
   return { shapeValue, addShape };

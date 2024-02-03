@@ -23,11 +23,13 @@ function ProjectPage() {
   const pageRendering = useRecoilValue(pageState);
   const [shapeValue, setShapeValue] = useRecoilState(shapeList);
   const [menu, setMenu] = useRecoilState(interactiveState);
+  console.log(shapeValue);
+
   const handleClose = () => {
     setMenu(0);
   };
   const toggleSlide = () => {
-    setIsOpen(!isOpen); // 상태 토글
+    setIsOpen(!isOpen);
   };
   const checkDeselect = (e) => {
     const clickedOnEmpty = e.target === e.target.getStage();
@@ -62,7 +64,72 @@ function ProjectPage() {
           {menu === 3 && <TextInteractive onClose={handleClose} />}
         </motion.div>
         <CanvasContainer>
-          {pageRendering === 0 && <h1>안녕</h1>}
+          {pageRendering === 0 && (
+            <Stage
+              width={1200}
+              height={600}
+              onMouseDown={checkDeselect}
+              onTouchStart={checkDeselect}
+            >
+              <Layer>
+                <Rect x={0} y={0} width={1200} height={600} fill="#D9D9D9" />
+                {shapeValue[pageRendering]?.map((shape, i) => {
+                  if (shape.type === 'Rectangle') {
+                    return (
+                      <ProjectKonva
+                        key={shape.id}
+                        shapeProps={shape}
+                        isSelected={shape.id === selectedId}
+                        onSelect={() => selectShape(shape.id)}
+                        onChange={(newAttrs) => {
+                          const updatedShapes = shapeValue.slice();
+                          updatedShapes[i] = newAttrs;
+                          setShapeValue(updatedShapes);
+                        }}
+                      />
+                    );
+                  }
+                  if (shape.type === 'Circle') {
+                    return (
+                      <Circle
+                        key={shape.id}
+                        {...shape}
+                        onClick={() => selectShape(shape.id)}
+                        draggable
+                        onDragEnd={(e) => {
+                          const updatedShapes = shapeValue.slice();
+                          updatedShapes[i] = { ...shape, ...e.target.attrs };
+                          setShapeValue(updatedShapes);
+                        }}
+                      />
+                    );
+                  }
+                  if (shape.type === 'Triangle') {
+                    return (
+                      <Line
+                        key={shape.id}
+                        points={shape.points}
+                        fill={shape.fill}
+                        closed
+                        onClick={() => selectShape(shape.id)}
+                        draggable
+                        onDragEnd={(e) => {
+                          const updatedShapes = shapeValue.slice();
+                          updatedShapes[i] = {
+                            ...shape,
+                            x: e.target.x(),
+                            y: e.target.y(),
+                          };
+                          setShapeValue(updatedShapes);
+                        }}
+                      />
+                    );
+                  }
+                  return null;
+                })}
+              </Layer>
+            </Stage>
+          )}
           {pageRendering === 1 && (
             <Stage
               width={1200}
@@ -72,7 +139,8 @@ function ProjectPage() {
             >
               <Layer>
                 <Rect x={0} y={0} width={1200} height={600} fill="#D9D9D9" />
-                {shapeValue?.map((shape, i) => {
+                {shapeValue[1]?.map((shape, i) => {
+                  console.log(shape);
                   if (shape.type === 'Rectangle') {
                     return (
                       <ProjectKonva

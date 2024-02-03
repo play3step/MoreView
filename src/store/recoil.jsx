@@ -12,5 +12,5 @@ export const pageState = atom({
 
 export const shapeList = atom({
   key: 'shapeList',
-  default: [],
+  default: {},
 });
