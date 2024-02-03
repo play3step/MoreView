@@ -35,7 +35,20 @@ function ProjectPage() {
       selectShape(null);
     }
   };
+  const handleDragEnd = (shapeId, newAttrs) => {
+    // 현재 페이지의 도형 배열을 복사하여 업데이트
+    const currentPageShapes = shapeValue[pageRendering]
+      ? [...shapeValue[pageRendering]]
+      : [];
+    const updatedShapes = currentPageShapes.map((shape) => {
+      if (shape.id === shapeId) {
+        return { ...shape, ...newAttrs };
+      }
+      return shape;
+    });
 
+    setShapeValue({ ...shapeValue, [pageRendering]: updatedShapes });
+  };
   return (
     <ProjectContainer>
       <ProjectHeaer />
@@ -72,8 +85,8 @@ function ProjectPage() {
             >
               <Layer>
                 <Rect x={0} y={0} width={1200} height={600} fill="#D9D9D9" />
-                {shapeValue[pageRendering]?.map((shape, i) => {
-                  console.log(shape.id);
+                {shapeValue[pageRendering]?.map((shape) => {
+                  console.log(shape);
 
                   if (shape.type === 'Rectangle') {
                     return (
@@ -82,11 +95,9 @@ function ProjectPage() {
                         shapeProps={shape}
                         isSelected={shape.id === selectedId}
                         onSelect={() => selectShape(shape.id)}
-                        onChange={(newAttrs) => {
-                          const updatedShapes = shapeValue.slice();
-                          updatedShapes[i] = newAttrs;
-                          setShapeValue(updatedShapes);
-                        }}
+                        onChange={(newAttrs) =>
+                          handleDragEnd(shape.id, newAttrs)
+                        }
                       />
                     );
                   }
@@ -97,11 +108,9 @@ function ProjectPage() {
                         {...shape}
                         onClick={() => selectShape(shape.id)}
                         draggable
-                        onDragEnd={(e) => {
-                          const updatedShapes = shapeValue.slice();
-                          updatedShapes[i] = { ...shape, ...e.target.attrs };
-                          setShapeValue(updatedShapes);
-                        }}
+                        onDragEnd={(e) =>
+                          handleDragEnd(shape.id, e.target.attrs)
+                        }
                       />
                     );
                   }
@@ -114,15 +123,12 @@ function ProjectPage() {
                         closed
                         onClick={() => selectShape(shape.id)}
                         draggable
-                        onDragEnd={(e) => {
-                          const updatedShapes = shapeValue.slice();
-                          updatedShapes[i] = {
-                            ...shape,
+                        onDragEnd={(e) =>
+                          handleDragEnd(shape.id, {
                             x: e.target.x(),
                             y: e.target.y(),
-                          };
-                          setShapeValue(updatedShapes);
-                        }}
+                          })
+                        }
                       />
                     );
                   }
@@ -140,8 +146,9 @@ function ProjectPage() {
             >
               <Layer>
                 <Rect x={0} y={0} width={1200} height={600} fill="#D9D9D9" />
-                {shapeValue[1]?.map((shape, i) => {
+                {shapeValue[pageRendering]?.map((shape) => {
                   console.log(shape);
+
                   if (shape.type === 'Rectangle') {
                     return (
                       <ProjectKonva
@@ -149,11 +156,9 @@ function ProjectPage() {
                         shapeProps={shape}
                         isSelected={shape.id === selectedId}
                         onSelect={() => selectShape(shape.id)}
-                        onChange={(newAttrs) => {
-                          const updatedShapes = shapeValue.slice();
-                          updatedShapes[i] = newAttrs;
-                          setShapeValue(updatedShapes);
-                        }}
+                        onChange={(newAttrs) =>
+                          handleDragEnd(shape.id, newAttrs)
+                        }
                       />
                     );
                   }
@@ -164,11 +169,9 @@ function ProjectPage() {
                         {...shape}
                         onClick={() => selectShape(shape.id)}
                         draggable
-                        onDragEnd={(e) => {
-                          const updatedShapes = shapeValue.slice();
-                          updatedShapes[i] = { ...shape, ...e.target.attrs };
-                          setShapeValue(updatedShapes);
-                        }}
+                        onDragEnd={(e) =>
+                          handleDragEnd(shape.id, e.target.attrs)
+                        }
                       />
                     );
                   }
@@ -178,18 +181,15 @@ function ProjectPage() {
                         key={shape.id}
                         points={shape.points}
                         fill={shape.fill}
-                        closed // 선을 닫아서 삼각형을 만듭니다.
+                        closed
                         onClick={() => selectShape(shape.id)}
                         draggable
-                        onDragEnd={(e) => {
-                          const updatedShapes = shapeValue.slice();
-                          updatedShapes[i] = {
-                            ...shape,
+                        onDragEnd={(e) =>
+                          handleDragEnd(shape.id, {
                             x: e.target.x(),
                             y: e.target.y(),
-                          };
-                          setShapeValue(updatedShapes);
-                        }}
+                          })
+                        }
                       />
                     );
                   }
@@ -246,5 +246,5 @@ const SlideListPosition = styled.div`
   position: absolute;
   left: 5.6vw;
   bottom: 0;
-  overflow: hidden; // 이 부분 추가
+  overflow: hidden;
 `;
