@@ -23,8 +23,6 @@ function ProjectPage() {
   const pageRendering = useRecoilValue(pageState);
   const [shapeValue, setShapeValue] = useRecoilState(shapeList);
   const [menu, setMenu] = useRecoilState(interactiveState);
-  console.log(shapeValue);
-
   const handleClose = () => {
     setMenu(0);
   };
@@ -64,6 +62,7 @@ function ProjectPage() {
           {menu === 3 && <TextInteractive onClose={handleClose} />}
         </motion.div>
         <CanvasContainer>
+          <h1>{pageRendering + 1} 페이지</h1>
           {pageRendering === 0 && (
             <Stage
               width={1200}
@@ -74,6 +73,8 @@ function ProjectPage() {
               <Layer>
                 <Rect x={0} y={0} width={1200} height={600} fill="#D9D9D9" />
                 {shapeValue[pageRendering]?.map((shape, i) => {
+                  console.log(shape.id);
+
                   if (shape.type === 'Rectangle') {
                     return (
                       <ProjectKonva

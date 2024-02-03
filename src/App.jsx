@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import ProjectPage from './pages/ProjectPage';
 import MainPage from './pages/MainPage';
+import './App.css';
 
 function App() {
   return (
