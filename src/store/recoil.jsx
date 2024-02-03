@@ -7,10 +7,10 @@ export const interactiveState = atom({
 
 export const pageState = atom({
   key: 'pagestate',
-  default: 1,
+  default: 0,
 });
 
 export const shapeList = atom({
   key: 'shapeList',
-  default: [],
+  default: {},
 });

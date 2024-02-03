@@ -27,7 +27,7 @@ function ProjectPage() {
     setMenu(0);
   };
   const toggleSlide = () => {
-    setIsOpen(!isOpen); // 상태 토글
+    setIsOpen(!isOpen);
   };
   const checkDeselect = (e) => {
     const clickedOnEmpty = e.target === e.target.getStage();
@@ -35,7 +35,20 @@ function ProjectPage() {
       selectShape(null);
     }
   };
+  const handleDragEnd = (shapeId, newAttrs) => {
+    // 현재 페이지의 도형 배열을 복사하여 업데이트
+    const currentPageShapes = shapeValue[pageRendering]
+      ? [...shapeValue[pageRendering]]
+      : [];
+    const updatedShapes = currentPageShapes.map((shape) => {
+      if (shape.id === shapeId) {
+        return { ...shape, ...newAttrs };
+      }
+      return shape;
+    });
 
+    setShapeValue({ ...shapeValue, [pageRendering]: updatedShapes });
+  };
   return (
     <ProjectContainer>
       <ProjectHeaer />
@@ -62,8 +75,8 @@ function ProjectPage() {
           {menu === 3 && <TextInteractive onClose={handleClose} />}
         </motion.div>
         <CanvasContainer>
-          {pageRendering === 0 && <h1>안녕</h1>}
-          {pageRendering === 1 && (
+          <h1>{pageRendering + 1} 페이지</h1>
+          {pageRendering === 0 && (
             <Stage
               width={1200}
               height={600}
@@ -72,7 +85,7 @@ function ProjectPage() {
             >
               <Layer>
                 <Rect x={0} y={0} width={1200} height={600} fill="#D9D9D9" />
-                {shapeValue?.map((shape, i) => {
+                {shapeValue[pageRendering]?.map((shape) => {
                   if (shape.type === 'Rectangle') {
                     return (
                       <ProjectKonva
@@ -80,11 +93,9 @@ function ProjectPage() {
                         shapeProps={shape}
                         isSelected={shape.id === selectedId}
                         onSelect={() => selectShape(shape.id)}
-                        onChange={(newAttrs) => {
-                          const updatedShapes = shapeValue.slice();
-                          updatedShapes[i] = newAttrs;
-                          setShapeValue(updatedShapes);
-                        }}
+                        onChange={(newAttrs) =>
+                          handleDragEnd(shape.id, newAttrs)
+                        }
                       />
                     );
                   }
@@ -95,11 +106,9 @@ function ProjectPage() {
                         {...shape}
                         onClick={() => selectShape(shape.id)}
                         draggable
-                        onDragEnd={(e) => {
-                          const updatedShapes = shapeValue.slice();
-                          updatedShapes[i] = { ...shape, ...e.target.attrs };
-                          setShapeValue(updatedShapes);
-                        }}
+                        onDragEnd={(e) =>
+                          handleDragEnd(shape.id, e.target.attrs)
+                        }
                       />
                     );
                   }
@@ -109,18 +118,74 @@ function ProjectPage() {
                         key={shape.id}
                         points={shape.points}
                         fill={shape.fill}
-                        closed // 선을 닫아서 삼각형을 만듭니다.
+                        closed
                         onClick={() => selectShape(shape.id)}
                         draggable
-                        onDragEnd={(e) => {
-                          const updatedShapes = shapeValue.slice();
-                          updatedShapes[i] = {
-                            ...shape,
+                        onDragEnd={(e) =>
+                          handleDragEnd(shape.id, {
                             x: e.target.x(),
                             y: e.target.y(),
-                          };
-                          setShapeValue(updatedShapes);
-                        }}
+                          })
+                        }
+                      />
+                    );
+                  }
+                  return null;
+                })}
+              </Layer>
+            </Stage>
+          )}
+          {pageRendering === 1 && (
+            <Stage
+              width={1200}
+              height={600}
+              onMouseDown={checkDeselect}
+              onTouchStart={checkDeselect}
+            >
+              <Layer>
+                <Rect x={0} y={0} width={1200} height={600} fill="#D9D9D9" />
+                {shapeValue[pageRendering]?.map((shape) => {
+                  if (shape.type === 'Rectangle') {
+                    return (
+                      <ProjectKonva
+                        key={shape.id}
+                        shapeProps={shape}
+                        isSelected={shape.id === selectedId}
+                        onSelect={() => selectShape(shape.id)}
+                        onChange={(newAttrs) =>
+                          handleDragEnd(shape.id, newAttrs)
+                        }
+                      />
+                    );
+                  }
+                  if (shape.type === 'Circle') {
+                    return (
+                      <Circle
+                        key={shape.id}
+                        {...shape}
+                        onClick={() => selectShape(shape.id)}
+                        draggable
+                        onDragEnd={(e) =>
+                          handleDragEnd(shape.id, e.target.attrs)
+                        }
+                      />
+                    );
+                  }
+                  if (shape.type === 'Triangle') {
+                    return (
+                      <Line
+                        key={shape.id}
+                        points={shape.points}
+                        fill={shape.fill}
+                        closed
+                        onClick={() => selectShape(shape.id)}
+                        draggable
+                        onDragEnd={(e) =>
+                          handleDragEnd(shape.id, {
+                            x: e.target.x(),
+                            y: e.target.y(),
+                          })
+                        }
                       />
                     );
                   }
@@ -177,5 +242,5 @@ const SlideListPosition = styled.div`
   position: absolute;
   left: 5.6vw;
   bottom: 0;
-  overflow: hidden; // 이 부분 추가
+  overflow: hidden;
 `;
