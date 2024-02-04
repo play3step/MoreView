@@ -2,7 +2,7 @@
 import React, { useRef, useEffect } from 'react';
 import { Rect, Transformer } from 'react-konva';
 
-function ProjectKonva({ shapeProps, isSelected, onSelect, onChange }) {
+function EditablRect({ shapeProps, isSelected, onSelect, onChange }) {
   const shapeRef = useRef();
   const trRef = useRef();
 
@@ -59,4 +59,4 @@ function ProjectKonva({ shapeProps, isSelected, onSelect, onChange }) {
   );
 }
 
-export default ProjectKonva;
+export default EditablRect;

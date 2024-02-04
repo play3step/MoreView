@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import useShapes from '../../../hooks/useShapes';
 
-import ElementItem from './ItemContainer/ElementItem';
+import ElementItem from './ElementItem';
 import CloseBtn from '../../button/CloseBtn';
 
 function ElementInteractive({ onClose }) {
