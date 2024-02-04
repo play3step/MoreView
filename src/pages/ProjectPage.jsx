@@ -15,14 +15,21 @@ import ElementInteractive from '../components/ProjectPage/ItemComponents/Element
 import TextInteractive from '../components/ProjectPage/ItemComponents/TextInteractive';
 import ProjectSlide from '../components/ProjectPage/ProjectSlide';
 import Project3d from '../components/ProjectPage/Project3d';
+import EditableText from '../components/ProjectPage/EditableText';
 
 function ProjectPage() {
   const [selectedId, selectShape] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [textValue, setTextValue] = useState('Some initial text');
 
   const pageRendering = useRecoilValue(pageState);
   const [shapeValue, setShapeValue] = useRecoilState(shapeList);
   const [menu, setMenu] = useRecoilState(interactiveState);
+
+  const handleTextChange = (newText) => {
+    setTextValue(newText);
+  };
+
   const handleClose = () => {
     setMenu(0);
   };
@@ -85,6 +92,10 @@ function ProjectPage() {
             >
               <Layer>
                 <Rect x={0} y={0} width={1200} height={600} fill="#D9D9D9" />
+                <EditableText
+                  initialText={textValue}
+                  onTextChange={handleTextChange}
+                />
                 {shapeValue[pageRendering]?.map((shape) => {
                   if (shape.type === 'Rectangle') {
                     return (
