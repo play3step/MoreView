@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import Rectangle from '../../../../../assets/shapes/rectangle.png';
-import Circle from '../../../../../assets/shapes/circle.png';
-import Triangle from '../../../../../assets/shapes/triangle.png';
+import Rectangle from '../../../../assets/shapes/rectangle.png';
+import Circle from '../../../../assets/shapes/circle.png';
+import Triangle from '../../../../assets/shapes/triangle.png';
 
 function ShapeBox({ onClick, shape }) {
   return (

@@ -1,21 +1,20 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { Stage, Layer, Rect, Circle, Line } from 'react-konva';
-import { useRecoilState, useRecoilValue } from 'recoil';
 import { motion } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
-
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { interactiveState, pageState, shapeList } from '../store/recoil';
 
 import ProjectHeaer from '../components/ProjectPage/ProjectHeader';
 import ProjectItem from '../components/ProjectPage/ProjectItem';
-import ProjectKonva from '../components/ProjectPage/ProjectKonva';
+import EditablRect from '../components/ProjectPage/Editable/EditablRect';
 import DesignInteractive from '../components/ProjectPage/ItemComponents/DesignInteractive';
 import ElementInteractive from '../components/ProjectPage/ItemComponents/ElementInteractive';
 import TextInteractive from '../components/ProjectPage/ItemComponents/TextInteractive';
 import ProjectSlide from '../components/ProjectPage/ProjectSlide';
 import Project3d from '../components/ProjectPage/Project3d';
-import EditableText from '../components/ProjectPage/EditableText';
+import EditableText from '../components/ProjectPage/Editable/EditableText';
 
 function ProjectPage() {
   const [selectedId, selectShape] = useState(null);
@@ -99,7 +98,7 @@ function ProjectPage() {
                 {shapeValue[pageRendering]?.map((shape) => {
                   if (shape.type === 'Rectangle') {
                     return (
-                      <ProjectKonva
+                      <EditablRect
                         key={shape.id}
                         shapeProps={shape}
                         isSelected={shape.id === selectedId}
@@ -158,7 +157,7 @@ function ProjectPage() {
                 {shapeValue[pageRendering]?.map((shape) => {
                   if (shape.type === 'Rectangle') {
                     return (
-                      <ProjectKonva
+                      <EditablRect
                         key={shape.id}
                         shapeProps={shape}
                         isSelected={shape.id === selectedId}

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import ItemTitle from './ItemContainer/atom/ItemTitle';
+import ItemTitle from './atom/ItemTitle';
 import CloseBtn from '../../button/CloseBtn';
 
 function DesignInteractive({ onClose }) {
