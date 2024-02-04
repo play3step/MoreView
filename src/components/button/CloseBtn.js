@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import Close from '../../assets/close.png';
+import { ReactComponent as Close } from '../../assets/close.svg';
 
 function CloseBtn({ onClose }) {
   return (
     <CloseButton onClick={onClose}>
-      <CloseImage src={Close} alt="Close" />
+      <Close alt="Close" />
     </CloseButton>
   );
 }
@@ -13,9 +13,4 @@ export default CloseBtn;
 const CloseButton = styled.button`
   background-color: transparent;
   border: none;
-`;
-
-const CloseImage = styled.img`
-  width: 1.6;
-  height: 10.88vh;
 `;

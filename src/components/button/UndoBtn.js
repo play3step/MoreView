@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import Undo from '../../assets/undo.png';
+import { ReactComponent as Undo } from '../../assets/undo.svg';
 
 function UndoBtn() {
   return (
     <UndoButton>
-      <UndoImage src={Undo} alt="Undo" />
+      <Undo alt="Undo" />
     </UndoButton>
   );
 }
@@ -14,9 +14,4 @@ const UndoButton = styled.button`
   background-color: transparent;
   border: none;
   margin-right: 0.2vw;
-`;
-
-const UndoImage = styled.img`
-  width: 2.4vw;
-  height: 4.88vh;
 `;

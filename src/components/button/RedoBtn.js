@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import Redo from '../../assets/redo.png';
+import { ReactComponent as Redo } from '../../assets/redo.svg';
 
 function RedoBtn() {
   return (
     <RedoButton>
-      <RedoImage src={Redo} alt="Redo" />
+      <Redo alt="Redo" />
     </RedoButton>
   );
 }
@@ -14,9 +14,4 @@ const RedoButton = styled.button`
   background-color: transparent;
   border: none;
   margin-right: 0.2vw;
-`;
-
-const RedoImage = styled.img`
-  width: 2.4vw;
-  height: 4.88vh;
 `;
