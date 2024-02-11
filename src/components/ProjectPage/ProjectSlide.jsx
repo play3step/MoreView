@@ -33,7 +33,7 @@ function ProjectSlide({ slideOpen }) {
 export default ProjectSlide;
 
 const SlideListContainer = styled.div`
-  width: 94.375vw;
+  width: 95.833vw;
   height: 27.9vh;
   background-color: #e9e9e9;
 `;

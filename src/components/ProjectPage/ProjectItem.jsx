@@ -29,8 +29,8 @@ function ProjectItem() {
 export default ProjectItem;
 
 const ProjectItemContainer = styled.div`
-  width: 5.625vw;
-  height: 93.652vh;
+  width: 4.166vw;
+  height: 93.98vh;
   background-color: #e9e9e9;
   display: flex;
   flex-direction: column;
@@ -39,8 +39,8 @@ const ProjectItemContainer = styled.div`
 `;
 
 const ItemBox = styled.div`
-  width: 5.625vw;
   height: 14.648vh;
+  width: 100%;
   border-bottom: 1px solid;
   text-align: center;
   display: flex;
