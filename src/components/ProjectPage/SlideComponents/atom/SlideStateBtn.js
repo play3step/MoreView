@@ -5,7 +5,15 @@ import { ReactComponent as SlideDown } from '../../../../assets/slideDown.svg';
 function SlideStateBtn({ slideState, onClick }) {
   return (
     <SlideStateButton onClick={onClick}>
-      {slideState ? <SlideDown alt="SlideDown" /> : <SlideUp alt="SlideUp" />}
+      {slideState ? (
+        <SlideDown
+          alt="SlideDown"
+          width="5.9375vw"
+          height="3.981481481481482vh"
+        />
+      ) : (
+        <SlideUp alt="SlideUp" width="5.9375vw" height="3.981481481481482vh" />
+      )}
     </SlideStateButton>
   );
 }

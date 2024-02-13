@@ -4,7 +4,7 @@ import { ReactComponent as Design } from '../../assets/design.svg';
 function DesignBtn({ onClick }) {
   return (
     <DesignButton onClick={onClick}>
-      <Design alt="Design" />
+      <Design alt="Design" width="4.21875vw" height="7.5vh" />
     </DesignButton>
   );
 }

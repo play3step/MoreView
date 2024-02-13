@@ -4,7 +4,7 @@ import { ReactComponent as Element } from '../../assets/element.svg';
 function ElementBtn({ onClick }) {
   return (
     <ElementButton onClick={onClick}>
-      <Element alt="Element" />
+      <Element alt="Element" width="4.21875vw" height="7.5vh" />
     </ElementButton>
   );
 }

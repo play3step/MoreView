@@ -4,7 +4,7 @@ import { ReactComponent as Close } from '../../assets/close.svg';
 function CloseBtn({ onClose }) {
   return (
     <CloseButton onClick={onClose}>
-      <Close alt="Close" />
+      <Close alt="Close" width="1.875vw" height="5.555vh" />
     </CloseButton>
   );
 }

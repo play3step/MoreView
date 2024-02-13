@@ -4,7 +4,7 @@ import { ReactComponent as Redo } from '../../assets/redo.svg';
 function RedoBtn() {
   return (
     <RedoButton>
-      <Redo alt="Redo" />
+      <Redo alt="Redo" width="1.822vw" height="3.7962vh" />
     </RedoButton>
   );
 }

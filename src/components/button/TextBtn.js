@@ -4,7 +4,7 @@ import { ReactComponent as Text } from '../../assets/text.svg';
 function TextBtn({ onClick }) {
   return (
     <TextButton onClick={onClick}>
-      <Text alt="Text" />
+      <Text alt="Text" width="4.21875vw" height="7.5vh" />
     </TextButton>
   );
 }

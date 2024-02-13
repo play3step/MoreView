@@ -4,7 +4,7 @@ import { ReactComponent as Undo } from '../../assets/undo.svg';
 function UndoBtn() {
   return (
     <UndoButton>
-      <Undo alt="Undo" />
+      <Undo alt="Undo" width="1.822vw" height="3.7962vh" />
     </UndoButton>
   );
 }

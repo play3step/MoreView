@@ -4,7 +4,7 @@ import { ReactComponent as Home } from '../../assets/home.svg';
 function HomeBtn({ className }) {
   return (
     <HomeButton className={className}>
-      <Home alt="home" />
+      <Home alt="home" width="2.60416vw" height="4.6296vh" />
     </HomeButton>
   );
 }

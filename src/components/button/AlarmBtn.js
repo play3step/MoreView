@@ -4,7 +4,7 @@ import { ReactComponent as Alarm } from '../../assets/alarm.svg';
 function AlarmBtn() {
   return (
     <AlarmButton>
-      <Alarm alt="Alarm" />
+      <Alarm alt="Alarm" width="2.60416vw" height="4.6296vh" />
     </AlarmButton>
   );
 }
