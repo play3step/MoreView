@@ -27,7 +27,7 @@ export default ProjectHeaer;
 
 const HeaderContainer = styled.div`
   width: 100vw;
-  height: 6.34vh;
+  height: 6.018vh;
   background-color: #353131;
   display: flex;
   align-items: center;
@@ -40,8 +40,8 @@ const HeaderProjectName = styled.div`
   align-items: center;
   color: white;
   font-size: 1.1111vw;
-  width: 24.3056vw;
-  height: 4.8722vh;
+  width: 26.35416vw;
+  height: 4.444vh;
   background-color: #545454;
   border-radius: 1.3889vw;
   position: absolute;

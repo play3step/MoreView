@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import Alarm from '../../assets/alarm.png';
+import { ReactComponent as Alarm } from '../../assets/alarm.svg';
 
 function AlarmBtn() {
   return (
     <AlarmButton>
-      <AlarmImage src={Alarm} alt="Alarm" />
+      <Alarm alt="Alarm" width="2.60416vw" height="4.6296vh" />
     </AlarmButton>
   );
 }
@@ -13,9 +13,4 @@ export default AlarmBtn;
 const AlarmButton = styled.button`
   background-color: transparent;
   border: none;
-`;
-
-const AlarmImage = styled.img`
-  width: 2.6vw;
-  height: 4.88vh;
 `;

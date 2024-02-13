@@ -20,8 +20,8 @@ function SlideClose({ slideOpen }) {
 export default SlideClose;
 
 const SlideCloseContainer = styled.div`
-  width: 94.375vw;
-  height: 4.1vh;
+  width: 95.833vw;
+  height: 3.981vh;
   background-color: #353131;
 `;
 

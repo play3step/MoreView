@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import Design from '../../assets/design.png';
+import { ReactComponent as Design } from '../../assets/design.svg';
 
 function DesignBtn({ onClick }) {
   return (
     <DesignButton onClick={onClick}>
-      <DesignImage src={Design} alt="Design" />
+      <Design alt="Design" width="4.21875vw" height="7.5vh" />
     </DesignButton>
   );
 }
@@ -13,9 +13,4 @@ export default DesignBtn;
 const DesignButton = styled.button`
   background-color: transparent;
   border: none;
-`;
-
-const DesignImage = styled.img`
-  width: 5.625vw;
-  height: 8vh;
 `;

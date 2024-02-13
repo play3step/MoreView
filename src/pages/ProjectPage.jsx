@@ -250,7 +250,7 @@ const CanvasContainer = styled.div`
 `;
 const SlideListPosition = styled.div`
   position: absolute;
-  left: 5.6vw;
+  left: 4.166vw;
   bottom: 0;
   overflow: hidden;
 `;

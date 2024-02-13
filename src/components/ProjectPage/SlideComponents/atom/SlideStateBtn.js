@@ -1,14 +1,18 @@
 import styled from 'styled-components';
-import SlideUp from '../../../../assets/slideUp.png';
-import SlideDown from '../../../../assets/slideDown.png';
+import { ReactComponent as SlideUp } from '../../../../assets/slideUp.svg';
+import { ReactComponent as SlideDown } from '../../../../assets/slideDown.svg';
 
 function SlideStateBtn({ slideState, onClick }) {
   return (
     <SlideStateButton onClick={onClick}>
       {slideState ? (
-        <SlideStateImg src={SlideUp} alt="SlideUp" />
+        <SlideDown
+          alt="SlideDown"
+          width="5.9375vw"
+          height="3.981481481481482vh"
+        />
       ) : (
-        <SlideStateImg src={SlideDown} alt="SlideDown" />
+        <SlideUp alt="SlideUp" width="5.9375vw" height="3.981481481481482vh" />
       )}
     </SlideStateButton>
   );
@@ -19,9 +23,4 @@ export default SlideStateBtn;
 const SlideStateButton = styled.button`
   background-color: transparent;
   border: none;
-`;
-
-const SlideStateImg = styled.img`
-  width: 7.916vw;
-  height: 4.199vh;
 `;

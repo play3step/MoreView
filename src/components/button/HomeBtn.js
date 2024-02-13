@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import Home from '../../assets/home.png';
+import { ReactComponent as Home } from '../../assets/home.svg';
 
 function HomeBtn({ className }) {
   return (
     <HomeButton className={className}>
-      <HomeImage src={Home} alt="home" />
+      <Home alt="home" width="2.60416vw" height="4.6296vh" />
     </HomeButton>
   );
 }
@@ -13,9 +13,4 @@ export default HomeBtn;
 const HomeButton = styled.button`
   background-color: transparent;
   border: none;
-`;
-
-const HomeImage = styled.img`
-  width: 2.62vw;
-  height: 3.88vh;
 `;
