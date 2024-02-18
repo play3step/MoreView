@@ -14,3 +14,13 @@ export const shapeList = atom({
   key: 'shapeList',
   default: {},
 });
+
+export const userState = atom({
+  key: 'userState',
+  default: { username: '', email: '' },
+});
+
+export const isLoggedInState = atom({
+  key: 'isLoggedInState',
+  default: false,
+});
