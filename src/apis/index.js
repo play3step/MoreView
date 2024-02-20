@@ -8,4 +8,14 @@ const basicApi = axios.create({
   headers: { 'Content-Type': 'application/json;charset=utf-8' },
 });
 
+basicApi.interceptors.request.use(
+  (config) => {
+    const accessToken = '';
+    config.headers['Content-Type'] = 'application/json';
+    config.headers.Authorization = `Bearer ${accessToken}`;
+
+    return config;
+  },
+  (error) => Promise.reject(error),
+);
 export default basicApi;
