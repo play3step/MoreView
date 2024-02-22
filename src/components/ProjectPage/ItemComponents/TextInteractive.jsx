@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import ItemTitle from './atom/ItemTitle';
-
+import { ReactComponent as Text } from '../../../assets/text/text.svg';
 import CloseBtn from '../../button/CloseBtn';
 
 function TextInteractive({ onClose }) {
@@ -8,7 +8,7 @@ function TextInteractive({ onClose }) {
     <TextInteractiveContainer>
       <TextItemContainer>
         <ItemTitle title="텍스트 스타일" />
-
+        <Text />
         <ItemTitle title="글꼴" />
       </TextItemContainer>
       <ClosePostion>

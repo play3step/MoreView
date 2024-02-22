@@ -55,9 +55,11 @@ function ProjectPage() {
 
     setShapeValue({ ...shapeValue, [pageRendering]: updatedShapes });
   };
+  console.log(textValue);
   return (
     <ProjectContainer>
       <ProjectHeaer />
+
       <div
         style={{
           display: 'flex',
