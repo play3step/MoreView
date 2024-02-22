@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { Text } from 'react-konva';
 
-function EditableText({ initialText, onTextChange, x, y }) {
+function EditableText({ id, initialText, onTextChange, onDragEnd, x, y }) {
   const [text, setText] = useState(initialText);
-
+  const handleDragEnd = (e) => {
+    const newX = e.target.x();
+    const newY = e.target.y();
+    onDragEnd(id, { x: newX, y: newY });
+  };
   const handleDoubleClick = (e) => {
     const textPosition = e.target.getAbsolutePosition();
     const stageBox = e.target.getStage().container().getBoundingClientRect();
@@ -68,6 +72,7 @@ function EditableText({ initialText, onTextChange, x, y }) {
       fontSize={20}
       draggable
       onDblClick={handleDoubleClick}
+      onDragEnd={handleDragEnd} // 드래그 종료 이벤트 핸들러 추가
     />
   );
 }

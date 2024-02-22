@@ -54,6 +54,15 @@ function ProjectPage() {
 
     setShapeValue({ ...shapeValue, [pageRendering]: updatedShapes });
   };
+  const handleTextDragEnd = (textId, newAttrs) => {
+    setTextValue((prevTextValue) => ({
+      ...prevTextValue,
+      [pageRendering]: prevTextValue[pageRendering].map((item) =>
+        item.id === textId ? { ...item, ...newAttrs } : item,
+      ),
+    }));
+  };
+
   const handleTextChange = (textId, newText) => {
     setTextValue((prevTextValue) => ({
       ...prevTextValue,
@@ -62,7 +71,7 @@ function ProjectPage() {
       ),
     }));
   };
-
+  console.log(textValue);
   return (
     <ProjectContainer>
       <ProjectHeaer />
@@ -103,12 +112,14 @@ function ProjectPage() {
                 {textValue[pageRendering]?.map((textItem) => (
                   <EditableText
                     key={textItem.id}
+                    id={textItem.id}
                     x={textItem.x}
                     y={textItem.y}
                     initialText={textItem.text}
                     onTextChange={(newText) =>
                       handleTextChange(textItem.id, newText)
                     }
+                    onDragEnd={handleTextDragEnd}
                   />
                 ))}
                 {shapeValue[pageRendering]?.map((shape) => {
@@ -170,6 +181,19 @@ function ProjectPage() {
             >
               <Layer>
                 <Rect x={0} y={0} width={1600} height={900} fill="#D9D9D9" />
+                {textValue[pageRendering]?.map((textItem) => (
+                  <EditableText
+                    key={textItem.id}
+                    id={textItem.id}
+                    x={textItem.x}
+                    y={textItem.y}
+                    initialText={textItem.text}
+                    onTextChange={(newText) =>
+                      handleTextChange(textItem.id, newText)
+                    }
+                    onDragEnd={handleTextDragEnd}
+                  />
+                ))}
                 {shapeValue[pageRendering]?.map((shape) => {
                   if (shape.type === 'Rectangle') {
                     return (
