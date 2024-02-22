@@ -81,16 +81,16 @@ function ProjectPage() {
           {menu === 3 && <TextInteractive onClose={handleClose} />}
         </motion.div>
         <CanvasContainer>
-          <h1>{pageRendering + 1} 페이지</h1>
+          <p>{pageRendering + 1} 페이지</p>
           {pageRendering === 0 && (
             <Stage
-              width={1200}
-              height={600}
+              width={1600}
+              height={900}
               onMouseDown={checkDeselect}
               onTouchStart={checkDeselect}
             >
               <Layer>
-                <Rect x={0} y={0} width={1200} height={600} fill="#D9D9D9" />
+                <Rect x={0} y={0} width={1600} height={900} fill="#D9D9D9" />
                 <EditableText
                   initialText={textValue}
                   onTextChange={handleTextChange}
@@ -147,13 +147,13 @@ function ProjectPage() {
           )}
           {pageRendering === 1 && (
             <Stage
-              width={1200}
-              height={600}
+              width={1600}
+              height={900}
               onMouseDown={checkDeselect}
               onTouchStart={checkDeselect}
             >
               <Layer>
-                <Rect x={0} y={0} width={1200} height={600} fill="#D9D9D9" />
+                <Rect x={0} y={0} width={1600} height={900} fill="#D9D9D9" />
                 {shapeValue[pageRendering]?.map((shape) => {
                   if (shape.type === 'Rectangle') {
                     return (
@@ -208,8 +208,8 @@ function ProjectPage() {
             <Canvas
               style={{
                 backgroundColor: '#D9D9D9',
-                width: '1200px',
-                height: '600px',
+                width: '83.33333333333334vw',
+                height: '83.33333333333334vh',
               }}
             >
               <Project3d />
@@ -245,7 +245,6 @@ const CanvasContainer = styled.div`
   position: absolute;
   z-index: 0;
   left: 50%;
-  top: 15%;
   transform: translateX(-50%);
 `;
 const SlideListPosition = styled.div`
