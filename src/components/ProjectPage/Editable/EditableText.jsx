@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Text } from 'react-konva';
 
-function EditableText({ initialText, onTextChange }) {
+function EditableText({ initialText, onTextChange, x, y }) {
   const [text, setText] = useState(initialText);
 
   const handleDoubleClick = (e) => {
@@ -63,8 +63,8 @@ function EditableText({ initialText, onTextChange }) {
   return (
     <Text
       text={text}
-      x={50}
-      y={80}
+      x={x}
+      y={y}
       fontSize={20}
       draggable
       onDblClick={handleDoubleClick}

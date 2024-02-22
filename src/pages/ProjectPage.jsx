@@ -4,7 +4,12 @@ import { Stage, Layer, Rect, Circle, Line } from 'react-konva';
 import { motion } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { interactiveState, pageState, shapeList } from '../store/recoil';
+import {
+  interactiveState,
+  pageState,
+  shapeList,
+  textList,
+} from '../store/recoil';
 
 import ProjectHeaer from '../components/ProjectPage/ProjectHeader';
 import ProjectItem from '../components/ProjectPage/ProjectItem';
@@ -19,15 +24,10 @@ import EditableText from '../components/ProjectPage/Editable/EditableText';
 function ProjectPage() {
   const [selectedId, selectShape] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [textValue, setTextValue] = useState('Some initial text');
-
   const pageRendering = useRecoilValue(pageState);
   const [shapeValue, setShapeValue] = useRecoilState(shapeList);
+  const [textValue, setTextValue] = useRecoilState(textList);
   const [menu, setMenu] = useRecoilState(interactiveState);
-
-  const handleTextChange = (newText) => {
-    setTextValue(newText);
-  };
 
   const handleClose = () => {
     setMenu(0);
@@ -42,7 +42,6 @@ function ProjectPage() {
     }
   };
   const handleDragEnd = (shapeId, newAttrs) => {
-    // 현재 페이지의 도형 배열을 복사하여 업데이트
     const currentPageShapes = shapeValue[pageRendering]
       ? [...shapeValue[pageRendering]]
       : [];
@@ -55,7 +54,15 @@ function ProjectPage() {
 
     setShapeValue({ ...shapeValue, [pageRendering]: updatedShapes });
   };
-  console.log(textValue);
+  const handleTextChange = (textId, newText) => {
+    setTextValue((prevTextValue) => ({
+      ...prevTextValue,
+      [pageRendering]: prevTextValue[pageRendering].map((item) =>
+        item.id === textId ? { ...item, text: newText } : item,
+      ),
+    }));
+  };
+
   return (
     <ProjectContainer>
       <ProjectHeaer />
@@ -93,10 +100,17 @@ function ProjectPage() {
             >
               <Layer>
                 <Rect x={0} y={0} width={1600} height={900} fill="#D9D9D9" />
-                <EditableText
-                  initialText={textValue}
-                  onTextChange={handleTextChange}
-                />
+                {textValue[pageRendering]?.map((textItem) => (
+                  <EditableText
+                    key={textItem.id}
+                    x={textItem.x}
+                    y={textItem.y}
+                    initialText={textItem.text}
+                    onTextChange={(newText) =>
+                      handleTextChange(textItem.id, newText)
+                    }
+                  />
+                ))}
                 {shapeValue[pageRendering]?.map((shape) => {
                   if (shape.type === 'Rectangle') {
                     return (
