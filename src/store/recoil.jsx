@@ -14,3 +14,8 @@ export const shapeList = atom({
   key: 'shapeList',
   default: {},
 });
+
+export const textList = atom({
+  key: 'textList',
+  default: {},
+});
