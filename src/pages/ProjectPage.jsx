@@ -71,7 +71,7 @@ function ProjectPage() {
       ),
     }));
   };
-  console.log(textValue);
+
   return (
     <ProjectContainer>
       <ProjectHeaer />
