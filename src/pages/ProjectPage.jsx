@@ -27,7 +27,7 @@ function ProjectPage() {
   const [shapeValue, setShapeValue] = useRecoilState(shapeList);
   const [textValue, setTextValue] = useRecoilState(textList);
   const [menu, setMenu] = useRecoilState(interactiveState);
-  const pageValue = useRecoilValue(pageData);
+  const [pageValue, setPageValue] = useRecoilState(pageData);
 
   const handleClose = () => {
     setMenu(0);
@@ -51,7 +51,6 @@ function ProjectPage() {
       }
       return shape;
     });
-
     setShapeValue({ ...shapeValue, [pageRendering]: updatedShapes });
   };
   const handleTextDragEnd = (textId, newAttrs) => {
@@ -62,7 +61,6 @@ function ProjectPage() {
       ),
     }));
   };
-
   const handleTextChange = (textId, newText) => {
     setTextValue((prevTextValue) => ({
       ...prevTextValue,
@@ -71,7 +69,14 @@ function ProjectPage() {
       ),
     }));
   };
-
+  const addSlide = () => {
+    setPageValue((oldPageData) => {
+      const newId = oldPageData.length > 0 ? oldPageData.length : 0;
+      const newPage = { id: newId, type: '2d' };
+      // 새 페이지 객체를 기존 배열에 추가합니다.
+      return [...oldPageData, newPage];
+    });
+  };
   return (
     <ProjectContainer>
       <ProjectHeaer />
@@ -140,7 +145,7 @@ function ProjectPage() {
           transition={{ duration: 0.5 }} // 애니메이션 지속 시간
           initial="hidden"
         >
-          <ProjectSlide slideOpen={toggleSlide} />
+          <ProjectSlide slideOpen={toggleSlide} addSlide={addSlide} />
         </motion.div>
       </SlideListPosition>
     </ProjectContainer>
