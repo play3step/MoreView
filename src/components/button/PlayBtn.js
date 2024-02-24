@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ReactComponent as Play } from '../../assets/play.svg';
+import { ReactComponent as Play } from '../../assets/icon/play.svg';
 
 function PlayBtn() {
   return (

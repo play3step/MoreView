@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ReactComponent as Close } from '../../assets/close.svg';
+import { ReactComponent as Close } from '../../assets/icon/close.svg';
 
 function CloseBtn({ onClose }) {
   return (

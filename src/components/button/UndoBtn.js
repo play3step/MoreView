@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ReactComponent as Undo } from '../../assets/undo.svg';
+import { ReactComponent as Undo } from '../../assets/icon/undo.svg';
 
 function UndoBtn() {
   return (
