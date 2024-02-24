@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ReactComponent as Home } from '../../assets/home.svg';
+import { ReactComponent as Home } from '../../assets/icon/home.svg';
 
 function HomeBtn({ className }) {
   return (

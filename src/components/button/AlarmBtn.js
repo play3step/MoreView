@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ReactComponent as Alarm } from '../../assets/alarm.svg';
+import { ReactComponent as Alarm } from '../../assets/icon/alarm.svg';
 
 function AlarmBtn() {
   return (

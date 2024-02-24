@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { ReactComponent as SlideUp } from '../../../../assets/slideUp.svg';
-import { ReactComponent as SlideDown } from '../../../../assets/slideDown.svg';
+import { ReactComponent as SlideUp } from '../../../../assets/icon/slideUp.svg';
+import { ReactComponent as SlideDown } from '../../../../assets/icon/slideDown.svg';
 
 function SlideStateBtn({ slideState, onClick }) {
   return (

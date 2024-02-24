@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ReactComponent as Text } from '../../assets/text.svg';
+import { ReactComponent as Text } from '../../assets/interactive/text.svg';
 
 function TextBtn({ onClick }) {
   return (

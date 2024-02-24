@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ReactComponent as Redo } from '../../assets/redo.svg';
+import { ReactComponent as Redo } from '../../assets/icon/redo.svg';
 
 function RedoBtn() {
   return (
