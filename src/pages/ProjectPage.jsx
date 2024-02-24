@@ -102,13 +102,13 @@ function ProjectPage() {
           <p>{pageRendering + 1} 페이지</p>
           {pageRendering === 0 && (
             <Stage
-              width={1600}
-              height={900}
+              width={800}
+              height={500}
               onMouseDown={checkDeselect}
               onTouchStart={checkDeselect}
             >
               <Layer>
-                <Rect x={0} y={0} width={1600} height={900} fill="#D9D9D9" />
+                <Rect x={0} y={0} width={800} height={500} fill="#D9D9D9" />
                 {textValue[pageRendering]?.map((textItem) => (
                   <EditableText
                     key={textItem.id}
@@ -174,13 +174,13 @@ function ProjectPage() {
           )}
           {pageRendering === 1 && (
             <Stage
-              width={1600}
-              height={900}
+              width={800}
+              height={500}
               onMouseDown={checkDeselect}
               onTouchStart={checkDeselect}
             >
               <Layer>
-                <Rect x={0} y={0} width={1600} height={900} fill="#D9D9D9" />
+                <Rect x={0} y={0} width={800} height={500} fill="#D9D9D9" />
                 {textValue[pageRendering]?.map((textItem) => (
                   <EditableText
                     key={textItem.id}
