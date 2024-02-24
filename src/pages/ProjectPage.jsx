@@ -5,6 +5,7 @@ import { Canvas } from '@react-three/fiber';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   interactiveState,
+  pageData,
   pageState,
   shapeList,
   textList,
@@ -26,6 +27,7 @@ function ProjectPage() {
   const [shapeValue, setShapeValue] = useRecoilState(shapeList);
   const [textValue, setTextValue] = useRecoilState(textList);
   const [menu, setMenu] = useRecoilState(interactiveState);
+  const pageValue = useRecoilValue(pageData);
 
   const handleClose = () => {
     setMenu(0);
@@ -73,7 +75,6 @@ function ProjectPage() {
   return (
     <ProjectContainer>
       <ProjectHeaer />
-
       <div
         style={{
           display: 'flex',
@@ -98,30 +99,36 @@ function ProjectPage() {
         </motion.div>
         <CanvasContainer>
           <p>{pageRendering + 1} 페이지</p>
-          {pageRendering === 0 && (
-            <Prjoect2d
-              pageRendering={pageRendering}
-              textValue={textValue}
-              shapeValue={shapeValue}
-              handleTextChange={handleTextChange}
-              handleDragEnd={handleDragEnd}
-              handleTextDragEnd={handleTextDragEnd}
-              checkDeselect={checkDeselect}
-              selectedId={selectedId}
-              selectShape={selectShape}
-            />
-          )}
-          {pageRendering === 1 && (
-            <Canvas
-              style={{
-                backgroundColor: '#D9D9D9',
-                width: '83.33333333333334vw',
-                height: '83.33333333333334vh',
-              }}
-            >
-              <Project3d />
-            </Canvas>
-          )}
+          {pageValue.map((page) => {
+            if (page.id === pageRendering) {
+              return page.type === '2d' ? (
+                <Prjoect2d
+                  key={page.id}
+                  pageRendering={pageRendering}
+                  textValue={textValue}
+                  shapeValue={shapeValue}
+                  handleTextChange={handleTextChange}
+                  handleDragEnd={handleDragEnd}
+                  handleTextDragEnd={handleTextDragEnd}
+                  checkDeselect={checkDeselect}
+                  selectedId={selectedId}
+                  selectShape={selectShape}
+                />
+              ) : (
+                <Canvas
+                  key={page.id}
+                  style={{
+                    backgroundColor: '#D9D9D9',
+                    width: '83.33333333333334vw',
+                    height: '83.33333333333334vh',
+                  }}
+                >
+                  <Project3d />
+                </Canvas>
+              );
+            }
+            return null;
+          })}
         </CanvasContainer>
       </div>
 
