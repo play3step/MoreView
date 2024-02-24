@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { Stage, Layer, Rect, Circle, Line } from 'react-konva';
 import { motion } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -13,13 +12,12 @@ import {
 
 import ProjectHeaer from '../components/ProjectPage/ProjectHeader';
 import ProjectItem from '../components/ProjectPage/ProjectItem';
-import EditablRect from '../components/ProjectPage/Editable/EditablRect';
 import DesignInteractive from '../components/ProjectPage/ItemComponents/DesignInteractive';
 import ElementInteractive from '../components/ProjectPage/ItemComponents/ElementInteractive';
 import TextInteractive from '../components/ProjectPage/ItemComponents/TextInteractive';
 import ProjectSlide from '../components/ProjectPage/ProjectSlide';
-import Project3d from '../components/ProjectPage/Project3d';
-import EditableText from '../components/ProjectPage/Editable/EditableText';
+import Project3d from '../components/ProjectPage/PageData/Project3d';
+import Prjoect2d from '../components/ProjectPage/PageData/Project2d';
 
 function ProjectPage() {
   const [selectedId, selectShape] = useState(null);
@@ -101,150 +99,19 @@ function ProjectPage() {
         <CanvasContainer>
           <p>{pageRendering + 1} 페이지</p>
           {pageRendering === 0 && (
-            <Stage
-              width={800}
-              height={500}
-              onMouseDown={checkDeselect}
-              onTouchStart={checkDeselect}
-            >
-              <Layer>
-                <Rect x={0} y={0} width={800} height={500} fill="#D9D9D9" />
-                {textValue[pageRendering]?.map((textItem) => (
-                  <EditableText
-                    key={textItem.id}
-                    id={textItem.id}
-                    x={textItem.x}
-                    y={textItem.y}
-                    initialText={textItem.text}
-                    onTextChange={(newText) =>
-                      handleTextChange(textItem.id, newText)
-                    }
-                    onDragEnd={handleTextDragEnd}
-                  />
-                ))}
-                {shapeValue[pageRendering]?.map((shape) => {
-                  if (shape.type === 'Rectangle') {
-                    return (
-                      <EditablRect
-                        key={shape.id}
-                        shapeProps={shape}
-                        isSelected={shape.id === selectedId}
-                        onSelect={() => selectShape(shape.id)}
-                        onChange={(newAttrs) =>
-                          handleDragEnd(shape.id, newAttrs)
-                        }
-                      />
-                    );
-                  }
-                  if (shape.type === 'Circle') {
-                    return (
-                      <Circle
-                        key={shape.id}
-                        {...shape}
-                        onClick={() => selectShape(shape.id)}
-                        draggable
-                        onDragEnd={(e) =>
-                          handleDragEnd(shape.id, e.target.attrs)
-                        }
-                      />
-                    );
-                  }
-                  if (shape.type === 'Triangle') {
-                    return (
-                      <Line
-                        key={shape.id}
-                        points={shape.points}
-                        fill={shape.fill}
-                        closed
-                        onClick={() => selectShape(shape.id)}
-                        draggable
-                        onDragEnd={(e) =>
-                          handleDragEnd(shape.id, {
-                            x: e.target.x(),
-                            y: e.target.y(),
-                          })
-                        }
-                      />
-                    );
-                  }
-                  return null;
-                })}
-              </Layer>
-            </Stage>
+            <Prjoect2d
+              pageRendering={pageRendering}
+              textValue={textValue}
+              shapeValue={shapeValue}
+              handleTextChange={handleTextChange}
+              handleDragEnd={handleDragEnd}
+              handleTextDragEnd={handleTextDragEnd}
+              checkDeselect={checkDeselect}
+              selectedId={selectedId}
+              selectShape={selectShape}
+            />
           )}
           {pageRendering === 1 && (
-            <Stage
-              width={800}
-              height={500}
-              onMouseDown={checkDeselect}
-              onTouchStart={checkDeselect}
-            >
-              <Layer>
-                <Rect x={0} y={0} width={800} height={500} fill="#D9D9D9" />
-                {textValue[pageRendering]?.map((textItem) => (
-                  <EditableText
-                    key={textItem.id}
-                    id={textItem.id}
-                    x={textItem.x}
-                    y={textItem.y}
-                    initialText={textItem.text}
-                    onTextChange={(newText) =>
-                      handleTextChange(textItem.id, newText)
-                    }
-                    onDragEnd={handleTextDragEnd}
-                  />
-                ))}
-                {shapeValue[pageRendering]?.map((shape) => {
-                  if (shape.type === 'Rectangle') {
-                    return (
-                      <EditablRect
-                        key={shape.id}
-                        shapeProps={shape}
-                        isSelected={shape.id === selectedId}
-                        onSelect={() => selectShape(shape.id)}
-                        onChange={(newAttrs) =>
-                          handleDragEnd(shape.id, newAttrs)
-                        }
-                      />
-                    );
-                  }
-                  if (shape.type === 'Circle') {
-                    return (
-                      <Circle
-                        key={shape.id}
-                        {...shape}
-                        onClick={() => selectShape(shape.id)}
-                        draggable
-                        onDragEnd={(e) =>
-                          handleDragEnd(shape.id, e.target.attrs)
-                        }
-                      />
-                    );
-                  }
-                  if (shape.type === 'Triangle') {
-                    return (
-                      <Line
-                        key={shape.id}
-                        points={shape.points}
-                        fill={shape.fill}
-                        closed
-                        onClick={() => selectShape(shape.id)}
-                        draggable
-                        onDragEnd={(e) =>
-                          handleDragEnd(shape.id, {
-                            x: e.target.x(),
-                            y: e.target.y(),
-                          })
-                        }
-                      />
-                    );
-                  }
-                  return null;
-                })}
-              </Layer>
-            </Stage>
-          )}
-          {pageRendering === 2 && (
             <Canvas
               style={{
                 backgroundColor: '#D9D9D9',
