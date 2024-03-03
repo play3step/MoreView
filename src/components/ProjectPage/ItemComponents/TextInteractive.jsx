@@ -1,14 +1,16 @@
 import styled from 'styled-components';
 import ItemTitle from './atom/ItemTitle';
-
+import { ReactComponent as TextIcon } from '../../../assets/text/text.svg';
 import CloseBtn from '../../button/CloseBtn';
+import useText from '../../../hooks/useText';
 
 function TextInteractive({ onClose }) {
+  const { addText } = useText();
   return (
     <TextInteractiveContainer>
       <TextItemContainer>
         <ItemTitle title="텍스트 스타일" />
-
+        <TextIcon onClick={addText} />
         <ItemTitle title="글꼴" />
       </TextItemContainer>
       <ClosePostion>
