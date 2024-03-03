@@ -73,7 +73,6 @@ function ProjectPage() {
     setPageValue((oldPageData) => {
       const newId = oldPageData.length > 0 ? oldPageData.length : 0;
       const newPage = { id: newId, type: '2d' };
-      // 새 페이지 객체를 기존 배열에 추가합니다.
       return [...oldPageData, newPage];
     });
   };

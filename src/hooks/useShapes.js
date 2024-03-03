@@ -27,7 +27,8 @@ function useShapes() {
         type: 'Circle',
         x: randomX,
         y: randomY,
-        radius: 50,
+        radiusX: 50,
+        radiusY: 50,
         fill: 'green',
         id: `circle${shapeCountInCurrentPage + 1}`,
       };

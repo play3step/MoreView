@@ -1,9 +1,7 @@
-// EditableCircle.js 파일
-
 import React, { useRef, useEffect } from 'react';
-import { Circle, Transformer } from 'react-konva';
+import { Ellipse, Transformer } from 'react-konva';
 
-function EditableCircle({ shapeProps, isSelected, onSelect, onChange }) {
+function EditableEllipse({ shapeProps, isSelected, onSelect, onChange }) {
   const shapeRef = useRef();
   const trRef = useRef();
 
@@ -16,7 +14,7 @@ function EditableCircle({ shapeProps, isSelected, onSelect, onChange }) {
 
   return (
     <>
-      <Circle
+      <Ellipse
         onClick={onSelect}
         onTap={onSelect}
         ref={shapeRef}
@@ -31,14 +29,21 @@ function EditableCircle({ shapeProps, isSelected, onSelect, onChange }) {
         }}
         onTransformEnd={() => {
           const node = shapeRef.current;
-          const radius = Math.max(5, node.radius());
+          const scaleX = node.scaleX();
+          const scaleY = node.scaleY();
 
           onChange({
             ...shapeProps,
             x: node.x(),
             y: node.y(),
-            radius,
+            radiusX: Math.max(5, node.radiusX() * scaleX),
+            radiusY: Math.max(5, node.radiusY() * scaleY),
           });
+
+          node.scaleX(1);
+          node.scaleY(1);
+
+          shapeRef.current.getLayer().batchDraw();
         }}
       />
       {isSelected && (
@@ -52,16 +57,21 @@ function EditableCircle({ shapeProps, isSelected, onSelect, onChange }) {
             'bottom-center',
           ]}
           rotateEnabled={false}
-          boundBoxFunc={(oldBox, newBox) => {
-            if (newBox.radius < 5) {
-              return oldBox;
+          onTransform={(e) => {
+            const node = shapeRef.current;
+            const scaleX = node.scaleX();
+            const scaleY = node.scaleY();
+
+            if (scaleX < 0.5 || scaleY < 0.5) {
+              e.target.scaleX(0.5);
+              e.target.scaleY(0.5);
             }
-            return newBox;
           }}
+          boundBoxFunc={(oldBox, newBox) => newBox}
         />
       )}
     </>
   );
 }
 
-export default EditableCircle;
+export default EditableEllipse;

@@ -1,4 +1,3 @@
-// Rectangle.js
 import React, { useRef, useEffect } from 'react';
 import { Rect, Transformer } from 'react-konva';
 
