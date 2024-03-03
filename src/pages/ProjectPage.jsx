@@ -76,6 +76,7 @@ function ProjectPage() {
       return [...oldPageData, newPage];
     });
   };
+
   return (
     <ProjectContainer>
       <ProjectHeaer />
