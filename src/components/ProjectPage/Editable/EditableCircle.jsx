@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
-import { Rect, Transformer } from 'react-konva';
+import { Ellipse, Transformer } from 'react-konva';
 
-function EditablRect({ shapeProps, isSelected, onSelect, onChange }) {
+function EditableEllipse({ shapeProps, isSelected, onSelect, onChange }) {
   const shapeRef = useRef();
   const trRef = useRef();
 
@@ -11,9 +11,10 @@ function EditablRect({ shapeProps, isSelected, onSelect, onChange }) {
       trRef.current.getLayer().batchDraw();
     }
   }, [isSelected]);
+
   return (
     <>
-      <Rect
+      <Ellipse
         onClick={onSelect}
         onTap={onSelect}
         ref={shapeRef}
@@ -31,31 +32,46 @@ function EditablRect({ shapeProps, isSelected, onSelect, onChange }) {
           const scaleX = node.scaleX();
           const scaleY = node.scaleY();
 
-          node.scaleX(1);
-          node.scaleY(1);
           onChange({
             ...shapeProps,
             x: node.x(),
             y: node.y(),
-            width: Math.max(5, node.width() * scaleX),
-            height: Math.max(5, node.height() * scaleY),
+            radiusX: Math.max(5, node.radiusX() * scaleX),
+            radiusY: Math.max(5, node.radiusY() * scaleY),
           });
+
+          node.scaleX(1);
+          node.scaleY(1);
+
+          shapeRef.current.getLayer().batchDraw();
         }}
       />
       {isSelected && (
         <Transformer
           ref={trRef}
-          flipEnabled={false}
-          boundBoxFunc={(oldBox, newBox) => {
-            if (newBox.width < 5 || newBox.height < 5) {
-              return oldBox;
+          anchorSize={8}
+          enabledAnchors={[
+            'middle-left',
+            'middle-right',
+            'top-center',
+            'bottom-center',
+          ]}
+          rotateEnabled={false}
+          onTransform={(e) => {
+            const node = shapeRef.current;
+            const scaleX = node.scaleX();
+            const scaleY = node.scaleY();
+
+            if (scaleX < 0.5 || scaleY < 0.5) {
+              e.target.scaleX(0.5);
+              e.target.scaleY(0.5);
             }
-            return newBox;
           }}
+          boundBoxFunc={(oldBox, newBox) => newBox}
         />
       )}
     </>
   );
 }
 
-export default EditablRect;
+export default EditableEllipse;

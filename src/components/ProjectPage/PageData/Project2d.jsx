@@ -1,6 +1,7 @@
-import { Stage, Layer, Rect, Circle, Line } from 'react-konva';
+import { Stage, Layer, Rect } from 'react-konva';
 import EditableText from '../Editable/EditableText';
 import EditablRect from '../Editable/EditablRect';
+import EditableCircle from '../Editable/EditableCircle';
 
 function Prjoect2d({
   pageRendering,
@@ -47,30 +48,12 @@ function Prjoect2d({
           }
           if (shape.type === 'Circle') {
             return (
-              <Circle
+              <EditableCircle
                 key={shape.id}
-                {...shape}
-                onClick={() => selectShape(shape.id)}
-                draggable
-                onDragEnd={(e) => handleDragEnd(shape.id, e.target.attrs)}
-              />
-            );
-          }
-          if (shape.type === 'Triangle') {
-            return (
-              <Line
-                key={shape.id}
-                points={shape.points}
-                fill={shape.fill}
-                closed
-                onClick={() => selectShape(shape.id)}
-                draggable
-                onDragEnd={(e) =>
-                  handleDragEnd(shape.id, {
-                    x: e.target.x(),
-                    y: e.target.y(),
-                  })
-                }
+                shapeProps={shape}
+                isSelected={shape.id === selectedId}
+                onSelect={() => selectShape(shape.id)}
+                onChange={(newAttrs) => handleDragEnd(shape.id, newAttrs)}
               />
             );
           }
