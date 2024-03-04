@@ -5,6 +5,7 @@ import MainPage from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
 
 import './App.css';
+import MyPage from './pages/MyPage';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainPage />} />
+          <Route path="/myPage" element={<MyPage />} />
           <Route path="/project" element={<ProjectPage />} />
           <Route path="/login" element={<LoginPage />} />
         </Routes>
