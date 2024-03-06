@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
 import { useRecoilState, useRecoilValue } from 'recoil';
+import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import {
   interactiveState,
   pageData,
@@ -28,6 +29,16 @@ function ProjectPage() {
   const [textValue, setTextValue] = useRecoilState(textList);
   const [menu, setMenu] = useRecoilState(interactiveState);
   const [pageValue, setPageValue] = useRecoilState(pageData);
+
+  const fullScreenHandle = useFullScreenHandle();
+  const [isFullScreen, setIsFullScreen] = useState(false);
+
+  const toggleFullScreen = () => {
+    if (!isFullScreen) {
+      fullScreenHandle.enter();
+    }
+    setIsFullScreen(!isFullScreen);
+  };
 
   const handleClose = () => {
     setMenu(0);
@@ -79,7 +90,7 @@ function ProjectPage() {
 
   return (
     <ProjectContainer>
-      <ProjectHeaer />
+      <ProjectHeaer fullScreen={toggleFullScreen} />
       <div
         style={{
           display: 'flex',
@@ -104,36 +115,51 @@ function ProjectPage() {
         </motion.div>
         <CanvasContainer>
           <p>{pageRendering + 1} 페이지</p>
-          {pageValue.map((page) => {
-            if (page.id === pageRendering) {
-              return page.type === '2d' ? (
-                <Prjoect2d
-                  key={page.id}
-                  pageRendering={pageRendering}
-                  textValue={textValue}
-                  shapeValue={shapeValue}
-                  handleTextChange={handleTextChange}
-                  handleDragEnd={handleDragEnd}
-                  handleTextDragEnd={handleTextDragEnd}
-                  checkDeselect={checkDeselect}
-                  selectedId={selectedId}
-                  selectShape={selectShape}
-                />
-              ) : (
-                <Canvas
-                  key={page.id}
-                  style={{
-                    backgroundColor: '#D9D9D9',
-                    width: '83.33333333333334vw',
-                    height: '83.33333333333334vh',
-                  }}
-                >
-                  <Project3d />
-                </Canvas>
-              );
-            }
-            return null;
-          })}
+          <FullScreen handle={fullScreenHandle}>
+            <div
+              style={{
+                ...(isFullScreen
+                  ? {
+                      position: 'fixed',
+                      top: '50%',
+                      left: '50%',
+                      transform: 'translate(-50%, -50%)',
+                    }
+                  : {}),
+              }}
+            >
+              {pageValue.map((page) => {
+                if (page.id === pageRendering) {
+                  return page.type === '2d' ? (
+                    <Prjoect2d
+                      key={page.id}
+                      pageRendering={pageRendering}
+                      textValue={textValue}
+                      shapeValue={shapeValue}
+                      handleTextChange={handleTextChange}
+                      handleDragEnd={handleDragEnd}
+                      handleTextDragEnd={handleTextDragEnd}
+                      checkDeselect={checkDeselect}
+                      selectedId={selectedId}
+                      selectShape={selectShape}
+                    />
+                  ) : (
+                    <Canvas
+                      key={page.id}
+                      style={{
+                        backgroundColor: '#D9D9D9',
+                        width: '83.33333333333334vw',
+                        height: '83.33333333333334vh',
+                      }}
+                    >
+                      <Project3d />
+                    </Canvas>
+                  );
+                }
+                return null;
+              })}
+            </div>
+          </FullScreen>
         </CanvasContainer>
       </div>
 
