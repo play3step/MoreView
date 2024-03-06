@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import {
   interactiveState,
@@ -24,7 +24,7 @@ import Prjoect2d from '../components/ProjectPage/PageData/Project2d';
 function ProjectPage() {
   const [selectedId, selectShape] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-  const pageRendering = useRecoilValue(pageState);
+  const [pageRendering, setPageRendering] = useRecoilState(pageState);
   const [shapeValue, setShapeValue] = useRecoilState(shapeList);
   const [textValue, setTextValue] = useRecoilState(textList);
   const [menu, setMenu] = useRecoilState(interactiveState);
@@ -84,6 +84,24 @@ function ProjectPage() {
       return [...oldPageData, newPage];
     });
   };
+
+  useEffect(() => {
+    const handleKeyEvent = (e) => {
+      if (e.key === 'ArrowLeft' && pageRendering > 0) {
+        setPageRendering(pageRendering - 1);
+      } else if (
+        e.key === 'ArrowRight' &&
+        pageValue.length - 1 > pageRendering
+      ) {
+        setPageRendering(pageRendering + 1);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyEvent);
+    return () => {
+      window.removeEventListener('keydown', handleKeyEvent);
+    };
+  }, [pageRendering]);
 
   return (
     <ProjectContainer>

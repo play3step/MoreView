@@ -20,4 +20,5 @@ const AddSlideBox = styled.button`
   border: 1px dashed;
   border-radius: 25px;
   background-color: #d9d9d9;
+  flex-shrink: 0;
 `;
