@@ -16,13 +16,13 @@ function Prjoect2d({
 }) {
   return (
     <Stage
-      width={800}
-      height={500}
+      width={1600}
+      height={900}
       onMouseDown={checkDeselect}
       onTouchStart={checkDeselect}
     >
       <Layer>
-        <Rect x={0} y={0} width={800} height={500} fill="#D9D9D9" />
+        <Rect x={0} y={0} width={1600} height={900} fill="#D9D9D9" />
         {textValue[pageRendering]?.map((textItem) => (
           <EditableText
             key={textItem.id}
