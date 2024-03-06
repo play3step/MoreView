@@ -37,5 +37,6 @@ const SlideBoxContainer = styled.div`
   display: flex;
   padding: 2.8vh 2.7vw;
   align-items: center;
+  overflow-x: auto;
   gap: 30px;
 `;

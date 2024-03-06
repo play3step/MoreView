@@ -12,4 +12,5 @@ const SlideListBox = styled.button`
   border: 1px solid;
   border-radius: 25px;
   background-color: #d9d9d9;
+  flex-shrink: 0; // 크기 조절 비활성화
 `;
