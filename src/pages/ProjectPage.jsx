@@ -31,13 +31,10 @@ function ProjectPage() {
   const [pageValue, setPageValue] = useRecoilState(pageData);
 
   const fullScreenHandle = useFullScreenHandle();
-  const [isFullScreen, setIsFullScreen] = useState(false);
+  const isFullScreen = fullScreenHandle.active;
 
   const toggleFullScreen = () => {
-    if (!isFullScreen) {
-      fullScreenHandle.enter();
-    }
-    setIsFullScreen(!isFullScreen);
+    fullScreenHandle.enter();
   };
 
   const handleClose = () => {
