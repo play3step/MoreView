@@ -1,13 +1,14 @@
 import styled from 'styled-components';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import SlideClose from './SlideComponents/SlideClose';
 import SlideList from './SlideComponents/atom/SlideList';
 import { pageData, pageState } from '../../store/recoil';
 import AddSlide from './SlideComponents/atom/AddSlide';
 
 function ProjectSlide({ slideOpen, addSlide }) {
-  const setPage = useSetRecoilState(pageState);
+  const [pageRendering, setPageRendering] = useRecoilState(pageState);
   const pageValue = useRecoilValue(pageData);
+
   return (
     <SlideListContainer>
       <SlideClose slideOpen={slideOpen} />
@@ -15,8 +16,9 @@ function ProjectSlide({ slideOpen, addSlide }) {
         {pageValue.map((page, index) => (
           <SlideList
             onClick={() => {
-              setPage(index);
+              setPageRendering(index);
             }}
+            select={index === pageRendering}
           />
         ))}
         <AddSlide onClick={addSlide} />
