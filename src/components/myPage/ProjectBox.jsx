@@ -1,12 +1,15 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 function ProjectBox() {
   return (
-    <BoxContainer>
-      <TextContainer>
-        <p> More, View team library</p>
-      </TextContainer>
-    </BoxContainer>
+    <Link to="/project/1" style={{ textDecoration: 'none', color: 'white' }}>
+      <BoxContainer>
+        <TextContainer>
+          <p> More, View team library</p>
+        </TextContainer>
+      </BoxContainer>
+    </Link>
   );
 }
 
