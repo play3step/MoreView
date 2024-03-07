@@ -34,6 +34,13 @@ function useShapes() {
           fill: 'green',
           id: `circle${shapeCountInCurrentPage + 1}`,
         };
+      } else if (shapeType === 'Line') {
+        newShape = {
+          type: 'Line',
+          points: [randomX, randomY, randomX + 100, randomY + 100],
+          stroke: 'red',
+          id: `line${shapeCountInCurrentPage + 1}`,
+        };
       }
       return {
         ...prevShapeValue,

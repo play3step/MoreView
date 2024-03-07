@@ -2,6 +2,7 @@ import { Stage, Layer, Rect } from 'react-konva';
 import EditableText from '../Editable/EditableText';
 import EditablRect from '../Editable/EditablRect';
 import EditableCircle from '../Editable/EditableCircle';
+import EditableLine from '../Editable/EditableLine';
 
 function Prjoect2d({
   pageRendering,
@@ -54,6 +55,16 @@ function Prjoect2d({
                 isSelected={shape.id === selectedId}
                 onSelect={() => selectShape(shape.id)}
                 onChange={(newAttrs) => handleDragEnd(shape.id, newAttrs)}
+              />
+            );
+          }
+          if (shape.type === 'Line') {
+            return (
+              <EditableLine
+                key={shape.id}
+                points={shape.points}
+                stroke={shape.stroke}
+                id={shape.id}
               />
             );
           }
