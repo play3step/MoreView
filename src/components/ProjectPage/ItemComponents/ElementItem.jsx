@@ -7,8 +7,10 @@ function ElementItem({ onAddShape }) {
     <ElementItemBox>
       <Itemposition>
         <ItemTitle title="도형" />
-        <ShapeBox onClick={() => onAddShape('Rectangle')} shape="Rectangle" />
-        <ShapeBox onClick={() => onAddShape('Circle')} shape="Circle" />
+        <ShapeBackground>
+          <ShapeBox onClick={() => onAddShape('Rectangle')} shape="Rectangle" />
+          <ShapeBox onClick={() => onAddShape('Circle')} shape="Circle" />
+        </ShapeBackground>
       </Itemposition>
     </ElementItemBox>
   );
@@ -22,4 +24,14 @@ const ElementItemBox = styled.div`
 
 const Itemposition = styled.div`
   margin-top: 1.878vh;
+`;
+
+const ShapeBackground = styled.div`
+  margin-top: 0.6vw;
+  height: 8.88888888888889vh;
+  background-color: #e9e9e9;
+  border-radius: 15px;
+  display: flex;
+  padding: 1vw;
+  gap: 0.5vw;
 `;
