@@ -5,6 +5,7 @@ import { Canvas } from '@react-three/fiber';
 import { useRecoilState } from 'recoil';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import {
+  imageList,
   interactiveState,
   pageData,
   pageState,
@@ -27,6 +28,7 @@ function ProjectPage() {
   const [pageRendering, setPageRendering] = useRecoilState(pageState);
   const [shapeValue, setShapeValue] = useRecoilState(shapeList);
   const [textValue, setTextValue] = useRecoilState(textList);
+  const [imgValue, setImgValue] = useRecoilState(imageList);
   const [menu, setMenu] = useRecoilState(interactiveState);
   const [pageValue, setPageValue] = useRecoilState(pageData);
 
@@ -74,6 +76,15 @@ function ProjectPage() {
       ...prevTextValue,
       [pageRendering]: prevTextValue[pageRendering].map((item) =>
         item.id === textId ? { ...item, text: newText } : item,
+      ),
+    }));
+  };
+
+  const handleImgDragEnd = (imageId, newImage) => {
+    setImgValue((prevImgValue) => ({
+      ...prevImgValue,
+      [pageRendering]: prevImgValue[pageRendering].map((item) =>
+        item.id === imageId ? { ...item, ...newImage } : item,
       ),
     }));
   };
@@ -165,9 +176,11 @@ function ProjectPage() {
                       pageRendering={pageRendering}
                       textValue={textValue}
                       shapeValue={shapeValue}
+                      imgValue={imgValue}
                       handleTextChange={handleTextChange}
                       handleDragEnd={handleDragEnd}
                       handleTextDragEnd={handleTextDragEnd}
+                      handleImgDragEnd={handleImgDragEnd}
                       checkDeselect={checkDeselect}
                       selectedId={selectedId}
                       selectShape={selectShape}

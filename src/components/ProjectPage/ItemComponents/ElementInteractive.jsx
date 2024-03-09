@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import useImage from '../../../hooks/useImage';
 import useShapes from '../../../hooks/useShapes';
 
 import ElementItem from './ElementItem';
@@ -6,10 +7,14 @@ import CloseBtn from '../../button/CloseBtn';
 
 function ElementInteractive({ onClose }) {
   const { addShape } = useShapes();
+  const { addImage } = useImage();
   return (
     <ShapeInteractiveContainer>
       <ShapeItemContainer>
-        <ElementItem onAddShape={addShape} />
+        <ElementItem onAddShape={addShape} onAddImg={addImage} />
+        <button type="button" onClick={() => addImage()}>
+          이미지 추가
+        </button>
       </ShapeItemContainer>
       <ClosePostion>
         <CloseBtn onClose={onClose} />

@@ -16,6 +16,8 @@ function Prjoect2d({
   selectedId,
   selectShape,
   onLineUpdate,
+  imgValue,
+  handleImgDragEnd,
 }) {
   return (
     <Stage
@@ -37,11 +39,16 @@ function Prjoect2d({
             onDragEnd={handleTextDragEnd}
           />
         ))}
-        <EditableImage
-          imageUrl="https://placekitten.com/200/300"
-          x={250}
-          y={250}
-        />
+        {imgValue[pageRendering]?.map((imgItem) => (
+          <EditableImage
+            key={imgItem.id}
+            id={imgItem.id}
+            imageUrl={imgItem.url}
+            x={imgItem.x}
+            y={imgItem.y}
+            onDragEnd={handleImgDragEnd}
+          />
+        ))}
         {shapeValue[pageRendering]?.map((shape) => {
           if (shape.type === 'Rectangle') {
             return (
