@@ -84,6 +84,20 @@ function ProjectPage() {
       return [...oldPageData, newPage];
     });
   };
+  const onLineUpdate = (shapeId, newPoints) => {
+    const currentPageShapes = Array.isArray(shapeValue[pageRendering])
+      ? shapeValue[pageRendering]
+      : [];
+
+    const updatedShapes = currentPageShapes.map((shape) => {
+      if (shape.id === shapeId) {
+        return { ...shape, points: newPoints };
+      }
+      return shape;
+    });
+
+    setShapeValue({ ...shapeValue, [pageRendering]: updatedShapes });
+  };
 
   useEffect(() => {
     const handleKeyEvent = (e) => {
@@ -157,6 +171,7 @@ function ProjectPage() {
                       checkDeselect={checkDeselect}
                       selectedId={selectedId}
                       selectShape={selectShape}
+                      onLineUpdate={onLineUpdate}
                     />
                   ) : (
                     <Canvas

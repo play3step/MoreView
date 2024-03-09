@@ -10,6 +10,7 @@ function ElementItem({ onAddShape }) {
         <ShapeBackground>
           <ShapeBox onClick={() => onAddShape('Rectangle')} shape="Rectangle" />
           <ShapeBox onClick={() => onAddShape('Circle')} shape="Circle" />
+          <ShapeBox onClick={() => onAddShape('Line')} shape="Line" />
         </ShapeBackground>
       </Itemposition>
     </ElementItemBox>
