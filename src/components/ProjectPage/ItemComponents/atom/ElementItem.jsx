@@ -3,7 +3,28 @@ import ItemTitle from './ItemTitle';
 import ShapeBox from './ShapeBox';
 import ImageBox from './ImageBox';
 
-function ElementItem({ onAddShape }) {
+const imgUrl = [
+  {
+    url: '/testImage/img1.jpeg',
+  },
+  {
+    url: '/testImage/img2.jpeg',
+  },
+  {
+    url: '/testImage/img3.png',
+  },
+  {
+    url: '/testImage/img4.jpeg',
+  },
+  {
+    url: '/testImage/img5.jpeg',
+  },
+  {
+    url: '/testImage/img6.jpeg',
+  },
+];
+
+function ElementItem({ onAddShape, onAddImg }) {
   return (
     <ElementItemBox>
       <Itemposition>
@@ -17,10 +38,13 @@ function ElementItem({ onAddShape }) {
       <Itemposition>
         <ItemTitle title="이미지" />
         <ImgBackground>
-          <ImageBox />
-          <ImageBox />
-          <ImageBox />
-          <ImageBox />
+          {imgUrl.map((data) => (
+            <ImageBox
+              key={data.url}
+              onClick={() => onAddImg(data.url)}
+              imgUrl={data.url}
+            />
+          ))}
         </ImgBackground>
       </Itemposition>
     </ElementItemBox>
@@ -52,9 +76,9 @@ const ImgBackground = styled.div`
   background-color: #e9e9e9;
   border-radius: 15px;
   display: flex;
-  flex-wrap: wrap; /* 이 부분을 추가합니다 */
-
+  flex-wrap: wrap;
   flex-shrink: 0;
-  padding: 1vw;
-  gap: 0.5vw;
+  padding: 0.5vw;
+  gap: 0.6vw;
+  justify-content: center;
 `;

@@ -2,7 +2,7 @@ import React from 'react';
 import { Image } from 'react-konva';
 import useImage from 'use-image';
 
-function EditableImage({ id, imageUrl, x, y, onDragEnd }) {
+function EditableImage({ id, imageUrl, x, y, width, height, onDragEnd }) {
   const [image] = useImage(imageUrl, 'Anonymous');
 
   const handleDragEnd = (e) => {
@@ -10,7 +10,15 @@ function EditableImage({ id, imageUrl, x, y, onDragEnd }) {
   };
 
   return (
-    <Image image={image} x={x} y={y} draggable onDragEnd={handleDragEnd} />
+    <Image
+      image={image}
+      x={x}
+      y={y}
+      width={width}
+      height={height}
+      draggable
+      onDragEnd={handleDragEnd}
+    />
   );
 }
 

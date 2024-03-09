@@ -46,6 +46,8 @@ function Prjoect2d({
             imageUrl={imgItem.url}
             x={imgItem.x}
             y={imgItem.y}
+            width={imgItem.width}
+            height={imgItem.height}
             onDragEnd={handleImgDragEnd}
           />
         ))}

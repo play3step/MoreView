@@ -6,15 +6,17 @@ const useImage = () => {
   const pageData = useRecoilValue(pageState);
   const currentPageImages = imgValue[pageData] || [];
 
-  const addImage = () => {
-    const randomX = Math.random() * (window.innerWidth - 100);
-    const randomY = Math.random() * (window.innerHeight - 100);
+  const addImage = (imgUrl) => {
+    const randomX = 600 + (Math.random() * 60 - 30);
+    const randomY = 300 + (Math.random() * 60 - 30);
     const imageCountInCurrentPage = currentPageImages.length;
 
     const newImage = {
       x: randomX,
       y: randomY,
-      url: 'https://placekitten.com/200/300',
+      url: imgUrl,
+      width: '300',
+      height: '300',
       id: `image${imageCountInCurrentPage + 1}`,
     };
 
