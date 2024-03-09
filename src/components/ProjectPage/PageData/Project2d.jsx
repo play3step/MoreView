@@ -1,4 +1,5 @@
 import { Stage, Layer, Rect } from 'react-konva';
+import { useEffect, useState } from 'react';
 import EditableText from '../Editable/EditableText';
 import EditablRect from '../Editable/EditablRect';
 import EditableCircle from '../Editable/EditableCircle';
@@ -19,15 +20,41 @@ function Prjoect2d({
   imgValue,
   handleImgDragEnd,
 }) {
+  const [dimensions, setDimensions] = useState({
+    width: window.innerWidth * 0.833, // 예를 들어 뷰포트 너비의 75%
+    height: window.innerHeight * 0.833, // 뷰포트 높이의 75%
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setDimensions({
+        width: window.innerWidth * 0.75,
+        height: window.innerHeight * 0.75,
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // 컴포넌트 언마운트 시 이벤트 리스너 제거
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
   return (
     <Stage
-      width={1600}
-      height={900}
+      width={dimensions.width}
+      height={dimensions.height}
       onMouseDown={checkDeselect}
       onTouchStart={checkDeselect}
     >
       <Layer>
-        <Rect x={0} y={0} width={1600} height={900} fill="#D9D9D9" />
+        <Rect
+          x={0}
+          y={0}
+          width={dimensions.width}
+          height={dimensions.height}
+          fill="#D9D9D9"
+        />
         {textValue[pageRendering]?.map((textItem) => (
           <EditableText
             key={textItem.id}
