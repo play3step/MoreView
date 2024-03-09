@@ -14,6 +14,7 @@ function Prjoect2d({
   checkDeselect,
   selectedId,
   selectShape,
+  onLineUpdate,
 }) {
   return (
     <Stage
@@ -64,7 +65,15 @@ function Prjoect2d({
                 key={shape.id}
                 points={shape.points}
                 stroke={shape.stroke}
-                id={shape.id}
+                strokeWidth={shape.strokeWidth}
+                onDragEnd={(e) =>
+                  handleDragEnd(shape.id, {
+                    x: e.target.x(),
+                    y: e.target.y(),
+                    points: [...e.target.points()],
+                  })
+                }
+                onLineUpdate={(newPoints) => onLineUpdate(shape.id, newPoints)} // onLineUpdate props 추가
               />
             );
           }

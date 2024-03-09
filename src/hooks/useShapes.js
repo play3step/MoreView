@@ -35,11 +35,40 @@ function useShapes() {
           id: `circle${shapeCountInCurrentPage + 1}`,
         };
       } else if (shapeType === 'Line') {
+        const startPointX = randomX - 100; // 시작점 X 좌표
+        const startPointY = randomY; // 시작점 Y 좌표
+        const endPointX = randomX + 100; // 끝점 X 좌표
+        const endPointY = randomY; // 끝점 Y 좌표
+
+        // 시작점과 끝점에 해당하는 원 생성
+        const startAnchor = {
+          type: 'Circle',
+          x: startPointX,
+          y: startPointY,
+          radius: 10,
+          fill: 'red',
+          id: `startAnchor${shapeCountInCurrentPage + 1}`,
+        };
+
+        const endAnchor = {
+          type: 'Circle',
+          x: endPointX,
+          y: endPointY,
+          radius: 10,
+          fill: 'red',
+          id: `endAnchor${shapeCountInCurrentPage + 2}`,
+        };
         newShape = {
           type: 'Line',
-          points: [randomX, randomY, randomX + 100, randomY + 100],
-          stroke: 'red',
-          id: `line${shapeCountInCurrentPage + 1}`,
+          points: [startPointX, startPointY, endPointX, endPointY],
+          stroke: 'black',
+          strokeWidth: 2,
+          id: `line${shapeCountInCurrentPage + 3}`,
+        };
+
+        return {
+          ...prevShapeValue,
+          [pageData]: [...currentPageShapes, startAnchor, endAnchor, newShape],
         };
       }
       return {
