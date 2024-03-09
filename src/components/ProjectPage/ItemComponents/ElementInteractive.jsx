@@ -1,15 +1,17 @@
 import styled from 'styled-components';
+import useImage from '../../../hooks/useImage';
 import useShapes from '../../../hooks/useShapes';
 
-import ElementItem from './ElementItem';
+import ElementItem from './atom/ElementItem';
 import CloseBtn from '../../button/CloseBtn';
 
 function ElementInteractive({ onClose }) {
   const { addShape } = useShapes();
+  const { addImage } = useImage();
   return (
     <ShapeInteractiveContainer>
       <ShapeItemContainer>
-        <ElementItem onAddShape={addShape} />
+        <ElementItem onAddShape={addShape} onAddImg={addImage} />
       </ShapeItemContainer>
       <ClosePostion>
         <CloseBtn onClose={onClose} />

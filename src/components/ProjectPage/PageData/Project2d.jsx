@@ -3,6 +3,7 @@ import EditableText from '../Editable/EditableText';
 import EditablRect from '../Editable/EditablRect';
 import EditableCircle from '../Editable/EditableCircle';
 import EditableLine from '../Editable/EditableLine';
+import EditableImage from '../Editable/EditableImage';
 
 function Prjoect2d({
   pageRendering,
@@ -15,6 +16,8 @@ function Prjoect2d({
   selectedId,
   selectShape,
   onLineUpdate,
+  imgValue,
+  handleImgDragEnd,
 }) {
   return (
     <Stage
@@ -34,6 +37,18 @@ function Prjoect2d({
             initialText={textItem.text}
             onTextChange={(newText) => handleTextChange(textItem.id, newText)}
             onDragEnd={handleTextDragEnd}
+          />
+        ))}
+        {imgValue[pageRendering]?.map((imgItem) => (
+          <EditableImage
+            key={imgItem.id}
+            id={imgItem.id}
+            imageUrl={imgItem.url}
+            x={imgItem.x}
+            y={imgItem.y}
+            width={imgItem.width}
+            height={imgItem.height}
+            onDragEnd={handleImgDragEnd}
           />
         ))}
         {shapeValue[pageRendering]?.map((shape) => {
