@@ -3,6 +3,7 @@ import EditableText from '../Editable/EditableText';
 import EditablRect from '../Editable/EditablRect';
 import EditableCircle from '../Editable/EditableCircle';
 import EditableLine from '../Editable/EditableLine';
+import EditableImage from '../Editable/EditableImage';
 
 function Prjoect2d({
   pageRendering,
@@ -36,6 +37,11 @@ function Prjoect2d({
             onDragEnd={handleTextDragEnd}
           />
         ))}
+        <EditableImage
+          imageUrl="https://placekitten.com/200/300"
+          x={250}
+          y={250}
+        />
         {shapeValue[pageRendering]?.map((shape) => {
           if (shape.type === 'Rectangle') {
             return (
