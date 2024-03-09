@@ -29,3 +29,8 @@ export const textList = atom({
   key: 'textList',
   default: {},
 });
+
+export const imageList = atom({
+  key: 'imageList',
+  default: {},
+});
