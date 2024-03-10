@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { ReactComponent as Play } from '../../assets/icon/play.svg';
 
-function PlayBtn() {
+function PlayBtn({ fullScreen }) {
   return (
-    <PlayButton>
+    <PlayButton onClick={fullScreen}>
       <Play alt="Play" width="2.60416vw" height="4.6296vh" />
     </PlayButton>
   );

@@ -5,7 +5,7 @@ import UndoBtn from '../button/UndoBtn';
 import PlayBtn from '../button/PlayBtn';
 import AlarmBtn from '../button/AlarmBtn';
 
-function ProjectHeaer() {
+function ProjectHeaer({ fullScreen }) {
   return (
     <HeaderContainer>
       <LeftGroup>
@@ -16,7 +16,7 @@ function ProjectHeaer() {
 
       <HeaderProjectName>프로젝트 이름</HeaderProjectName>
       <RightGroup>
-        <PlayBtn />
+        <PlayBtn fullScreen={fullScreen} />
         <AlarmBtn />
       </RightGroup>
     </HeaderContainer>

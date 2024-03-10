@@ -12,6 +12,15 @@ function MainPage() {
         프로젝트
       </Link>
       <Link
+        to="/myPage"
+        style={{
+          fontSize: '36px',
+          marginLeft: '24px',
+        }}
+      >
+        마이페이지
+      </Link>
+      <Link
         to="/login"
         style={{
           fontSize: '36px',
