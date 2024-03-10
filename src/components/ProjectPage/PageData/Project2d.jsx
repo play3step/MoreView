@@ -28,8 +28,8 @@ function Prjoect2d({
   useEffect(() => {
     const handleResize = () => {
       setDimensions({
-        width: window.innerWidth * 0.75,
-        height: window.innerHeight * 0.75,
+        width: window.innerWidth * 0.833,
+        height: window.innerHeight * 0.833,
       });
     };
 
