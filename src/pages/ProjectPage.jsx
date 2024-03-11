@@ -111,7 +111,7 @@ function ProjectPage() {
 
     setShapeValue({ ...shapeValue, [pageRendering]: updatedShapes });
   };
-  console.log(shapeValue);
+
   useEffect(() => {
     const handleKeyEvent = (e) => {
       if (isEditing) {
