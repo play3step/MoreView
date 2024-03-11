@@ -2,9 +2,10 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import {
+  editState,
   imageList,
   interactiveState,
   pageData,
@@ -31,6 +32,7 @@ function ProjectPage() {
   const [imgValue, setImgValue] = useRecoilState(imageList);
   const [menu, setMenu] = useRecoilState(interactiveState);
   const [pageValue, setPageValue] = useRecoilState(pageData);
+  const isEditing = useRecoilValue(editState);
 
   const fullScreenHandle = useFullScreenHandle();
   const isFullScreen = fullScreenHandle.active;
@@ -109,9 +111,12 @@ function ProjectPage() {
 
     setShapeValue({ ...shapeValue, [pageRendering]: updatedShapes });
   };
-
+  console.log(shapeValue);
   useEffect(() => {
     const handleKeyEvent = (e) => {
+      if (isEditing) {
+        return;
+      }
       if (e.key === 'ArrowLeft' && pageRendering > 0) {
         setPageRendering(pageRendering - 1);
       } else if (
@@ -126,7 +131,7 @@ function ProjectPage() {
     return () => {
       window.removeEventListener('keydown', handleKeyEvent);
     };
-  }, [pageRendering]);
+  }, [isEditing, pageRendering]);
 
   return (
     <ProjectContainer>

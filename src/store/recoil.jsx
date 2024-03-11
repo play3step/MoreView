@@ -44,3 +44,8 @@ export const imageList = atom({
   key: 'imageList',
   default: {},
 });
+
+export const editState = atom({
+  key: 'editState',
+  default: false,
+});

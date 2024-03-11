@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Text } from 'react-konva';
+import { useRecoilState } from 'recoil';
+import { editState } from '../../../store/recoil';
 
 function EditableText({ id, initialText, onTextChange, onDragEnd, x, y }) {
   const [text, setText] = useState(initialText);
-  const [editing, setEditing] = useState(false);
+  const [editing, setEditing] = useRecoilState(editState);
   const handleDragEnd = (e) => {
     const newX = e.target.x();
     const newY = e.target.y();
