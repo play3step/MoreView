@@ -1,10 +1,13 @@
 import styled from 'styled-components';
-import { ReactComponent as Add } from '../../../../assets/icon/add.svg';
+
+import { ReactComponent as Page2d } from '../../../../assets/icon/2d.svg';
+import { ReactComponent as Page3d } from '../../../../assets/icon/3d.svg';
 
 function AddSlide({ onClick }) {
   return (
     <AddSlideBox onClick={onClick}>
-      <Add />
+      <Page2d width="3.3333333333333335vw" height="5.9259259259259265vh" />
+      <Page3d width="3.3333333333333335vw" height="5.9259259259259265vh" />
     </AddSlideBox>
   );
 }
