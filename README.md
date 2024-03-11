@@ -4,7 +4,11 @@
 </h1>
 
 <p align="center">
-
+    
+<div align=center> 
+  
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FTUK-MoreView%2Fmore-view-web&count_bg=%23FF6B17&title_bg=%23000000&icon=github.svg&icon_color=%23FFFFFF&title=&edge_flat=true)](https://github.com/TUK-MoreView/more-view-web)  
+</div>
 </p>
 <div align="center" style="font-size:18px"> 
 <br>
