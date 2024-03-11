@@ -25,6 +25,16 @@ export const shapeList = atom({
   default: {},
 });
 
+export const userState = atom({
+  key: 'userState',
+  default: { username: '', email: '' },
+});
+
+export const isLoggedInState = atom({
+  key: 'isLoggedInState',
+  default: false,
+});
+
 export const textList = atom({
   key: 'textList',
   default: {},
