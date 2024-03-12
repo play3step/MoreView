@@ -127,12 +127,14 @@ function ProjectPage() {
         setPageRendering(pageRendering + 1);
       }
     };
-
     window.addEventListener('keydown', handleKeyEvent);
     return () => {
       window.removeEventListener('keydown', handleKeyEvent);
     };
   }, [isEditing, pageRendering]);
+  useEffect(() => {
+    handleClose(0);
+  }, [pageRendering]);
   return (
     <ProjectContainer>
       <ProjectHeaer fullScreen={toggleFullScreen} />
