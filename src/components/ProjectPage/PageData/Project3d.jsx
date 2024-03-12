@@ -1,3 +1,4 @@
+import React, { useEffect, useRef } from 'react';
 import { useLoader } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
@@ -8,12 +9,20 @@ function Model() {
 
   return (
     <mesh>
-      <primitive object={obj} position={[0, -5, 0]} scale={0.5} />
+      <primitive object={obj} position={[0, 0, 0]} scale={0.5} />
     </mesh>
   );
 }
 
 function Project3d() {
+  const controlsRef = useRef();
+
+  useEffect(() => {
+    if (controlsRef.current) {
+      controlsRef.current.target.set(0, 0, 0);
+    }
+  }, []);
+
   return (
     <>
       <PerspectiveCamera makeDefault position={[10, 10, 15]} />
@@ -21,7 +30,7 @@ function Project3d() {
       <directionalLight position={[0, 0, 5]} intensity={0.5} />
       <directionalLight position={[5, 5, 5]} intensity={0.5} />
       <directionalLight position={[-5, -5, -5]} intensity={0.5} />
-      <OrbitControls />
+      <OrbitControls ref={controlsRef} />
       <Model />
     </>
   );
