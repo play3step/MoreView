@@ -3,23 +3,38 @@ import { useSetRecoilState } from 'recoil';
 import { interactiveState } from '../../store/recoil';
 import ItemBtn from '../button/ItemBtn';
 
-function ProjectItem() {
+function ProjectItem({ type }) {
   const setInteractive = useSetRecoilState(interactiveState);
 
   return (
     <ProjectItemContainer>
-      <ItemBox>
-        <ItemBtn type="Design" onClick={() => setInteractive(1)} />
-        <ItemTitle>디자인</ItemTitle>
-      </ItemBox>
-      <ItemBox>
-        <ItemBtn type="Element" onClick={() => setInteractive(2)} />
-        <ItemTitle>요소</ItemTitle>
-      </ItemBox>
-      <ItemBox>
-        <ItemBtn type="Text" onClick={() => setInteractive(3)} />
-        <ItemTitle>텍스트</ItemTitle>
-      </ItemBox>
+      {type === '2d' ? (
+        <>
+          <ItemBox>
+            <ItemBtn type="Design" onClick={() => setInteractive(1)} />
+            <ItemTitle>디자인</ItemTitle>
+          </ItemBox>
+          <ItemBox>
+            <ItemBtn type="Element" onClick={() => setInteractive(2)} />
+            <ItemTitle>요소</ItemTitle>
+          </ItemBox>
+          <ItemBox>
+            <ItemBtn type="Text" onClick={() => setInteractive(3)} />
+            <ItemTitle>텍스트</ItemTitle>
+          </ItemBox>
+        </>
+      ) : (
+        <>
+          <ItemBox>
+            <ItemBtn type="Search3d" />
+            <ItemTitle>3d 모델 찾기</ItemTitle>
+          </ItemBox>
+          <ItemBox>
+            <ItemBtn type="produce3d" />
+            <ItemTitle>3d 모델 생성</ItemTitle>
+          </ItemBox>
+        </>
+      )}
     </ProjectItemContainer>
   );
 }
