@@ -6,10 +6,10 @@ import { ReactComponent as Page3d } from '../../../../assets/icon/3d.svg';
 function AddSlide({ onClick }) {
   return (
     <AddSlideBox>
-      <Button onClick={onClick('2d')}>
+      <Button onClick={() => onClick('2d')}>
         <Page2d width="4.375vw" height="7.777777777777778vh" />
       </Button>
-      <Button onClick={onClick('3d')}>
+      <Button onClick={() => onClick('3d')}>
         <Page3d width="4.375vw" height="7.777777777777778vh" />
       </Button>
     </AddSlideBox>
