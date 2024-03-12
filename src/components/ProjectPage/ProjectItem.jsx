@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 import { useSetRecoilState } from 'recoil';
 import { interactiveState } from '../../store/recoil';
-import DesignBtn from '../button/DesignBtn';
-import ElementBtn from '../button/ElementBtn';
-import TextBtn from '../button/TextBtn';
+import ItemBtn from '../button/ItemBtn';
 
 function ProjectItem() {
   const setInteractive = useSetRecoilState(interactiveState);
@@ -11,15 +9,15 @@ function ProjectItem() {
   return (
     <ProjectItemContainer>
       <ItemBox>
-        <DesignBtn onClick={() => setInteractive(1)} />
+        <ItemBtn type="Design" onClick={() => setInteractive(1)} />
         <ItemTitle>디자인</ItemTitle>
       </ItemBox>
       <ItemBox>
-        <ElementBtn onClick={() => setInteractive(2)} />
+        <ItemBtn type="Element" onClick={() => setInteractive(2)} />
         <ItemTitle>요소</ItemTitle>
       </ItemBox>
       <ItemBox>
-        <TextBtn onClick={() => setInteractive(3)} />
+        <ItemBtn type="Text" onClick={() => setInteractive(3)} />
         <ItemTitle>텍스트</ItemTitle>
       </ItemBox>
     </ProjectItemContainer>

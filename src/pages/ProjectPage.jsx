@@ -133,7 +133,7 @@ function ProjectPage() {
       window.removeEventListener('keydown', handleKeyEvent);
     };
   }, [isEditing, pageRendering]);
-
+  console.log(pageValue);
   return (
     <ProjectContainer>
       <ProjectHeaer fullScreen={toggleFullScreen} />
@@ -142,7 +142,7 @@ function ProjectPage() {
           display: 'flex',
         }}
       >
-        <ProjectItem />
+        {pageValue[pageRendering].type === '2d' && <ProjectItem />}
         <motion.div
           key={menu}
           initial={{ x: '-2vw', opacity: 0 }}
