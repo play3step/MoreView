@@ -90,13 +90,14 @@ function ProjectPage() {
       ),
     }));
   };
-  const addSlide = () => {
+  const addSlide = (type) => {
     setPageValue((oldPageData) => {
       const newId = oldPageData.length > 0 ? oldPageData.length : 0;
-      const newPage = { id: newId, type: '2d' };
+      const newPage = { id: newId, type };
       return [...oldPageData, newPage];
     });
   };
+
   const onLineUpdate = (shapeId, newPoints) => {
     const currentPageShapes = Array.isArray(shapeValue[pageRendering])
       ? shapeValue[pageRendering]
