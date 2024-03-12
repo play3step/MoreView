@@ -1,7 +1,7 @@
 import { useLoader } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-import userObj from '../../../assets/3dObject/Male.obj';
+import userObj from '../../../assets/3dObject/home3d.obj';
 
 function Model() {
   const obj = useLoader(OBJLoader, userObj);

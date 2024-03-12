@@ -1,30 +1,34 @@
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import ItemTitle from './ItemTitle';
 import ShapeBox from './ShapeBox';
 import ImageBox from './ImageBox';
 
-const imgUrl = [
-  {
-    url: '/testImage/img1.jpeg',
-  },
-  {
-    url: '/testImage/img2.jpeg',
-  },
-  {
-    url: '/testImage/img3.png',
-  },
-  {
-    url: '/testImage/img4.jpeg',
-  },
-  {
-    url: '/testImage/img5.jpeg',
-  },
-  {
-    url: '/testImage/img6.jpeg',
-  },
+const initialImgUrl = [
+  { url: '/testImage/img1.jpeg' },
+  { url: '/testImage/img2.jpeg' },
+  { url: '/testImage/img3.png' },
+  { url: '/testImage/img4.jpeg' },
+  { url: '/testImage/img5.jpeg' },
+  { url: '/testImage/img6.jpeg' },
 ];
 
 function ElementItem({ onAddShape, onAddImg }) {
+  const [uploadedImages, setUploadedImages] = useState([]);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const newImage = { url: e.target.result };
+        setUploadedImages((prevImages) => [...prevImages, newImage]);
+        onAddImg(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <ElementItemBox>
       <Itemposition>
@@ -38,13 +42,14 @@ function ElementItem({ onAddShape, onAddImg }) {
       <Itemposition>
         <ItemTitle title="이미지" />
         <ImgBackground>
-          {imgUrl.map((data) => (
+          {initialImgUrl.concat(uploadedImages).map((data, index) => (
             <ImageBox
-              key={data.url}
+              key={index}
               onClick={() => onAddImg(data.url)}
               imgUrl={data.url}
             />
           ))}
+          <input type="file" onChange={handleFileChange} accept="image/*" />
         </ImgBackground>
       </Itemposition>
     </ElementItemBox>
@@ -78,7 +83,6 @@ const ImgBackground = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-shrink: 0;
-  padding: 0.5vw;
+  padding: 0.5vw 0.5vw 0.5vw 1.4vw;
   gap: 0.6vw;
-  justify-content: center;
 `;
