@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import { ReactComponent as Kakao } from '../../assets/socialLogin/kakao.svg';
 import { ReactComponent as Naver } from '../../assets/socialLogin/naver.svg';
 
-function SocialLoginBtn({ type }) {
+function SocialLoginBtn({ type, onClick }) {
   return (
-    <SocialLoginBtnContainer>
+    <SocialLoginBtnContainer onClick={onClick}>
       {type === 'kakao' && (
         <TextContainer>
           <Kakao alt="카카오" width="1.40625vw" height="2.5vh" />

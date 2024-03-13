@@ -200,8 +200,9 @@ function ProjectPage() {
                   ) : (
                     <Canvas
                       key={page.id}
+                      gl={{ alpha: true }}
                       style={{
-                        backgroundColor: '#D9D9D9',
+                        // backgroundColor: '#D9D9D9',
                         width: '83.33333333333334vw',
                         height: '83.33333333333334vh',
                       }}
