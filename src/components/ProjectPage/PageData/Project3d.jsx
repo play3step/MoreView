@@ -74,7 +74,11 @@ function Project3d() {
   return (
     <>
       <PerspectiveCamera makeDefault position={[10, 10, 15]} />
-      <ambientLight intensity={1} />
+      <hemisphereLight
+        skyColor={0xffffbb}
+        groundColor={0x080820}
+        intensity={1}
+      />
       <directionalLight position={[0, 0, 5]} intensity={0.5} />
       <directionalLight position={[5, 5, 5]} intensity={0.5} />
       <directionalLight position={[-5, -5, -5]} intensity={0.5} />
