@@ -8,19 +8,32 @@ function LoginPage() {
   const onCancel = () => {
     navigate(-1);
   };
+  const NAVER = process.env.REACT_APP_NAVER;
+  const KAKAO = process.env.REACT_APP_KAKAO;
+
+  const routeToSocialLogin = (type) => {
+    const url = type === 'naver' ? NAVER : KAKAO;
+    window.location.href = url;
+  };
+
   return (
     <LoginContainer>
       <BackPosition>
         <CloseBtn onClose={onCancel} />
       </BackPosition>
       <LogoStyle>MoreView</LogoStyle>
-      <SocialLoginBtn type="kakao" />
+      <SocialLoginBtn
+        type="kakao"
+        onClick={() => routeToSocialLogin('kakao')}
+      />
       <Despite>또는</Despite>
-      <SocialLoginBtn type="naver" />
+      <SocialLoginBtn
+        type="naver"
+        onClick={() => routeToSocialLogin('naver')}
+      />
     </LoginContainer>
   );
 }
-
 export default LoginPage;
 
 const LoginContainer = styled.div`
