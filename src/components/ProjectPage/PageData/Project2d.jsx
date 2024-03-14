@@ -76,6 +76,11 @@ function Prjoect2d({
             width={imgItem.width}
             height={imgItem.height}
             onDragEnd={handleImgDragEnd}
+            isSelected={selectedId === imgItem.id}
+            onSelect={() => selectShape(imgItem.id)}
+            onTransformEnd={(id, newAttrs) => {
+              handleDragEnd(id, newAttrs);
+            }}
           />
         ))}
         {shapeValue[pageRendering]?.map((shape) => {

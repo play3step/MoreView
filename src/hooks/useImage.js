@@ -15,8 +15,8 @@ const useImage = () => {
       x: randomX,
       y: randomY,
       url: imgUrl,
-      width: '300',
-      height: '300',
+      width: 300,
+      height: 300,
       id: `image${imageCountInCurrentPage + 1}`,
     };
 
