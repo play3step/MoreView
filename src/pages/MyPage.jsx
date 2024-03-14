@@ -28,10 +28,6 @@ function MyPage() {
           <SortList />
           <ProjectGrid>
             <ProjectBox />
-            <ProjectBox />
-            <ProjectBox />
-            <ProjectBox />
-            <ProjectBox />
           </ProjectGrid>
         </ProjectContainer>
       </div>

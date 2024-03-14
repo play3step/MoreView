@@ -21,8 +21,8 @@ function Prjoect2d({
   handleImgDragEnd,
 }) {
   const [dimensions, setDimensions] = useState({
-    width: window.innerWidth * 0.833, // 예를 들어 뷰포트 너비의 75%
-    height: window.innerHeight * 0.833, // 뷰포트 높이의 75%
+    width: window.innerWidth * 0.833,
+    height: window.innerHeight * 0.833,
   });
 
   useEffect(() => {
