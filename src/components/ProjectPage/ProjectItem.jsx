@@ -26,7 +26,7 @@ function ProjectItem({ type }) {
       ) : (
         <>
           <ItemBox>
-            <ItemBtn type="Search3d" />
+            <ItemBtn type="Search3d" onClick={() => setInteractive(4)} />
             <ItemTitle>3d 모델 찾기</ItemTitle>
           </ItemBox>
           <ItemBox>

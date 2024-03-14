@@ -16,9 +16,12 @@ import {
 
 import ProjectHeaer from '../components/ProjectPage/ProjectHeader';
 import ProjectItem from '../components/ProjectPage/ProjectItem';
-import DesignInteractive from '../components/ProjectPage/ItemComponents/DesignInteractive';
-import ElementInteractive from '../components/ProjectPage/ItemComponents/ElementInteractive';
-import TextInteractive from '../components/ProjectPage/ItemComponents/TextInteractive';
+import DesignInteractive from '../components/ProjectPage/ItemComponents/2d/DesignInteractive';
+import ElementInteractive from '../components/ProjectPage/ItemComponents/2d/ElementInteractive';
+import TextInteractive from '../components/ProjectPage/ItemComponents/2d/TextInteractive';
+
+import ObjectSearch from '../components/ProjectPage/ItemComponents/3d/ObjectSearch';
+
 import ProjectSlide from '../components/ProjectPage/ProjectSlide';
 import Project3d from '../components/ProjectPage/PageData/Project3d';
 import Prjoect2d from '../components/ProjectPage/PageData/Project2d';
@@ -214,6 +217,7 @@ function ProjectPage() {
           {menu === 1 && <DesignInteractive onClose={handleClose} />}
           {menu === 2 && <ElementInteractive onClose={handleClose} />}
           {menu === 3 && <TextInteractive onClose={handleClose} />}
+          {menu === 4 && <ObjectSearch onClose={handleClose} />}
         </motion.div>
         <CanvasContainer>
           <p>{pageRendering + 1} 페이지</p>

@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import ItemTitle from './atom/ItemTitle';
-import { ReactComponent as TextIcon } from '../../../assets/text/text.svg';
-import CloseBtn from '../../button/CloseBtn';
-import useText from '../../../hooks/useText';
+import ItemTitle from '../atom/ItemTitle';
+import { ReactComponent as TextIcon } from '../../../../assets/text/text.svg';
+import CloseBtn from '../../../button/CloseBtn';
+import useText from '../../../../hooks/useText';
 
 function TextInteractive({ onClose }) {
   const { addText } = useText();

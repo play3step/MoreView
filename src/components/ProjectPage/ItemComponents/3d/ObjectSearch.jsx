@@ -1,23 +1,20 @@
 import styled from 'styled-components';
-import ItemTitle from './atom/ItemTitle';
-import CloseBtn from '../../button/CloseBtn';
+import CloseBtn from '../../../button/CloseBtn';
 
-function DesignInteractive({ onClose }) {
+function ObjectSearch({ onClose }) {
   return (
-    <DesignInteractiveContainer>
-      <DesignItemContainer>
-        <ItemTitle title="디자인" />
-      </DesignItemContainer>
+    <ObjectInteractiveContainer>
+      <ObjectItemContainer />
       <ClosePostion>
         <CloseBtn onClose={onClose} />
       </ClosePostion>
-    </DesignInteractiveContainer>
+    </ObjectInteractiveContainer>
   );
 }
 
-export default DesignInteractive;
+export default ObjectSearch;
 
-const DesignInteractiveContainer = styled.div`
+const ObjectInteractiveContainer = styled.div`
   width: 25.7638vw;
   height: 93.652vh;
   background-color: #e9e9e9;
@@ -25,10 +22,8 @@ const DesignInteractiveContainer = styled.div`
   justify-content: center;
   align-items: center;
   border: 1px solid;
-  z-index: 2;
 `;
-
-const DesignItemContainer = styled.div`
+const ObjectItemContainer = styled.div`
   width: 22.083vw;
   height: 81.542vh;
   background-color: white;

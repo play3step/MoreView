@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import useImage from '../../../hooks/useImage';
-import useShapes from '../../../hooks/useShapes';
+import useImage from '../../../../hooks/useImage';
+import useShapes from '../../../../hooks/useShapes';
 
-import ElementItem from './atom/ElementItem';
-import CloseBtn from '../../button/CloseBtn';
+import ElementItem from '../atom/ElementItem';
+import CloseBtn from '../../../button/CloseBtn';
 
 function ElementInteractive({ onClose }) {
   const { addShape } = useShapes();
