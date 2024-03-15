@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLoader, useThree } from '@react-three/fiber';
 import { PerspectiveCamera } from '@react-three/drei';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
@@ -67,21 +67,29 @@ function Model() {
 function Project3d() {
   const { camera } = useThree();
 
+  const [isMouseDown, setIsMouseDown] = useState(false);
+
   useEffect(() => {
     const handleMouseMove = (event) => {
-      const { movementX, movementY } = event;
+      if (!isMouseDown) return;
+      const { movementX } = event;
       const rotationSpeed = 0.005;
-
       camera.rotation.y -= movementX * rotationSpeed;
-      camera.rotation.x -= movementY * rotationSpeed;
     };
 
-    document.addEventListener('mousemove', handleMouseMove);
+    const handleMouseDown = () => setIsMouseDown(true);
+    const handleMouseUp = () => setIsMouseDown(false);
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousedown', handleMouseDown);
+    window.addEventListener('mouseup', handleMouseUp);
 
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mousedown', handleMouseDown);
+      window.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [camera]);
+  }, [camera, isMouseDown]);
 
   return (
     <>
