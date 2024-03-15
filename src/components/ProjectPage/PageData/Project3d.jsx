@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useLoader, useThree } from '@react-three/fiber';
-import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
+import { PerspectiveCamera } from '@react-three/drei';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { Vector3 } from 'three';
 
@@ -65,13 +65,23 @@ function Model() {
 }
 
 function Project3d() {
-  const controlsRef = useRef();
+  const { camera } = useThree();
 
   useEffect(() => {
-    if (controlsRef.current) {
-      controlsRef.current.target.set(0, 0, 0);
-    }
-  }, []);
+    const handleMouseMove = (event) => {
+      const { movementX, movementY } = event;
+      const rotationSpeed = 0.005;
+
+      camera.rotation.y -= movementX * rotationSpeed;
+      camera.rotation.x -= movementY * rotationSpeed;
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, [camera]);
 
   return (
     <>
@@ -84,7 +94,6 @@ function Project3d() {
       <directionalLight position={[0, 0, 5]} intensity={0.5} />
       <directionalLight position={[5, 5, 5]} intensity={0.5} />
       <directionalLight position={[-5, -5, -5]} intensity={0.5} />
-      <OrbitControls ref={controlsRef} />
       <Model />
     </>
   );
