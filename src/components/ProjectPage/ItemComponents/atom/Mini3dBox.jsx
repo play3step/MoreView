@@ -6,7 +6,7 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 function Model() {
   const obj = useLoader(
     OBJLoader,
-    `${process.env.PUBLIC_URL}/3dObject/male.obj`,
+    `${process.env.PUBLIC_URL}/3dObject/Male.obj`,
   );
   const modelRef = useRef();
 

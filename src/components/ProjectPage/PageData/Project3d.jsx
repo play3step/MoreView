@@ -14,7 +14,10 @@ function Model({ objecturl }) {
     setLoadUrl(objecturl);
   }, [objecturl]);
 
-  const obj = useLoader(OBJLoader, loadUrl || '');
+  const obj = useLoader(
+    OBJLoader,
+    loadUrl || `${process.env.PUBLIC_URL}/3dObject/Creeper.obj`,
+  );
 
   useEffect(() => {
     const handleKeyDown = (event) => {
