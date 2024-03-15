@@ -4,13 +4,11 @@ import { PerspectiveCamera } from '@react-three/drei';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { Vector3 } from 'three';
 
-function Model() {
-  const obj = useLoader(
-    OBJLoader,
-    `${process.env.PUBLIC_URL}/3dObject/home3d.obj`,
-  );
+function Model({ objecturl }) {
   const modelRef = useRef();
   const { camera } = useThree();
+
+  const obj = useLoader(OBJLoader, objecturl);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -55,7 +53,7 @@ function Model() {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
     };
-  }, [camera]);
+  }, [camera, objecturl]);
 
   return (
     <mesh ref={modelRef}>
@@ -64,7 +62,7 @@ function Model() {
   );
 }
 
-function Project3d() {
+function Project3d({ objecturl }) {
   const { camera } = useThree();
 
   const [isMouseDown, setIsMouseDown] = useState(false);
@@ -102,7 +100,7 @@ function Project3d() {
       <directionalLight position={[0, 0, 5]} intensity={0.5} />
       <directionalLight position={[5, 5, 5]} intensity={0.5} />
       <directionalLight position={[-5, -5, -5]} intensity={0.5} />
-      <Model />
+      <Model objecturl={objecturl} />
     </>
   );
 }

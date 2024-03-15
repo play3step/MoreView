@@ -190,7 +190,7 @@ function ProjectPage() {
     setImgValue,
     selectShape,
   ]);
-  console.log(objectValue);
+
   return (
     <ProjectContainer>
       <ProjectHeaer fullScreen={toggleFullScreen} />
@@ -264,7 +264,9 @@ function ProjectPage() {
                         height: '83.33333333333334vh',
                       }}
                     >
-                      <Project3d />
+                      <Project3d
+                        objecturl={objectValue[pageRendering]?.[0]?.url}
+                      />
                     </Canvas>
                   );
                 }
