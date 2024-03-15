@@ -8,7 +8,13 @@ function Model({ objecturl }) {
   const modelRef = useRef();
   const { camera } = useThree();
 
-  const obj = useLoader(OBJLoader, objecturl);
+  const [loadUrl, setLoadUrl] = useState(objecturl);
+
+  useEffect(() => {
+    setLoadUrl(objecturl);
+  }, [objecturl]);
+
+  const obj = useLoader(OBJLoader, loadUrl || '');
 
   useEffect(() => {
     const handleKeyDown = (event) => {
