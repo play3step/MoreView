@@ -3,10 +3,12 @@ import { useLoader, useThree } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { Vector3 } from 'three';
-import userObj from '../../../assets/3dObject/home3d.obj';
 
 function Model() {
-  const obj = useLoader(OBJLoader, userObj);
+  const obj = useLoader(
+    OBJLoader,
+    `${process.env.PUBLIC_URL}/3dObject/home3d.obj`,
+  );
   const modelRef = useRef();
   const { camera } = useThree();
 

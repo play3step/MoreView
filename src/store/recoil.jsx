@@ -49,3 +49,8 @@ export const editState = atom({
   key: 'editState',
   default: false,
 });
+
+export const object3dState = atom({
+  key: 'object3dState',
+  default: {},
+});

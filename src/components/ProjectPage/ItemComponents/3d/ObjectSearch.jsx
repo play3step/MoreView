@@ -1,10 +1,13 @@
 import styled from 'styled-components';
 import CloseBtn from '../../../button/CloseBtn';
+import Mini3dBox from '../atom/Mini3dBox';
 
 function ObjectSearch({ onClose }) {
   return (
     <ObjectInteractiveContainer>
-      <ObjectItemContainer />
+      <ObjectItemContainer>
+        <Mini3dBox />
+      </ObjectItemContainer>
       <ClosePostion>
         <CloseBtn onClose={onClose} />
       </ClosePostion>
