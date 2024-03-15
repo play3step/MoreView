@@ -8,6 +8,7 @@ import {
   editState,
   imageList,
   interactiveState,
+  object3dState,
   pageData,
   pageState,
   shapeList,
@@ -33,6 +34,7 @@ function ProjectPage() {
   const [shapeValue, setShapeValue] = useRecoilState(shapeList);
   const [textValue, setTextValue] = useRecoilState(textList);
   const [imgValue, setImgValue] = useRecoilState(imageList);
+  const objectValue = useRecoilValue(object3dState);
   const [menu, setMenu] = useRecoilState(interactiveState);
   const [pageValue, setPageValue] = useRecoilState(pageData);
   const isEditing = useRecoilValue(editState);
@@ -188,7 +190,7 @@ function ProjectPage() {
     setImgValue,
     selectShape,
   ]);
-
+  console.log(objectValue);
   return (
     <ProjectContainer>
       <ProjectHeaer fullScreen={toggleFullScreen} />

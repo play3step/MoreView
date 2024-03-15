@@ -93,7 +93,7 @@ function Project3d() {
 
   return (
     <>
-      <PerspectiveCamera makeDefault position={[10, 10, 15]} />
+      <PerspectiveCamera makeDefault position={[3, 3, 15]} />
       <hemisphereLight
         skyColor={0xffffbb}
         groundColor={0x080820}

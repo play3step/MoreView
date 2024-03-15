@@ -21,26 +21,40 @@ function Model() {
   );
 }
 
-function Mini3dBox() {
+function Mini3dBox({ onAddObject }) {
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (!file) {
+      return;
+    }
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      onAddObject(reader.result);
+    };
+  };
   return (
-    <Canvas
-      style={{
-        width: '5.208333333333334vw',
-        height: '9.25925925925926vh',
-        backgroundColor: '#D9D9D9',
-      }}
-    >
-      <PerspectiveCamera makeDefault position={[0, 0, 10]} />
-      <hemisphereLight
-        skyColor={0xffffbb}
-        groundColor={0x080820}
-        intensity={1}
-      />
-      <directionalLight position={[0, 0, 5]} intensity={0.5} />
-      <directionalLight position={[5, 5, 5]} intensity={0.5} />
-      <directionalLight position={[-5, -5, -5]} intensity={0.5} />
-      <Model />
-    </Canvas>
+    <>
+      <Canvas
+        style={{
+          width: '5.208333333333334vw',
+          height: '9.25925925925926vh',
+          backgroundColor: '#D9D9D9',
+        }}
+      >
+        <PerspectiveCamera makeDefault position={[0, 0, 10]} />
+        <hemisphereLight
+          skyColor={0xffffbb}
+          groundColor={0x080820}
+          intensity={1}
+        />
+        <directionalLight position={[0, 0, 5]} intensity={0.5} />
+        <directionalLight position={[5, 5, 5]} intensity={0.5} />
+        <directionalLight position={[-5, -5, -5]} intensity={0.5} />
+        <Model />
+      </Canvas>
+      <input type="file" onChange={handleFileChange} accept=".obj" />
+    </>
   );
 }
 
