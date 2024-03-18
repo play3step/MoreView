@@ -3,22 +3,30 @@ import { useLoader, useThree } from '@react-three/fiber';
 import { PerspectiveCamera } from '@react-three/drei';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { Vector3 } from 'three';
+import { useRecoilState } from 'recoil';
+import { LodingState } from '../../../store/recoil';
 
 function Model({ objecturl }) {
   const modelRef = useRef();
   const { camera } = useThree();
-
+  const [loadingValue, setLoadingValue] = useRecoilState(LodingState);
   const [loadUrl, setLoadUrl] = useState(objecturl);
 
   useEffect(() => {
     setLoadUrl(objecturl);
+    setLoadingValue(true);
   }, [objecturl]);
 
   const obj = useLoader(
     OBJLoader,
     loadUrl || `${process.env.PUBLIC_URL}/3dObject/Creeper.obj`,
   );
-
+  useEffect(() => {
+    if (obj) {
+      // 로딩 완료
+      setLoadingValue(false);
+    }
+  }, [obj]);
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (!modelRef.current) return;
@@ -65,7 +73,7 @@ function Model({ objecturl }) {
   }, [camera, objecturl]);
 
   return (
-    <mesh ref={modelRef}>
+    <mesh ref={modelRef} visible={!loadingValue}>
       <primitive object={obj} position={[0, 0, 0]} scale={0.5} />
     </mesh>
   );
