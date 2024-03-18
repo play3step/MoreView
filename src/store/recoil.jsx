@@ -54,3 +54,8 @@ export const object3dState = atom({
   key: 'object3dState',
   default: {},
 });
+
+export const LodingState = atom({
+  key: 'LodingState',
+  default: true,
+});

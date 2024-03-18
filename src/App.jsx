@@ -6,11 +6,13 @@ import LoginPage from './pages/LoginPage';
 
 import './App.css';
 import MyPage from './pages/MyPage';
+import LoadingModal from './components/ProjectPage/LoadingModal';
 
 function App() {
   return (
     <RecoilRoot>
       <BrowserRouter>
+        <LoadingModal />
         <Routes>
           {/* <Route path="/" element={<MainPage />} /> */}
           <Route path="/" element={<MyPage />} />
