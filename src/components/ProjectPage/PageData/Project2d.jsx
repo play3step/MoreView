@@ -19,17 +19,18 @@ function Prjoect2d({
   onLineUpdate,
   imgValue,
   handleImgDragEnd,
+  pageSize,
 }) {
   const [dimensions, setDimensions] = useState({
-    width: window.innerWidth * 0.833,
-    height: window.innerHeight * 0.833,
+    width: window.innerWidth,
+    height: window.innerHeight,
   });
 
   useEffect(() => {
     const handleResize = () => {
       setDimensions({
-        width: window.innerWidth * 0.833,
-        height: window.innerHeight * 0.833,
+        width: window.innerWidth,
+        height: window.innerHeight,
       });
     };
 
@@ -42,8 +43,10 @@ function Prjoect2d({
   }, []);
   return (
     <Stage
-      width={dimensions.width}
-      height={dimensions.height}
+      width={dimensions.width * pageSize}
+      height={dimensions.height * pageSize}
+      scaleX={pageSize} // 모든 콘텐츠를 축소하기 위한 스케일 조정
+      scaleY={pageSize}
       onMouseDown={checkDeselect}
       onTouchStart={checkDeselect}
     >

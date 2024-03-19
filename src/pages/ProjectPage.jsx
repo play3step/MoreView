@@ -253,6 +253,7 @@ function ProjectPage() {
                       selectedId={selectedId}
                       selectShape={selectShape}
                       onLineUpdate={onLineUpdate}
+                      pageSize={0.833}
                     />
                   ) : (
                     <Canvas
@@ -285,7 +286,23 @@ function ProjectPage() {
           transition={{ duration: 0.5 }} // 애니메이션 지속 시간
           initial="hidden"
         >
-          <ProjectSlide slideOpen={toggleSlide} addSlide={addSlide} />
+          <ProjectSlide
+            slideOpen={toggleSlide}
+            addSlide={addSlide}
+            pageRendering={pageRendering}
+            textValue={textValue}
+            shapeValue={shapeValue}
+            imgValue={imgValue}
+            handleTextChange={handleTextChange}
+            handleDragEnd={handleDragEnd}
+            handleTextDragEnd={handleTextDragEnd}
+            handleImgDragEnd={handleImgDragEnd}
+            checkDeselect={checkDeselect}
+            selectedId={selectedId}
+            selectShape={selectShape}
+            onLineUpdate={onLineUpdate}
+            pageSize={0.433}
+          />
         </motion.div>
       </SlideListPosition>
     </ProjectContainer>
