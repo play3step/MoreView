@@ -293,15 +293,6 @@ function ProjectPage() {
             textValue={textValue}
             shapeValue={shapeValue}
             imgValue={imgValue}
-            handleTextChange={handleTextChange}
-            handleDragEnd={handleDragEnd}
-            handleTextDragEnd={handleTextDragEnd}
-            handleImgDragEnd={handleImgDragEnd}
-            checkDeselect={checkDeselect}
-            selectedId={selectedId}
-            selectShape={selectShape}
-            onLineUpdate={onLineUpdate}
-            pageSize={0.433}
           />
         </motion.div>
       </SlideListPosition>
