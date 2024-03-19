@@ -24,7 +24,7 @@ const AddSlideBox = styled.div`
   align-items: center;
   position: relative;
   width: 18.958vw;
-  height: 16.11vh;
+  height: 17.51vh;
   border: 2.5px dashed;
   border-radius: 25px;
   background-color: #d9d9d9;

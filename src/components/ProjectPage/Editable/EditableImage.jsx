@@ -3,7 +3,6 @@ import { Image, Transformer } from 'react-konva';
 import useImage from 'use-image';
 
 function EditableImage({
-  id,
   imageUrl,
   x,
   y,
@@ -12,6 +11,7 @@ function EditableImage({
   isSelected,
   onSelect,
   onTransformEnd,
+  imgItem,
 }) {
   const imageRef = useRef(null);
   const transformerRef = useRef(null);
@@ -19,7 +19,6 @@ function EditableImage({
 
   useEffect(() => {
     if (isSelected) {
-      // 이미지가 선택되면 Transformer를 현재 이미지에 맞춥니다.
       transformerRef.current.nodes([imageRef.current]);
       transformerRef.current.getLayer().batchDraw();
     }
@@ -38,17 +37,20 @@ function EditableImage({
         onTap={onSelect}
         ref={imageRef}
         onDragEnd={(e) => {
-          onTransformEnd(id, {
+          onTransformEnd({
+            ...imgItem,
             x: e.target.x(),
             y: e.target.y(),
           });
         }}
-        onTransformEnd={(e) => {
-          const node = e.target;
+        onTransformEnd={() => {
+          const node = imageRef.current;
           const scaleX = node.scaleX();
           const scaleY = node.scaleY();
-
-          onTransformEnd(id, {
+          node.scaleX(1);
+          node.scaleY(1);
+          onTransformEnd({
+            ...imgItem,
             x: node.x(),
             y: node.y(),
             width: node.width() * scaleX,
@@ -59,6 +61,7 @@ function EditableImage({
       {isSelected && (
         <Transformer
           ref={transformerRef}
+          flipEnabled={false}
           boundBoxFunc={(oldBox, newBox) => newBox}
         />
       )}

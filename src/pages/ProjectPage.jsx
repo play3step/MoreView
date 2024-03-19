@@ -70,6 +70,19 @@ function ProjectPage() {
     });
     setShapeValue({ ...shapeValue, [pageRendering]: updatedShapes });
   };
+  const handleImgTransform = (id, newAttrs) => {
+    const updatedImgValue = imgValue[pageRendering].map((img) => {
+      if (img.id === id) {
+        return { ...img, ...newAttrs };
+      }
+      return img;
+    });
+
+    setImgValue({
+      ...imgValue,
+      [pageRendering]: updatedImgValue,
+    });
+  };
   const handleTextDragEnd = (textId, newAttrs) => {
     setTextValue((prevTextValue) => ({
       ...prevTextValue,
@@ -254,6 +267,7 @@ function ProjectPage() {
                       selectShape={selectShape}
                       onLineUpdate={onLineUpdate}
                       pageSize={0.833}
+                      handleImgTransform={handleImgTransform}
                     />
                   ) : (
                     <Canvas

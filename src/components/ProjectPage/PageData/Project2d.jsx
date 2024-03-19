@@ -20,6 +20,7 @@ function Prjoect2d({
   imgValue,
   handleImgDragEnd,
   pageSize,
+  handleImgTransform,
 }) {
   const [dimensions, setDimensions] = useState({
     width: window.innerWidth,
@@ -73,6 +74,7 @@ function Prjoect2d({
           <EditableImage
             key={imgItem.id}
             id={imgItem.id}
+            imgItem={imgItem}
             imageUrl={imgItem.url}
             x={imgItem.x}
             y={imgItem.y}
@@ -81,8 +83,8 @@ function Prjoect2d({
             onDragEnd={handleImgDragEnd}
             isSelected={selectedId === imgItem.id}
             onSelect={() => selectShape(imgItem.id)}
-            onTransformEnd={(id, newAttrs) => {
-              handleDragEnd(id, newAttrs);
+            onTransformEnd={(newAttrs) => {
+              handleImgTransform(imgItem.id, newAttrs);
             }}
           />
         ))}
