@@ -11,18 +11,24 @@ import SideMenu from './components/myPage/SideMenu';
 
 function App() {
   return (
-    <RecoilRoot>
-      <BrowserRouter>
-        <SideMenu />
-        <LoadingModal />
-        <Routes>
-          {/* <Route path="/" element={<MainPage />} /> */}
-          <Route path="/" element={<MyPage />} />
-          <Route path="/project/:projectId" element={<ProjectPage />} />
-          <Route path="/login" element={<LoginPage />} />
-        </Routes>
-      </BrowserRouter>
-    </RecoilRoot>
+    <div
+      style={{
+        display: 'flex',
+      }}
+    >
+      <RecoilRoot>
+        <BrowserRouter>
+          <SideMenu />
+          <LoadingModal />
+          <Routes>
+            {/* <Route path="/" element={<MainPage />} /> */}
+            <Route path="/" element={<MyPage />} />
+            <Route path="/project/:projectId" element={<ProjectPage />} />
+            <Route path="/login" element={<LoginPage />} />
+          </Routes>
+        </BrowserRouter>
+      </RecoilRoot>
+    </div>
   );
 }
 
