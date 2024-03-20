@@ -7,11 +7,13 @@ import LoginPage from './pages/LoginPage';
 import './App.css';
 import MyPage from './pages/MyPage';
 import LoadingModal from './components/ProjectPage/LoadingModal';
+import SideMenu from './components/myPage/SideMenu';
 
 function App() {
   return (
     <RecoilRoot>
       <BrowserRouter>
+        <SideMenu />
         <LoadingModal />
         <Routes>
           {/* <Route path="/" element={<MainPage />} /> */}
