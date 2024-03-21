@@ -10,12 +10,12 @@ function Model() {
     `${process.env.PUBLIC_URL}/3dObject/Camera.obj`,
   );
   useFrame(() => {
-    modelRef.current.rotation.y += 0; // 프레임마다 오브젝트의 y축 회전값 업데이트
+    modelRef.current.rotation.y += 0.01; // 프레임마다 오브젝트의 y축 회전값 업데이트
   });
 
   return (
     <mesh ref={modelRef}>
-      <primitive object={obj} position={[0, 0, 0]} scale={0.03} />
+      <primitive object={obj} position={[0, 0, -1]} scale={0.03} />
     </mesh>
   );
 }
