@@ -1,11 +1,25 @@
 import styled from 'styled-components';
-import Logo from './atom/Logo';
-import MenuBtn from './atom/MenuBtn';
-import SearchProject from './atom/SearchProject';
+import { useLocation } from 'react-router-dom';
+import Logo from './myPage/atom/Logo';
+import MenuBtn from './myPage/atom/MenuBtn';
+import SearchProject from './myPage/atom/SearchProject';
 
 const types = ['About', 'OverView', 'Comments', 'Projects', 'Starred'];
 
 function SideMenu() {
+  const location = useLocation();
+  const shouldShow = [
+    '/',
+    '/Projects',
+    '/About',
+    '/OverView',
+    '/Comments',
+    '/Starred',
+  ].includes(location.pathname);
+
+  if (!shouldShow) {
+    return null;
+  }
   return (
     <MenuContainer>
       <Logo />

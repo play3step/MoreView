@@ -1,9 +1,13 @@
 import { ReactComponent as Message } from '../../../assets/myPage/message.svg';
 import { ReactComponent as Trash } from '../../../assets/myPage/trash.svg';
+import { ReactComponent as Edit } from '../../../assets/myPage/edit.svg';
+import { ReactComponent as Play } from '../../../assets/myPage/play.svg';
 
 const ICON = {
   Message,
   Trash,
+  Edit,
+  Play,
 };
 
 function UserIcon({ type }) {

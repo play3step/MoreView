@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { ReactComponent as About } from '../../../assets/myPage/about.svg';
 import { ReactComponent as OverView } from '../../../assets/myPage/overView.svg';
 import { ReactComponent as Comments } from '../../../assets/myPage/comments.svg';
@@ -20,24 +21,25 @@ const ICONS = {
 function MenuBtn({ type }) {
   const Icon = ICONS[type];
   return (
-    <MenuContainer>
-      {Icon && (
-        <Icon
-          alt="item"
-          width="1.3541666666666667vw"
-          height="2.4074074074074074vh"
-        />
-      )}
-      <MenuTitle>{type}</MenuTitle>
-    </MenuContainer>
+    <Link to={`/${type}`} style={{ textDecoration: 'none' }}>
+      <MenuContainer>
+        {Icon && (
+          <Icon
+            alt="item"
+            width="1.3541666666666667vw"
+            height="2.4074074074074074vh"
+          />
+        )}
+        <MenuTitle>{type}</MenuTitle>
+      </MenuContainer>
+    </Link>
   );
 }
 
 export default MenuBtn;
 
-const MenuContainer = styled.button`
+const MenuContainer = styled.div`
   background-color: transparent;
-  border: none;
   display: flex;
   margin-left: 2.7083333333333335vw;
   margin-bottom: 3.7037037037037033vh;

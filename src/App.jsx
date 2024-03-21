@@ -7,7 +7,8 @@ import LoginPage from './pages/LoginPage';
 import './App.css';
 import MyPage from './pages/MyPage';
 import LoadingModal from './components/ProjectPage/LoadingModal';
-import SideMenu from './components/myPage/SideMenu';
+import SideMenu from './components/SideMenu';
+import ItemPage from './pages/ItemPage';
 
 function App() {
   return (
@@ -23,6 +24,8 @@ function App() {
           <Routes>
             {/* <Route path="/" element={<MainPage />} /> */}
             <Route path="/" element={<MyPage />} />
+            <Route path="/About" element={<MyPage />} />
+            <Route path="/Projects" element={<ItemPage />} />
             <Route path="/project/:projectId" element={<ProjectPage />} />
             <Route path="/login" element={<LoginPage />} />
           </Routes>
