@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import SvgIcon from './atom/SvgIcon';
 import useText from '../../hooks/useText';
 
-function EditHeader({ pageValue, setMenu }) {
+function EditHeader({ pageValue, setMenu, fullScreen }) {
   const { addText } = useText();
   const is3dDisabled = pageValue.type !== '3d';
   const is2dDisabled = pageValue.type !== '2d';
@@ -33,7 +33,7 @@ function EditHeader({ pageValue, setMenu }) {
         </Editor3DBox>
       </CenterSection>
       <RightSection>
-        <SvgIcon type="Play" />
+        <SvgIcon type="Play" onClick={fullScreen} />
       </RightSection>
     </HeaderContainer>
   );

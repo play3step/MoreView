@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useEffect, useRef, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
+import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import EditHeader from '../components/EditPage/EditHeader';
 import PreviewSlide from '../components/EditPage/PreviewSlide/PreviewSlide';
 import Edit2d from '../components/EditPage/PageData/Edit2d';
@@ -34,6 +35,13 @@ function EditPage() {
 
   const [menu, setMenu] = useRecoilState(interactiveState);
   const menuRef = useRef();
+
+  const fullScreenHandle = useFullScreenHandle();
+  const isFullScreen = fullScreenHandle.active;
+
+  const toggleFullScreen = () => {
+    fullScreenHandle.enter();
+  };
 
   const checkDeselect = (e) => {
     const clickedOnEmpty = e.target === e.target.getStage();
@@ -197,7 +205,11 @@ function EditPage() {
   }, [setMenu, menuRef]);
   return (
     <EditContainer>
-      <EditHeader pageValue={pageValue[pageRendering]} setMenu={setMenu} />
+      <EditHeader
+        pageValue={pageValue[pageRendering]}
+        setMenu={setMenu}
+        fullScreen={toggleFullScreen}
+      />
       <PreviewSlide
         textValue={textValue}
         shapeValue={shapeValue}
@@ -205,41 +217,56 @@ function EditPage() {
         addSlide={addSlide}
       />
       <CanvasContainer>
-        {pageValue.map((page) => {
-          if (page.id === pageRendering) {
-            return page.type === '2d' ? (
-              <Edit2d
-                key={page.id}
-                pageRendering={pageRendering}
-                textValue={textValue}
-                shapeValue={shapeValue}
-                imgValue={imgValue}
-                handleTextChange={handleTextChange}
-                handleDragEnd={handleDragEnd}
-                handleTextDragEnd={handleTextDragEnd}
-                handleImgDragEnd={handleImgDragEnd}
-                checkDeselect={checkDeselect}
-                selectedId={selectedId}
-                selectShape={selectShape}
-                onLineUpdate={onLineUpdate}
-                pageSize={0.733}
-                handleImgTransform={handleImgTransform}
-              />
-            ) : (
-              <Canvas
-                key={page.id}
-                gl={{ alpha: true }}
-                style={{
-                  width: '72.91666666666666vw',
-                  height: '81.48148148148148vh',
-                }}
-              >
-                <Edit3d objecturl={objectValue[pageRendering]?.[0]?.url} />
-              </Canvas>
-            );
-          }
-          return null;
-        })}
+        <FullScreen handle={fullScreenHandle}>
+          <div
+            style={{
+              ...(isFullScreen
+                ? {
+                    position: 'fixed',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                  }
+                : {}),
+            }}
+          >
+            {pageValue.map((page) => {
+              if (page.id === pageRendering) {
+                return page.type === '2d' ? (
+                  <Edit2d
+                    key={page.id}
+                    pageRendering={pageRendering}
+                    textValue={textValue}
+                    shapeValue={shapeValue}
+                    imgValue={imgValue}
+                    handleTextChange={handleTextChange}
+                    handleDragEnd={handleDragEnd}
+                    handleTextDragEnd={handleTextDragEnd}
+                    handleImgDragEnd={handleImgDragEnd}
+                    checkDeselect={checkDeselect}
+                    selectedId={selectedId}
+                    selectShape={selectShape}
+                    onLineUpdate={onLineUpdate}
+                    pageSize={0.733}
+                    handleImgTransform={handleImgTransform}
+                  />
+                ) : (
+                  <Canvas
+                    key={page.id}
+                    gl={{ alpha: true }}
+                    style={{
+                      width: '72.91666666666666vw',
+                      height: '81.48148148148148vh',
+                    }}
+                  >
+                    <Edit3d objecturl={objectValue[pageRendering]?.[0]?.url} />
+                  </Canvas>
+                );
+              }
+              return null;
+            })}
+          </div>
+        </FullScreen>
       </CanvasContainer>
       <ItemListPosition>
         {menu === 1 && <ShapeItem menuRef={menuRef} />}
