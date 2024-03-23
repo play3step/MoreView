@@ -1,7 +1,12 @@
 import styled from 'styled-components';
+import EditHeader from '../components/EditPage/EditHeader';
 
 function EditPage() {
-  return <EditContainer />;
+  return (
+    <EditContainer>
+      <EditHeader />
+    </EditContainer>
+  );
 }
 
 export default EditPage;
