@@ -1,14 +1,14 @@
 import styled from 'styled-components';
-import { ReactComponent as Comment } from '../../../assets/svgIcon/commentIcon.svg';
-import { ReactComponent as Creation } from '../../../assets/svgIcon/creationIcon.svg';
-import { ReactComponent as Image } from '../../../assets/svgIcon/imageIcon.svg';
-import { ReactComponent as Note } from '../../../assets/svgIcon/noteIcon.svg';
-import { ReactComponent as Play } from '../../../assets/svgIcon/playIcon.svg';
-import { ReactComponent as Redo } from '../../../assets/svgIcon/redoIcon.svg';
-import { ReactComponent as Shape } from '../../../assets/svgIcon/shapeIcon.svg';
-import { ReactComponent as Search } from '../../../assets/svgIcon/search3DIcon.svg';
-import { ReactComponent as Text } from '../../../assets/svgIcon/textIcon.svg';
-import { ReactComponent as Undo } from '../../../assets/svgIcon/undoIcon.svg';
+import { ReactComponent as Comment } from '../../../assets/svgIcon/SmallIcon/commentIcon.svg';
+import { ReactComponent as Creation } from '../../../assets/svgIcon/SmallIcon/creationIcon.svg';
+import { ReactComponent as Image } from '../../../assets/svgIcon/SmallIcon/imageIcon.svg';
+import { ReactComponent as Note } from '../../../assets/svgIcon/SmallIcon/noteIcon.svg';
+import { ReactComponent as Play } from '../../../assets/svgIcon/SmallIcon/playIcon.svg';
+import { ReactComponent as Redo } from '../../../assets/svgIcon/SmallIcon/redoIcon.svg';
+import { ReactComponent as Shape } from '../../../assets/svgIcon/SmallIcon/shapeIcon.svg';
+import { ReactComponent as Search } from '../../../assets/svgIcon/SmallIcon/search3DIcon.svg';
+import { ReactComponent as Text } from '../../../assets/svgIcon/SmallIcon/textIcon.svg';
+import { ReactComponent as Undo } from '../../../assets/svgIcon/SmallIcon/undoIcon.svg';
 
 const ICONS = [
   { id: 'Comment', type: Comment, text: 'Comment' },

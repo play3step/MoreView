@@ -18,8 +18,7 @@ function EditPage() {
   const [selectedId, selectShape] = useState(null);
   const [pageRendering, setPageRendering] = useRecoilState(pageState);
 
-  // const [pageValue, setPageValue] = useRecoilState(pageData);
-  const pageValue = useRecoilValue(pageData);
+  const [pageValue, setPageValue] = useRecoilState(pageData);
 
   const [shapeValue, setShapeValue] = useRecoilState(shapeList);
   const [textValue, setTextValue] = useRecoilState(textList);
@@ -82,13 +81,13 @@ function EditPage() {
       ),
     }));
   };
-  // const addSlide = (type) => {
-  //   setPageValue((oldPageData) => {
-  //     const newId = oldPageData.length > 0 ? oldPageData.length : 0;
-  //     const newPage = { id: newId, type };
-  //     return [...oldPageData, newPage];
-  //   });
-  // };
+  const addSlide = (type) => {
+    setPageValue((oldPageData) => {
+      const newId = oldPageData.length > 0 ? oldPageData.length : 0;
+      const newPage = { id: newId, type };
+      return [...oldPageData, newPage];
+    });
+  };
 
   const onLineUpdate = (shapeId, newPoints) => {
     const currentPageShapes = Array.isArray(shapeValue[pageRendering])
@@ -180,6 +179,7 @@ function EditPage() {
         textValue={textValue}
         shapeValue={shapeValue}
         imgValue={imgValue}
+        addSlide={addSlide}
       />
       <CanvasContainer>
         {pageValue.map((page) => {

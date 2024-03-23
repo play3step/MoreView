@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { ReactComponent as Circle } from '../../../assets/svgIcon/shape/circleIcon.svg';
-import { ReactComponent as Line } from '../../../assets/svgIcon/shape/lineIcon.svg';
-import { ReactComponent as Rectangle } from '../../../assets/svgIcon/shape/rectangleIcon.svg';
+import { ReactComponent as Circle } from '../../../assets/svgIcon/LargeIcon/circleIcon.svg';
+import { ReactComponent as Line } from '../../../assets/svgIcon/LargeIcon/lineIcon.svg';
+import { ReactComponent as Rectangle } from '../../../assets/svgIcon/LargeIcon/rectangleIcon.svg';
 
 const ICONS = [
   { id: 'Circle', type: Circle, text: 'Circle' },
@@ -37,10 +37,3 @@ const IconBox = styled.div`
       brightness(102%) contrast(91%);
   }
 `;
-// const IconText = styled.p`
-//   font-size: 0.6vw;
-//   margin-top: 0.3vw;
-//   &:hover {
-//     color: #4d7df3;
-//   }
-// `;

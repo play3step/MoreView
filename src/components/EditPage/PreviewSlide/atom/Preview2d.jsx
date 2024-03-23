@@ -40,6 +40,7 @@ function Preview2d({
 
   return (
     <SlideListBox onClick={onClick} select={select}>
+      <SlideNum>{id + 1} </SlideNum>
       <Stage
         width={dimensions.width * pageSize}
         height={dimensions.height * pageSize}
@@ -117,4 +118,13 @@ const SlideListBox = styled.button`
   border: 2px solid ${({ select }) => (select ? '#4D7DF3' : '#747684')};
   background-color: #d9d9d9;
   flex-shrink: 0; // 크기 조절 비활성화
+  position: relative;
+`;
+
+const SlideNum = styled.p`
+  font-size: 1vw;
+  position: absolute;
+  top: 0.25vw;
+  left: 0.45vw;
+  z-index: 2;
 `;
