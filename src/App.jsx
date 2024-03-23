@@ -9,6 +9,7 @@ import MyPage from './pages/MyPage';
 import LoadingModal from './components/ProjectPage/LoadingModal';
 import SideMenu from './components/SideMenu';
 import ItemPage from './pages/ItemPage';
+import EditPage from './pages/EditPage';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             {/* <Route path="/" element={<MainPage />} /> */}
             <Route path="/" element={<MyPage />} />
             <Route path="/About" element={<MyPage />} />
+            <Route path="/Edit/:EditId" element={<EditPage />} />
             <Route path="/Projects" element={<ItemPage />} />
             <Route path="/project/:projectId" element={<ProjectPage />} />
             <Route path="/login" element={<LoginPage />} />

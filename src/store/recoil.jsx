@@ -12,7 +12,10 @@ export const pageState = atom({
 
 export const pageData = atom({
   key: 'pageData',
-  default: [{ id: 0, type: '2d' }],
+  default: [
+    { id: 0, type: '2d' },
+    { id: 1, type: '2d' },
+  ],
 });
 
 export const shapeList = atom({
