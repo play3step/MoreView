@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useEffect, useState } from 'react';
 import EditHeader from '../components/EditPage/EditHeader';
-import PreviewSlide from '../components/EditPage/PreviewSlide';
+import PreviewSlide from '../components/EditPage/PreviewSlide/PreviewSlide';
 import Edit2d from '../components/EditPage/PageData/Edit2d';
 import {
   editState,
@@ -176,31 +176,33 @@ function EditPage() {
   return (
     <EditContainer>
       <EditHeader />
-      <PreviewSlide />
+      <PreviewSlide
+        textValue={textValue}
+        shapeValue={shapeValue}
+        imgValue={imgValue}
+      />
       <CanvasContainer>
         {pageValue.map((page) => {
           if (page.id === pageRendering) {
-            return (
-              page.type === '2d' && (
-                <Edit2d
-                  key={page.id}
-                  pageRendering={pageRendering}
-                  textValue={textValue}
-                  shapeValue={shapeValue}
-                  imgValue={imgValue}
-                  handleTextChange={handleTextChange}
-                  handleDragEnd={handleDragEnd}
-                  handleTextDragEnd={handleTextDragEnd}
-                  handleImgDragEnd={handleImgDragEnd}
-                  checkDeselect={checkDeselect}
-                  selectedId={selectedId}
-                  selectShape={selectShape}
-                  onLineUpdate={onLineUpdate}
-                  pageSize={0.733}
-                  handleImgTransform={handleImgTransform}
-                />
-              )
-            );
+            return page.type === '2d' ? (
+              <Edit2d
+                key={page.id}
+                pageRendering={pageRendering}
+                textValue={textValue}
+                shapeValue={shapeValue}
+                imgValue={imgValue}
+                handleTextChange={handleTextChange}
+                handleDragEnd={handleDragEnd}
+                handleTextDragEnd={handleTextDragEnd}
+                handleImgDragEnd={handleImgDragEnd}
+                checkDeselect={checkDeselect}
+                selectedId={selectedId}
+                selectShape={selectShape}
+                onLineUpdate={onLineUpdate}
+                pageSize={0.733}
+                handleImgTransform={handleImgTransform}
+              />
+            ) : null;
           }
           return null;
         })}
