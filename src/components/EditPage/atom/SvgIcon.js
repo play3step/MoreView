@@ -23,7 +23,7 @@ const ICONS = [
   { id: 'Undo', type: Undo, text: 'Undo' },
 ];
 
-function SvgIcon({ type }) {
+function SvgIcon({ type, onClick }) {
   const Icon = ICONS.find((icon) => icon.id === type);
 
   if (!Icon) {
@@ -31,7 +31,7 @@ function SvgIcon({ type }) {
   }
   const IconComponent = Icon.type;
   return (
-    <IconBox>
+    <IconBox onClick={onClick}>
       <IconComponent width="1.875vw" height="3.3333333333333335vh" />
       <IconText>{Icon.text}</IconText>
     </IconBox>

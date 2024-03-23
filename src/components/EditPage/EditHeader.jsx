@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import SvgIcon from './atom/SvgIcon';
+import useText from '../../hooks/useText';
 
 function EditHeader() {
+  const { addText } = useText();
   return (
     <HeaderContainer>
       <LeftSection>
@@ -10,7 +12,7 @@ function EditHeader() {
       </LeftSection>
       <CenterSection>
         <Editor2DBox>
-          <SvgIcon type="Text" />
+          <SvgIcon type="Text" onClick={addText} />
           <SvgIcon type="Shape" />
           <SvgIcon type="Image" />
         </Editor2DBox>
