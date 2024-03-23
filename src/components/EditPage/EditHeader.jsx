@@ -4,7 +4,8 @@ import useText from '../../hooks/useText';
 
 function EditHeader({ pageValue, setMenu }) {
   const { addText } = useText();
-  const isTextDisabled = pageValue.type !== '3d';
+  const is3dDisabled = pageValue.type !== '3d';
+  const is2dDisabled = pageValue.type !== '2d';
   return (
     <HeaderContainer>
       <LeftSection>
@@ -13,12 +14,21 @@ function EditHeader({ pageValue, setMenu }) {
       </LeftSection>
       <CenterSection>
         <Editor2DBox>
-          <SvgIcon type="Text" onClick={isTextDisabled ? addText : undefined} />
-          <SvgIcon type="Shape" onClick={() => setMenu(1)} />
-          <SvgIcon type="Image" onClick={() => setMenu(2)} />
+          <SvgIcon type="Text" onClick={is3dDisabled ? addText : undefined} />
+          <SvgIcon
+            type="Shape"
+            onClick={() => (is3dDisabled ? setMenu(1) : null)}
+          />
+          <SvgIcon
+            type="Image"
+            onClick={() => (is3dDisabled ? setMenu(2) : null)}
+          />
         </Editor2DBox>
         <Editor3DBox>
-          <SvgIcon type="Search" />
+          <SvgIcon
+            type="Search"
+            onClick={() => (is2dDisabled ? setMenu(3) : null)}
+          />
           <SvgIcon type="Creation" />
         </Editor3DBox>
       </CenterSection>

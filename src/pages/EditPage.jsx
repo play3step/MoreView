@@ -15,9 +15,10 @@ import {
   shapeList,
   textList,
 } from '../store/recoil';
-import ShapeItem from '../components/EditPage/ItemListBox/ShapeItem';
+import ShapeItem from '../components/EditPage/ItemListBox/2D/ShapeItem';
 import Edit3d from '../components/EditPage/PageData/Edit3d';
-import ImageItem from '../components/EditPage/ItemListBox/ImageItem';
+import ImageItem from '../components/EditPage/ItemListBox/2D/ImageItem';
+import ObjectSearch from '../components/EditPage/ItemListBox/3D/ObjectSearch';
 
 function EditPage() {
   const [selectedId, selectShape] = useState(null);
@@ -243,6 +244,7 @@ function EditPage() {
       <ItemListPosition>
         {menu === 1 && <ShapeItem menuRef={menuRef} />}
         {menu === 2 && <ImageItem menuRef={menuRef} />}
+        {menu === 3 && <ObjectSearch menuRef={menuRef} />}
       </ItemListPosition>
     </EditContainer>
   );

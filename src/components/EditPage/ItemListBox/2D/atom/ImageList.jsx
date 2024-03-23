@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ReactComponent as Image } from '../../../../assets/icon/image.svg';
+import { ReactComponent as Image } from '../../../../../assets/icon/image.svg';
 
 function ImageList({ imgUrl, onClick }) {
   return (

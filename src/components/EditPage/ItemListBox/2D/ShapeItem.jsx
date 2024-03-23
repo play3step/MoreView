@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import SvgLargeIcon from '../atom/SvgLargeIcon';
-import useShapes from '../../../hooks/useShapes';
+import SvgLargeIcon from '../../atom/SvgLargeIcon';
+import useShapes from '../../../../hooks/useShapes';
 
 function ShapeItem({ menuRef }) {
   const { addShape } = useShapes();
