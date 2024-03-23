@@ -44,7 +44,15 @@ const IconBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  &:hover {
+    filter: invert(43%) sepia(89%) saturate(3053%) hue-rotate(210deg)
+      brightness(102%) contrast(91%);
+  }
 `;
 const IconText = styled.p`
   font-size: 0.6vw;
+  margin-top: 0.3vw;
+  &:hover {
+    color: #4d7df3;
+  }
 `;

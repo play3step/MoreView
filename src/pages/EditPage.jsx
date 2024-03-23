@@ -222,4 +222,5 @@ const CanvasContainer = styled.div`
   z-index: 0;
   left: 20.5%;
   top: 14%;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 `;

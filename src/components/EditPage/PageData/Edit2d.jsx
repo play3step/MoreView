@@ -57,7 +57,7 @@ function Edit2d({
           y={0}
           width={dimensions.width}
           height={dimensions.height}
-          fill="#D9D9D9"
+          fill="#FBFBFD"
         />
         {textValue[pageRendering]?.map((textItem) => (
           <EditableText
