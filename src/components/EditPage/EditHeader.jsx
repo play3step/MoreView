@@ -2,8 +2,9 @@ import styled from 'styled-components';
 import SvgIcon from './atom/SvgIcon';
 import useText from '../../hooks/useText';
 
-function EditHeader() {
+function EditHeader({ pageValue, setMenu }) {
   const { addText } = useText();
+  const isTextDisabled = pageValue.type !== '3d';
   return (
     <HeaderContainer>
       <LeftSection>
@@ -12,9 +13,9 @@ function EditHeader() {
       </LeftSection>
       <CenterSection>
         <Editor2DBox>
-          <SvgIcon type="Text" onClick={addText} />
-          <SvgIcon type="Shape" />
-          <SvgIcon type="Image" />
+          <SvgIcon type="Text" onClick={isTextDisabled ? addText : undefined} />
+          <SvgIcon type="Shape" onClick={() => setMenu(1)} />
+          <SvgIcon type="Image" onClick={() => setMenu(2)} />
         </Editor2DBox>
         <Editor3DBox>
           <SvgIcon type="Search" />

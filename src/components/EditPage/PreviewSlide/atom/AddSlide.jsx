@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import SvgMiddleIcon from '../atom/SvgMiddleIcon';
+import SvgMiddleIcon from '../../atom/SvgMiddleIcon';
 
 function AddSlide({ onClick }) {
   return (

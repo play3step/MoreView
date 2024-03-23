@@ -1,29 +1,38 @@
 import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { Canvas } from '@react-three/fiber';
 import EditHeader from '../components/EditPage/EditHeader';
 import PreviewSlide from '../components/EditPage/PreviewSlide/PreviewSlide';
 import Edit2d from '../components/EditPage/PageData/Edit2d';
 import {
   editState,
   imageList,
+  interactiveState,
+  object3dState,
   pageData,
   pageState,
   shapeList,
   textList,
 } from '../store/recoil';
 import ShapeItem from '../components/EditPage/ItemListBox/ShapeItem';
+import Edit3d from '../components/EditPage/PageData/Edit3d';
+import ImageItem from '../components/EditPage/ItemListBox/ImageItem';
 
 function EditPage() {
   const [selectedId, selectShape] = useState(null);
   const [pageRendering, setPageRendering] = useRecoilState(pageState);
 
   const [pageValue, setPageValue] = useRecoilState(pageData);
+  const objectValue = useRecoilValue(object3dState);
 
   const [shapeValue, setShapeValue] = useRecoilState(shapeList);
   const [textValue, setTextValue] = useRecoilState(textList);
   const [imgValue, setImgValue] = useRecoilState(imageList);
   const isEditing = useRecoilValue(editState);
+
+  const [menu, setMenu] = useRecoilState(interactiveState);
+  const menuRef = useRef();
 
   const checkDeselect = (e) => {
     const clickedOnEmpty = e.target === e.target.getStage();
@@ -172,9 +181,22 @@ function EditPage() {
     setImgValue,
     selectShape,
   ]);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenu(0);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [setMenu, menuRef]);
   return (
     <EditContainer>
-      <EditHeader />
+      <EditHeader pageValue={pageValue[pageRendering]} setMenu={setMenu} />
       <PreviewSlide
         textValue={textValue}
         shapeValue={shapeValue}
@@ -202,13 +224,25 @@ function EditPage() {
                 pageSize={0.733}
                 handleImgTransform={handleImgTransform}
               />
-            ) : null;
+            ) : (
+              <Canvas
+                key={page.id}
+                gl={{ alpha: true }}
+                style={{
+                  width: '72.91666666666666vw',
+                  height: '81.48148148148148vh',
+                }}
+              >
+                <Edit3d objecturl={objectValue[pageRendering]?.[0]?.url} />
+              </Canvas>
+            );
           }
           return null;
         })}
       </CanvasContainer>
       <ItemListPosition>
-        <ShapeItem />
+        {menu === 1 && <ShapeItem menuRef={menuRef} />}
+        {menu === 2 && <ImageItem menuRef={menuRef} />}
       </ItemListPosition>
     </EditContainer>
   );
@@ -221,6 +255,7 @@ const EditContainer = styled.div`
   width: 100vw;
   display: flex;
   flex-direction: column;
+  position: absolute;
 `;
 
 const CanvasContainer = styled.div`

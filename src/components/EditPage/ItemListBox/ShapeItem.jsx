@@ -2,13 +2,18 @@ import styled from 'styled-components';
 import SvgLargeIcon from '../atom/SvgLargeIcon';
 import useShapes from '../../../hooks/useShapes';
 
-function ShapeItem() {
+function ShapeItem({ menuRef }) {
   const { addShape } = useShapes();
+
+  const handleAddShape = (shapeType) => () => {
+    addShape(shapeType);
+  };
+
   return (
-    <ItemContainer>
-      <SvgLargeIcon type="Rectangle" onClick={addShape} />
-      <SvgLargeIcon type="Circle" onClick={addShape} />
-      <SvgLargeIcon type="Line" onClick={addShape} />
+    <ItemContainer ref={menuRef}>
+      <SvgLargeIcon type="Rectangle" onClick={handleAddShape('Rectangle')} />
+      <SvgLargeIcon type="Circle" onClick={handleAddShape('Circle')} />
+      <SvgLargeIcon type="Line" onClick={handleAddShape('Line')} />
     </ItemContainer>
   );
 }
@@ -25,4 +30,5 @@ const ItemContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 2.2395833333333335vw;
+  background-color: #ffffff;
 `;

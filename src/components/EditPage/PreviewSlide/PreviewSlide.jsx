@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { pageData, pageState } from '../../../store/recoil';
 import Preview2d from './atom/Preview2d';
-import AddSlide from './AddSlide';
+import AddSlide from './atom/AddSlide';
 
 function PreviewSlide({ textValue, shapeValue, imgValue, addSlide }) {
   const [pageRendering, setPageRendering] = useRecoilState(pageState);
