@@ -20,7 +20,7 @@ function ProjectCard() {
         program.
       </CardExplanation>
       <CardItem>
-        <Link to="/project/1" style={{ textDecoration: 'none' }}>
+        <Link to="/Edit/1" style={{ textDecoration: 'none' }}>
           <UserIcon type="Edit" />
         </Link>
         <UserIcon type="Message" />
