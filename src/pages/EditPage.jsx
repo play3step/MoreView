@@ -12,6 +12,7 @@ import {
   shapeList,
   textList,
 } from '../store/recoil';
+import ShapeItem from '../components/EditPage/ItemListBox/ShapeItem';
 
 function EditPage() {
   const [selectedId, selectShape] = useState(null);
@@ -204,6 +205,9 @@ function EditPage() {
           return null;
         })}
       </CanvasContainer>
+      <ItemListPosition>
+        <ShapeItem />
+      </ItemListPosition>
     </EditContainer>
   );
 }
@@ -223,4 +227,10 @@ const CanvasContainer = styled.div`
   left: 20.5%;
   top: 14%;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+`;
+
+const ItemListPosition = styled.div`
+  position: absolute;
+  left: 40%;
+  top: 8%;
 `;
