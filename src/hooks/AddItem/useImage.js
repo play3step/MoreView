@@ -1,5 +1,5 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { pageState, imageList } from '../store/recoil';
+import { pageState, imageList } from '../../store/recoil';
 
 const useImage = () => {
   const [imgValue, setImgValue] = useRecoilState(imageList);

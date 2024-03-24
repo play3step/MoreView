@@ -1,5 +1,5 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { object3dState, pageState } from '../store/recoil';
+import { object3dState, pageState } from '../../store/recoil';
 
 const useObject = () => {
   const [objectValue, setObjectValue] = useRecoilState(object3dState);

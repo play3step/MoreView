@@ -1,38 +1,45 @@
 import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import EditHeader from '../components/EditPage/EditHeader';
 import PreviewSlide from '../components/EditPage/PreviewSlide/PreviewSlide';
 import Edit2d from '../components/EditPage/PageData/Edit2d';
-import {
-  editState,
-  imageList,
-  interactiveState,
-  object3dState,
-  pageData,
-  pageState,
-  shapeList,
-  textList,
-} from '../store/recoil';
+import { editState, interactiveState } from '../store/recoil';
 import ShapeItem from '../components/EditPage/ItemListBox/2D/ShapeItem';
 import Edit3d from '../components/EditPage/PageData/Edit3d';
 import ImageItem from '../components/EditPage/ItemListBox/2D/ImageItem';
 import ObjectSearch from '../components/EditPage/ItemListBox/3D/ObjectSearch';
+import useEditorState from '../hooks/EditPage/useEditorState';
+import useItemValue from '../hooks/EditPage/useItemValue';
+import useImageHandlers from '../hooks/EditPage/Handlers/useImageHandlers';
+import useTextHandlers from '../hooks/EditPage/Handlers/useTextHandlers';
+import useShapeHandlers from '../hooks/EditPage/Handlers/useShapeHandlers';
+import useKeyboardNavigation from '../hooks/EditPage/useKeyboardNavigation';
+import useDeleteItem from '../hooks/EditPage/useDeleteItem';
 
 function EditPage() {
-  const [selectedId, selectShape] = useState(null);
-  const [pageRendering, setPageRendering] = useRecoilState(pageState);
+  const {
+    selectedId,
+    setSelectedId,
+    pageRendering,
+    setPageRendering,
+    pageValue,
+    setPageValue,
+  } = useEditorState();
 
-  const [pageValue, setPageValue] = useRecoilState(pageData);
-  const objectValue = useRecoilValue(object3dState);
+  const {
+    objectValue,
+    shapeValue,
+    setShapeValue,
+    textValue,
+    setTextValue,
+    imgValue,
+    setImgValue,
+  } = useItemValue();
 
-  const [shapeValue, setShapeValue] = useRecoilState(shapeList);
-  const [textValue, setTextValue] = useRecoilState(textList);
-  const [imgValue, setImgValue] = useRecoilState(imageList);
   const isEditing = useRecoilValue(editState);
-
   const [menu, setMenu] = useRecoilState(interactiveState);
   const menuRef = useRef();
 
@@ -46,59 +53,21 @@ function EditPage() {
   const checkDeselect = (e) => {
     const clickedOnEmpty = e.target === e.target.getStage();
     if (clickedOnEmpty) {
-      selectShape(null);
+      setSelectedId(null);
     }
   };
-  const handleDragEnd = (shapeId, newAttrs) => {
-    const currentPageShapes = shapeValue[pageRendering]
-      ? [...shapeValue[pageRendering]]
-      : [];
-    const updatedShapes = currentPageShapes.map((shape) => {
-      if (shape.id === shapeId) {
-        return { ...shape, ...newAttrs };
-      }
-      return shape;
-    });
-    setShapeValue({ ...shapeValue, [pageRendering]: updatedShapes });
-  };
-  const handleImgTransform = (id, newAttrs) => {
-    const updatedImgValue = imgValue[pageRendering].map((img) => {
-      if (img.id === id) {
-        return { ...img, ...newAttrs };
-      }
-      return img;
-    });
 
-    setImgValue({
-      ...imgValue,
-      [pageRendering]: updatedImgValue,
-    });
-  };
-  const handleTextDragEnd = (textId, newAttrs) => {
-    setTextValue((prevTextValue) => ({
-      ...prevTextValue,
-      [pageRendering]: prevTextValue[pageRendering].map((item) =>
-        item.id === textId ? { ...item, ...newAttrs } : item,
-      ),
-    }));
-  };
-  const handleTextChange = (textId, newText) => {
-    setTextValue((prevTextValue) => ({
-      ...prevTextValue,
-      [pageRendering]: prevTextValue[pageRendering].map((item) =>
-        item.id === textId ? { ...item, text: newText } : item,
-      ),
-    }));
-  };
+  const { handleImgTransform, handleImgDragEnd } = useImageHandlers(
+    imgValue,
+    setImgValue,
+    pageRendering,
+  );
 
-  const handleImgDragEnd = (imageId, newImage) => {
-    setImgValue((prevImgValue) => ({
-      ...prevImgValue,
-      [pageRendering]: prevImgValue[pageRendering].map((item) =>
-        item.id === imageId ? { ...item, ...newImage } : item,
-      ),
-    }));
-  };
+  const { handleTextDragEnd, handleTextChange } = useTextHandlers(
+    setTextValue,
+    pageRendering,
+  );
+
   const addSlide = (type) => {
     setPageValue((oldPageData) => {
       const newId = oldPageData.length > 0 ? oldPageData.length : 0;
@@ -107,78 +76,15 @@ function EditPage() {
     });
   };
 
-  const onLineUpdate = (shapeId, newPoints) => {
-    const currentPageShapes = Array.isArray(shapeValue[pageRendering])
-      ? shapeValue[pageRendering]
-      : [];
+  const { handleDragEnd, onLineUpdate } = useShapeHandlers(
+    shapeValue,
+    pageRendering,
+    setShapeValue,
+  );
 
-    const updatedShapes = currentPageShapes.map((shape) => {
-      if (shape.id === shapeId) {
-        return { ...shape, points: newPoints };
-      }
-      return shape;
-    });
+  useKeyboardNavigation(isEditing, pageRendering, pageValue, setPageRendering);
 
-    setShapeValue({ ...shapeValue, [pageRendering]: updatedShapes });
-  };
-
-  useEffect(() => {
-    const handleKeyEvent = (e) => {
-      if (isEditing) {
-        return;
-      }
-      if (e.key === 'ArrowLeft' && pageRendering > 0) {
-        setPageRendering(pageRendering - 1);
-      } else if (
-        e.key === 'ArrowRight' &&
-        pageValue.length - 1 > pageRendering
-      ) {
-        setPageRendering(pageRendering + 1);
-      }
-    };
-    window.addEventListener('keydown', handleKeyEvent);
-    return () => {
-      window.removeEventListener('keydown', handleKeyEvent);
-    };
-  }, [isEditing, pageRendering]);
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (
-        !isEditing &&
-        (e.key === 'Backspace' || e.key === 'Delete') &&
-        selectedId
-      ) {
-        e.preventDefault();
-
-        const deleteObject = (prev, id) => {
-          const currentPageObjects = prev[pageRendering] || [];
-          const filteredObjects = currentPageObjects.filter(
-            (object) => object.id !== id,
-          );
-          return { ...prev, [pageRendering]: filteredObjects };
-        };
-
-        if (
-          shapeValue[pageRendering]?.some((object) => object.id === selectedId)
-        ) {
-          setShapeValue((prev) => deleteObject(prev, selectedId));
-        } else if (
-          textValue[pageRendering]?.some((object) => object.id === selectedId)
-        ) {
-          setTextValue((prev) => deleteObject(prev, selectedId));
-        } else if (
-          imgValue[pageRendering]?.some((object) => object.id === selectedId)
-        ) {
-          setImgValue((prev) => deleteObject(prev, selectedId));
-        }
-
-        selectShape(null);
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [
+  useDeleteItem(
     isEditing,
     selectedId,
     shapeValue,
@@ -188,8 +94,8 @@ function EditPage() {
     setShapeValue,
     setTextValue,
     setImgValue,
-    selectShape,
-  ]);
+    setSelectedId,
+  );
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -245,7 +151,7 @@ function EditPage() {
                     handleImgDragEnd={handleImgDragEnd}
                     checkDeselect={checkDeselect}
                     selectedId={selectedId}
-                    selectShape={selectShape}
+                    selectShape={setSelectedId}
                     onLineUpdate={onLineUpdate}
                     pageSize={0.733}
                     handleImgTransform={handleImgTransform}

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import useObject from '../../../../hooks/useObject';
+import useObject from '../../../../hooks/AddItem/useObject';
 
 function ObjectSearch({ menuRef }) {
   const { addObject } = useObject();

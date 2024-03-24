@@ -1,5 +1,5 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { pageState, textList } from '../store/recoil';
+import { pageState, textList } from '../../store/recoil';
 
 const useText = () => {
   const [textValue, setTextValue] = useRecoilState(textList);

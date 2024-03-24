@@ -1,5 +1,5 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { pageState, shapeList } from '../store/recoil';
+import { pageState, shapeList } from '../../store/recoil';
 
 function useShapes() {
   const [shapeValue, setShapeValue] = useRecoilState(shapeList);
