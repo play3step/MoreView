@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import SvgIcon from './atom/SvgIcon';
-import useText from '../../hooks/useText';
+import useText from '../../hooks/AddItem/useText';
 
 function EditHeader({ pageValue, setMenu, fullScreen }) {
   const { addText } = useText();

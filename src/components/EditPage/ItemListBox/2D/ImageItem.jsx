@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import useImage from '../../../../hooks/useImage';
+import useImage from '../../../../hooks/AddItem/useImage';
 import ImageList from './atom/ImageList';
 
 const initialImgUrl = [
