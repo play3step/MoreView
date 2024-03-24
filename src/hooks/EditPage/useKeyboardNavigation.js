@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 
-function useKeyboardNavigation(
-  pageRendering,
-  setPageRendering,
-  pageValueLength,
+const useKeyboardNavigation = (
   isEditing,
-) {
+  pageRendering,
+  pageValue,
+  setPageRendering,
+) => {
   useEffect(() => {
-    function handleKeyEvent(e) {
+    const handleKeyEvent = (e) => {
       if (isEditing) {
         return;
       }
@@ -15,17 +15,16 @@ function useKeyboardNavigation(
         setPageRendering(pageRendering - 1);
       } else if (
         e.key === 'ArrowRight' &&
-        pageRendering < pageValueLength - 1
+        pageValue.length - 1 > pageRendering
       ) {
         setPageRendering(pageRendering + 1);
       }
-    }
-
+    };
     window.addEventListener('keydown', handleKeyEvent);
     return () => {
       window.removeEventListener('keydown', handleKeyEvent);
     };
-  }, [pageRendering, setPageRendering, pageValueLength, isEditing]);
-}
+  }, [isEditing, pageRendering]);
+};
 
 export default useKeyboardNavigation;

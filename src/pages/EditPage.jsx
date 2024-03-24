@@ -3,7 +3,6 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
-import { useKeyboardControls } from '@react-three/drei';
 import EditHeader from '../components/EditPage/EditHeader';
 import PreviewSlide from '../components/EditPage/PreviewSlide/PreviewSlide';
 import Edit2d from '../components/EditPage/PageData/Edit2d';
@@ -17,6 +16,8 @@ import useItemValue from '../hooks/EditPage/useItemValue';
 import useImageHandlers from '../hooks/EditPage/Handlers/useImageHandlers';
 import useTextHandlers from '../hooks/EditPage/Handlers/useTextHandlers';
 import useShapeHandlers from '../hooks/EditPage/Handlers/useShapeHandlers';
+import useKeyboardNavigation from '../hooks/EditPage/useKeyboardNavigation';
+import useDeleteItem from '../hooks/EditPage/useDeleteItem';
 
 function EditPage() {
   const {
@@ -81,51 +82,9 @@ function EditPage() {
     setShapeValue,
   );
 
-  useKeyboardControls(
-    pageRendering,
-    setPageRendering,
-    pageValue.length,
-    isEditing,
-  );
+  useKeyboardNavigation(isEditing, pageRendering, pageValue, setPageRendering);
 
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (
-        !isEditing &&
-        (e.key === 'Backspace' || e.key === 'Delete') &&
-        selectedId
-      ) {
-        e.preventDefault();
-
-        const deleteObject = (prev, id) => {
-          const currentPageObjects = prev[pageRendering] || [];
-          const filteredObjects = currentPageObjects.filter(
-            (object) => object.id !== id,
-          );
-          return { ...prev, [pageRendering]: filteredObjects };
-        };
-
-        if (
-          shapeValue[pageRendering]?.some((object) => object.id === selectedId)
-        ) {
-          setShapeValue((prev) => deleteObject(prev, selectedId));
-        } else if (
-          textValue[pageRendering]?.some((object) => object.id === selectedId)
-        ) {
-          setTextValue((prev) => deleteObject(prev, selectedId));
-        } else if (
-          imgValue[pageRendering]?.some((object) => object.id === selectedId)
-        ) {
-          setImgValue((prev) => deleteObject(prev, selectedId));
-        }
-
-        setSelectedId(null);
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [
+  useDeleteItem(
     isEditing,
     selectedId,
     shapeValue,
@@ -136,7 +95,7 @@ function EditPage() {
     setTextValue,
     setImgValue,
     setSelectedId,
-  ]);
+  );
 
   useEffect(() => {
     function handleClickOutside(event) {
