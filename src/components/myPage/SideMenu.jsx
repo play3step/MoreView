@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
-import Logo from './myPage/atom/Logo';
-import MenuBtn from './myPage/atom/MenuBtn';
-import SearchProject from './myPage/atom/SearchProject';
+import Logo from './atom/Logo';
+import MenuBtn from './atom/MenuBtn';
+import SearchProject from './atom/SearchProject';
 
 const types = ['About', 'OverView', 'Comments', 'Projects', 'Starred'];
 
@@ -30,8 +30,8 @@ function SideMenu() {
           flexDirection: 'column',
         }}
       >
-        {types.map((value) => (
-          <MenuBtn type={value} />
+        {types.map((value, index) => (
+          <MenuBtn type={value} key={index} />
         ))}
       </div>
     </MenuContainer>
