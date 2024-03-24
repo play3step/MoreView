@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { ReactComponent as Image } from '../../../../../assets/icon/image.svg';
 
 function ImageList({ imgUrl, onClick }) {
   return (
@@ -11,11 +10,14 @@ function ImageList({ imgUrl, onClick }) {
       {imgUrl ? (
         <ImgSize src={imgUrl} alt="이미지" onClick={onClick} />
       ) : (
-        <Image
+        <button
           alt="image"
           width="8.333333333333332vw"
           height="8.333333333333332vw"
-        />
+          type="button"
+        >
+          ?
+        </button>
       )}
     </div>
   );
