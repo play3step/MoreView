@@ -13,6 +13,7 @@ import ImageItem from '../components/EditPage/ItemListBox/2D/ImageItem';
 import ObjectSearch from '../components/EditPage/ItemListBox/3D/ObjectSearch';
 import useEditorState from '../hooks/EditPage/useEditorState';
 import useItemValue from '../hooks/EditPage/useItemValue';
+import useImageHandlers from '../hooks/EditPage/Handlers/useImageHandlers';
 
 function EditPage() {
   const {
@@ -51,6 +52,7 @@ function EditPage() {
       setSelectedId(null);
     }
   };
+
   const handleDragEnd = (shapeId, newAttrs) => {
     const currentPageShapes = shapeValue[pageRendering]
       ? [...shapeValue[pageRendering]]
@@ -63,19 +65,13 @@ function EditPage() {
     });
     setShapeValue({ ...shapeValue, [pageRendering]: updatedShapes });
   };
-  const handleImgTransform = (id, newAttrs) => {
-    const updatedImgValue = imgValue[pageRendering].map((img) => {
-      if (img.id === id) {
-        return { ...img, ...newAttrs };
-      }
-      return img;
-    });
 
-    setImgValue({
-      ...imgValue,
-      [pageRendering]: updatedImgValue,
-    });
-  };
+  const { handleImgTransform, handleImgDragEnd } = useImageHandlers(
+    imgValue,
+    setImgValue,
+    pageRendering,
+  );
+
   const handleTextDragEnd = (textId, newAttrs) => {
     setTextValue((prevTextValue) => ({
       ...prevTextValue,
@@ -93,14 +89,6 @@ function EditPage() {
     }));
   };
 
-  const handleImgDragEnd = (imageId, newImage) => {
-    setImgValue((prevImgValue) => ({
-      ...prevImgValue,
-      [pageRendering]: prevImgValue[pageRendering].map((item) =>
-        item.id === imageId ? { ...item, ...newImage } : item,
-      ),
-    }));
-  };
   const addSlide = (type) => {
     setPageValue((oldPageData) => {
       const newId = oldPageData.length > 0 ? oldPageData.length : 0;
