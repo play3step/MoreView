@@ -1,38 +1,40 @@
 import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import EditHeader from '../components/EditPage/EditHeader';
 import PreviewSlide from '../components/EditPage/PreviewSlide/PreviewSlide';
 import Edit2d from '../components/EditPage/PageData/Edit2d';
-import {
-  editState,
-  imageList,
-  interactiveState,
-  object3dState,
-  pageData,
-  pageState,
-  shapeList,
-  textList,
-} from '../store/recoil';
+import { editState, interactiveState } from '../store/recoil';
 import ShapeItem from '../components/EditPage/ItemListBox/2D/ShapeItem';
 import Edit3d from '../components/EditPage/PageData/Edit3d';
 import ImageItem from '../components/EditPage/ItemListBox/2D/ImageItem';
 import ObjectSearch from '../components/EditPage/ItemListBox/3D/ObjectSearch';
+import useEditorState from '../hooks/EditPage/useEditorState';
+import useItemValue from '../hooks/EditPage/useItemValue';
 
 function EditPage() {
-  const [selectedId, selectShape] = useState(null);
-  const [pageRendering, setPageRendering] = useRecoilState(pageState);
+  const {
+    selectedId,
+    setSelectedId,
+    pageRendering,
+    setPageRendering,
+    pageValue,
+    setPageValue,
+  } = useEditorState();
 
-  const [pageValue, setPageValue] = useRecoilState(pageData);
-  const objectValue = useRecoilValue(object3dState);
+  const {
+    objectValue,
+    shapeValue,
+    setShapeValue,
+    textValue,
+    setTextValue,
+    imgValue,
+    setImgValue,
+  } = useItemValue();
 
-  const [shapeValue, setShapeValue] = useRecoilState(shapeList);
-  const [textValue, setTextValue] = useRecoilState(textList);
-  const [imgValue, setImgValue] = useRecoilState(imageList);
   const isEditing = useRecoilValue(editState);
-
   const [menu, setMenu] = useRecoilState(interactiveState);
   const menuRef = useRef();
 
@@ -46,7 +48,7 @@ function EditPage() {
   const checkDeselect = (e) => {
     const clickedOnEmpty = e.target === e.target.getStage();
     if (clickedOnEmpty) {
-      selectShape(null);
+      setSelectedId(null);
     }
   };
   const handleDragEnd = (shapeId, newAttrs) => {
@@ -172,7 +174,7 @@ function EditPage() {
           setImgValue((prev) => deleteObject(prev, selectedId));
         }
 
-        selectShape(null);
+        setSelectedId(null);
       }
     };
 
@@ -188,7 +190,7 @@ function EditPage() {
     setShapeValue,
     setTextValue,
     setImgValue,
-    selectShape,
+    setSelectedId,
   ]);
 
   useEffect(() => {
@@ -245,7 +247,7 @@ function EditPage() {
                     handleImgDragEnd={handleImgDragEnd}
                     checkDeselect={checkDeselect}
                     selectedId={selectedId}
-                    selectShape={selectShape}
+                    selectShape={setSelectedId}
                     onLineUpdate={onLineUpdate}
                     pageSize={0.733}
                     handleImgTransform={handleImgTransform}
