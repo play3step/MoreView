@@ -14,6 +14,7 @@ import ObjectSearch from '../components/EditPage/ItemListBox/3D/ObjectSearch';
 import useEditorState from '../hooks/EditPage/useEditorState';
 import useItemValue from '../hooks/EditPage/useItemValue';
 import useImageHandlers from '../hooks/EditPage/Handlers/useImageHandlers';
+import useTextHandlers from '../hooks/EditPage/Handlers/useTextHandlers';
 
 function EditPage() {
   const {
@@ -53,6 +54,25 @@ function EditPage() {
     }
   };
 
+  const { handleImgTransform, handleImgDragEnd } = useImageHandlers(
+    imgValue,
+    setImgValue,
+    pageRendering,
+  );
+
+  const { handleTextDragEnd, handleTextChange } = useTextHandlers(
+    setTextValue,
+    pageRendering,
+  );
+
+  const addSlide = (type) => {
+    setPageValue((oldPageData) => {
+      const newId = oldPageData.length > 0 ? oldPageData.length : 0;
+      const newPage = { id: newId, type };
+      return [...oldPageData, newPage];
+    });
+  };
+
   const handleDragEnd = (shapeId, newAttrs) => {
     const currentPageShapes = shapeValue[pageRendering]
       ? [...shapeValue[pageRendering]]
@@ -65,38 +85,6 @@ function EditPage() {
     });
     setShapeValue({ ...shapeValue, [pageRendering]: updatedShapes });
   };
-
-  const { handleImgTransform, handleImgDragEnd } = useImageHandlers(
-    imgValue,
-    setImgValue,
-    pageRendering,
-  );
-
-  const handleTextDragEnd = (textId, newAttrs) => {
-    setTextValue((prevTextValue) => ({
-      ...prevTextValue,
-      [pageRendering]: prevTextValue[pageRendering].map((item) =>
-        item.id === textId ? { ...item, ...newAttrs } : item,
-      ),
-    }));
-  };
-  const handleTextChange = (textId, newText) => {
-    setTextValue((prevTextValue) => ({
-      ...prevTextValue,
-      [pageRendering]: prevTextValue[pageRendering].map((item) =>
-        item.id === textId ? { ...item, text: newText } : item,
-      ),
-    }));
-  };
-
-  const addSlide = (type) => {
-    setPageValue((oldPageData) => {
-      const newId = oldPageData.length > 0 ? oldPageData.length : 0;
-      const newPage = { id: newId, type };
-      return [...oldPageData, newPage];
-    });
-  };
-
   const onLineUpdate = (shapeId, newPoints) => {
     const currentPageShapes = Array.isArray(shapeValue[pageRendering])
       ? shapeValue[pageRendering]
