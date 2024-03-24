@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import SocialLoginBtn from '../components/LoginPage/SocialLoginBtn';
-import CloseBtn from '../components/button/CloseBtn';
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -19,7 +18,9 @@ function LoginPage() {
   return (
     <LoginContainer>
       <BackPosition>
-        <CloseBtn onClose={onCancel} />
+        <button type="button" onClick={onCancel}>
+          뒤로가기
+        </button>
       </BackPosition>
       <LogoStyle>MoreView</LogoStyle>
       <SocialLoginBtn

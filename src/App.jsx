@@ -1,15 +1,15 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import ProjectPage from './pages/ProjectPage';
 // import MainPage from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
 
 import './App.css';
 import MyPage from './pages/MyPage';
-import LoadingModal from './components/ProjectPage/LoadingModal';
-import SideMenu from './components/SideMenu';
+
+import SideMenu from './components/myPage/SideMenu';
 import ItemPage from './pages/ItemPage';
 import EditPage from './pages/EditPage';
+import LoadingModal from './components/Modal/LoadingModal';
 
 function App() {
   return (
@@ -28,7 +28,6 @@ function App() {
             <Route path="/About" element={<MyPage />} />
             <Route path="/Edit/:EditId" element={<EditPage />} />
             <Route path="/Projects" element={<ItemPage />} />
-            <Route path="/project/:projectId" element={<ProjectPage />} />
             <Route path="/login" element={<LoginPage />} />
           </Routes>
         </BrowserRouter>
