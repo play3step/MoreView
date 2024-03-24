@@ -15,6 +15,7 @@ import useEditorState from '../hooks/EditPage/useEditorState';
 import useItemValue from '../hooks/EditPage/useItemValue';
 import useImageHandlers from '../hooks/EditPage/Handlers/useImageHandlers';
 import useTextHandlers from '../hooks/EditPage/Handlers/useTextHandlers';
+import useShapeHandlers from '../hooks/EditPage/Handlers/useShapeHandlers';
 
 function EditPage() {
   const {
@@ -73,32 +74,11 @@ function EditPage() {
     });
   };
 
-  const handleDragEnd = (shapeId, newAttrs) => {
-    const currentPageShapes = shapeValue[pageRendering]
-      ? [...shapeValue[pageRendering]]
-      : [];
-    const updatedShapes = currentPageShapes.map((shape) => {
-      if (shape.id === shapeId) {
-        return { ...shape, ...newAttrs };
-      }
-      return shape;
-    });
-    setShapeValue({ ...shapeValue, [pageRendering]: updatedShapes });
-  };
-  const onLineUpdate = (shapeId, newPoints) => {
-    const currentPageShapes = Array.isArray(shapeValue[pageRendering])
-      ? shapeValue[pageRendering]
-      : [];
-
-    const updatedShapes = currentPageShapes.map((shape) => {
-      if (shape.id === shapeId) {
-        return { ...shape, points: newPoints };
-      }
-      return shape;
-    });
-
-    setShapeValue({ ...shapeValue, [pageRendering]: updatedShapes });
-  };
+  const { handleDragEnd, onLineUpdate } = useShapeHandlers(
+    shapeValue,
+    pageRendering,
+    setShapeValue,
+  );
 
   useEffect(() => {
     const handleKeyEvent = (e) => {
