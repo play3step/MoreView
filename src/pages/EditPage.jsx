@@ -3,6 +3,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
+import { useKeyboardControls } from '@react-three/drei';
 import EditHeader from '../components/EditPage/EditHeader';
 import PreviewSlide from '../components/EditPage/PreviewSlide/PreviewSlide';
 import Edit2d from '../components/EditPage/PageData/Edit2d';
@@ -80,25 +81,13 @@ function EditPage() {
     setShapeValue,
   );
 
-  useEffect(() => {
-    const handleKeyEvent = (e) => {
-      if (isEditing) {
-        return;
-      }
-      if (e.key === 'ArrowLeft' && pageRendering > 0) {
-        setPageRendering(pageRendering - 1);
-      } else if (
-        e.key === 'ArrowRight' &&
-        pageValue.length - 1 > pageRendering
-      ) {
-        setPageRendering(pageRendering + 1);
-      }
-    };
-    window.addEventListener('keydown', handleKeyEvent);
-    return () => {
-      window.removeEventListener('keydown', handleKeyEvent);
-    };
-  }, [isEditing, pageRendering]);
+  useKeyboardControls(
+    pageRendering,
+    setPageRendering,
+    pageValue.length,
+    isEditing,
+  );
+
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (
