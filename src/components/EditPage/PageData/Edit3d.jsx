@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useLoader, useThree } from '@react-three/fiber';
 import { PerspectiveCamera } from '@react-three/drei';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-import { Vector3 } from 'three';
+import { Color, Vector3 } from 'three';
 import { useRecoilState } from 'recoil';
+import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
 import { LodingState } from '../../../store/recoil';
 
 function Model({ objecturl }) {
@@ -11,22 +12,38 @@ function Model({ objecturl }) {
   const { camera } = useThree();
   const [loadingValue, setLoadingValue] = useRecoilState(LodingState);
   const [loadUrl, setLoadUrl] = useState(objecturl);
+  const { scene } = useThree();
+
+  useEffect(() => {
+    scene.background = new Color('#FFFFFF'); // 씬의 배경색을 흰색으로 설정
+  }, [scene]);
 
   useEffect(() => {
     setLoadUrl(objecturl);
     setLoadingValue(true);
   }, [objecturl]);
 
-  const obj = useLoader(
+  // const obj = useLoader(
+  //   OBJLoader,
+  //   loadUrl || `${process.env.PUBLIC_URL}/3dObject/Camera.obj`,
+  // );
+  const materials = useLoader(
+    MTLLoader,
+    `${process.env.PUBLIC_URL}/3dObject/Camera/10124_SLR_Camera_SG_V1_Iteration2.mtl`,
+  );
+  const object = useLoader(
     OBJLoader,
-    loadUrl || `${process.env.PUBLIC_URL}/3dObject/Creeper.obj`,
+    loadUrl || `${process.env.PUBLIC_URL}/3dObject/Camera/Camera.obj`,
+    (loader) => {
+      materials.preload();
+      loader.setMaterials(materials);
+    },
   );
   useEffect(() => {
-    if (obj) {
-      // 로딩 완료
+    if (object) {
       setLoadingValue(false);
     }
-  }, [obj]);
+  }, [object]);
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (!modelRef.current) return;
@@ -74,7 +91,7 @@ function Model({ objecturl }) {
 
   return (
     <mesh ref={modelRef} visible={!loadingValue}>
-      <primitive object={obj} position={[0, 0, 0]} scale={0.5} />
+      <primitive object={object} position={[0, 0, -1]} scale={0.03} />
     </mesh>
   );
 }
@@ -108,15 +125,15 @@ function Edit3d({ objecturl }) {
 
   return (
     <>
-      <PerspectiveCamera makeDefault position={[3, 3, 15]} />
+      <PerspectiveCamera makeDefault position={[0, 0, 10]} />
       <hemisphereLight
         skyColor={0xffffbb}
         groundColor={0x080820}
         intensity={1}
       />
-      <directionalLight position={[0, 0, 5]} intensity={0.5} />
-      <directionalLight position={[5, 5, 5]} intensity={0.5} />
-      <directionalLight position={[-5, -5, -5]} intensity={0.5} />
+      <directionalLight position={[0, 0, 5]} intensity={5} />
+      <directionalLight position={[5, 5, 5]} intensity={5} />
+      <directionalLight position={[-5, -5, -5]} intensity={5} />
       <Model objecturl={objecturl} />
     </>
   );

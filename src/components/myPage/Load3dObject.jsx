@@ -1,21 +1,31 @@
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { useRef } from 'react';
+import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 
 function Model() {
   const modelRef = useRef();
-  const obj = useLoader(
-    OBJLoader,
-    `${process.env.PUBLIC_URL}/3dObject/Camera.obj`,
+  const materials = useLoader(
+    MTLLoader,
+    `${process.env.PUBLIC_URL}/3dObject/Camera/10124_SLR_Camera_SG_V1_Iteration2.mtl`,
   );
+  const object = useLoader(
+    OBJLoader,
+    `${process.env.PUBLIC_URL}/3dObject/Camera/Camera.obj`,
+    (loader) => {
+      materials.preload();
+      loader.setMaterials(materials);
+    },
+  );
+
   useFrame(() => {
-    modelRef.current.rotation.y += 0.01; // 프레임마다 오브젝트의 y축 회전값 업데이트
+    modelRef.current.rotation.y += 0.01;
   });
 
   return (
     <mesh ref={modelRef}>
-      <primitive object={obj} position={[0, 0, -1]} scale={0.03} />
+      <primitive object={object} position={[0, 0, -1]} scale={0.03} />
     </mesh>
   );
 }
