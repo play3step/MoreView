@@ -1,5 +1,5 @@
-import { useRecoilState } from 'recoil';
 import { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
 import { historyState } from '../../../store/recoil';
 
 function useHistory(
@@ -14,32 +14,39 @@ function useHistory(
     useRecoilState(historyState);
 
   useEffect(() => {
+    if (history.length > 0 && currentStep >= 0) {
+      const currentState = history[currentStep];
+      setShapeValue(currentState.shapeValue);
+      setTextValue(currentState.textValue);
+      setImgValue(currentState.imgValue);
+    }
+  }, [currentStep]);
+
+  useEffect(() => {
     const currentState = { shapeValue, textValue, imgValue };
-    const newHistory = [...history.slice(0, currentStep + 1), currentState];
-    setHistoryState({
-      history: newHistory,
-      currentStep: newHistory.length - 1,
-    });
+    if (JSON.stringify(history[currentStep]) !== JSON.stringify(currentState)) {
+      const newHistory = [...history.slice(0, currentStep + 1), currentState];
+      setHistoryState({
+        history: newHistory,
+        currentStep: newHistory.length - 1,
+      });
+    }
   }, [shapeValue, textValue, imgValue]);
 
   const undo = () => {
     if (currentStep === 0) return;
-    const previousState = history[currentStep - 1];
-    console.log('Undoing to', previousState);
-    setHistoryState({ history, currentStep: currentStep - 1 });
-    setShapeValue(previousState.shapeValue);
-    setTextValue(previousState.textValue);
-    setImgValue(previousState.imgValue);
+    setHistoryState((prevState) => ({
+      ...prevState,
+      currentStep: prevState.currentStep - 1,
+    }));
   };
 
   const redo = () => {
-    if (currentStep === history.length - 1) return;
-    const nextState = history[currentStep + 1];
-    console.log('Redoing to', nextState);
-    setShapeValue(nextState.shapeValue);
-    setTextValue(nextState.textValue);
-    setImgValue(nextState.imgValue);
-    setHistoryState({ history, currentStep: currentStep + 1 });
+    if (currentStep >= history.length - 1) return;
+    setHistoryState((prevState) => ({
+      ...prevState,
+      currentStep: prevState.currentStep + 1,
+    }));
   };
 
   return { undo, redo };
