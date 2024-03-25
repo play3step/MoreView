@@ -178,8 +178,8 @@ function EditPage() {
                   />
                 ) : (
                   <Canvas
+                    backgroundColor="#FFFFFF" // 여기에 배경색을 직접 지정합니다.
                     key={page.id}
-                    gl={{ alpha: true }}
                     style={{
                       width: '72.91666666666666vw',
                       height: '81.48148148148148vh',
