@@ -18,6 +18,7 @@ import useTextHandlers from '../hooks/EditPage/Handlers/useTextHandlers';
 import useShapeHandlers from '../hooks/EditPage/Handlers/useShapeHandlers';
 import useKeyboardNavigation from '../hooks/EditPage/useKeyboardNavigation';
 import useDeleteItem from '../hooks/EditPage/useDeleteItem';
+import useHistory from '../hooks/EditPage/Handlers/useHistory';
 
 function EditPage() {
   const {
@@ -82,8 +83,6 @@ function EditPage() {
     setShapeValue,
   );
 
-  useKeyboardNavigation(isEditing, pageRendering, pageValue, setPageRendering);
-
   useDeleteItem(
     isEditing,
     selectedId,
@@ -95,6 +94,24 @@ function EditPage() {
     setTextValue,
     setImgValue,
     setSelectedId,
+  );
+
+  const { redo, undo } = useHistory(
+    shapeValue,
+    setShapeValue,
+    textValue,
+    setTextValue,
+    imgValue,
+    setImgValue,
+  );
+
+  useKeyboardNavigation(
+    isEditing,
+    pageRendering,
+    pageValue,
+    setPageRendering,
+    redo,
+    undo,
   );
 
   useEffect(() => {
@@ -109,12 +126,15 @@ function EditPage() {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [setMenu, menuRef]);
+
   return (
     <EditContainer>
       <EditHeader
         pageValue={pageValue[pageRendering]}
         setMenu={setMenu}
         fullScreen={toggleFullScreen}
+        redo={redo}
+        undo={undo}
       />
       <PreviewSlide
         textValue={textValue}

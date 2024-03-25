@@ -2,15 +2,15 @@ import styled from 'styled-components';
 import SvgIcon from './atom/SvgIcon';
 import useText from '../../hooks/AddItem/useText';
 
-function EditHeader({ pageValue, setMenu, fullScreen }) {
+function EditHeader({ pageValue, setMenu, fullScreen, redo, undo }) {
   const { addText } = useText();
   const is3dDisabled = pageValue.type !== '3d';
   const is2dDisabled = pageValue.type !== '2d';
   return (
     <HeaderContainer>
       <LeftSection>
-        <SvgIcon type="Redo" />
-        <SvgIcon type="Undo" />
+        <SvgIcon type="Undo" onClick={undo} />
+        <SvgIcon type="Redo" onClick={redo} />
       </LeftSection>
       <CenterSection>
         <Editor2DBox>
