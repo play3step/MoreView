@@ -57,3 +57,11 @@ export const LodingState = atom({
   key: 'LodingState',
   default: false,
 });
+
+export const historyState = atom({
+  key: 'historyState',
+  default: {
+    history: [],
+    currentStep: 0,
+  },
+});

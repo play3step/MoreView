@@ -5,6 +5,7 @@ const useKeyboardNavigation = (
   pageRendering,
   pageValue,
   setPageRendering,
+  undo,
 ) => {
   useEffect(() => {
     const handleKeyEvent = (e) => {
@@ -19,12 +20,15 @@ const useKeyboardNavigation = (
       ) {
         setPageRendering(pageRendering + 1);
       }
+      if (e.metaKey && e.key === 'z') {
+        undo();
+      }
     };
     window.addEventListener('keydown', handleKeyEvent);
     return () => {
       window.removeEventListener('keydown', handleKeyEvent);
     };
-  }, [isEditing, pageRendering]);
+  }, [isEditing, pageRendering, undo]);
 };
 
 export default useKeyboardNavigation;
