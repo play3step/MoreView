@@ -1,41 +1,57 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useFrame, useLoader, useThree } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import { PerspectiveCamera } from '@react-three/drei';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { Color, Vector3 } from 'three';
 import { useRecoilState } from 'recoil';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { LodingState } from '../../../store/recoil';
 
 function Model({ objecturl }) {
   const modelRef = useRef();
   const { camera } = useThree();
   const [loadingValue, setLoadingValue] = useRecoilState(LodingState);
-  const [loadUrl, setLoadUrl] = useState(objecturl);
   const { scene } = useThree();
   const movement = useRef({ forward: 0, right: 0, up: 0 });
+  const [object, setObject] = useState(null);
 
   useEffect(() => {
-    scene.background = new Color('#FFFFFF'); // 씬의 배경색을 흰색으로 설정
+    scene.background = new Color('#FFFFFF');
   }, [scene]);
-
   useEffect(() => {
-    setLoadUrl(objecturl);
     setLoadingValue(true);
-  }, [objecturl]);
+    const loadUrl =
+      objecturl?.obj ||
+      objecturl?.gltf ||
+      `${process.env.PUBLIC_URL}/3dObject/Camera/Camera.obj`;
+    const materialUrl =
+      objecturl?.mtl ||
+      objecturl?.bin ||
+      `${process.env.PUBLIC_URL}/3dObject/Camera/10124_SLR_Camera_SG_V1_Iteration2.mtl`;
+    const extension = objecturl?.extension || 'obj';
+    if (extension === 'obj') {
+      const mtlLoader = new MTLLoader();
+      mtlLoader.load(materialUrl, (materials) => {
+        materials.preload();
+        const objLoader = new OBJLoader();
+        objLoader.setMaterials(materials);
+        objLoader.load(loadUrl, (obj) => {
+          setObject(obj);
+          setLoadingValue(false);
+        });
+      });
+    }
 
-  const materials = useLoader(
-    MTLLoader,
-    `${process.env.PUBLIC_URL}/3dObject/Camera/10124_SLR_Camera_SG_V1_Iteration2.mtl`,
-  );
-  const object = useLoader(
-    OBJLoader,
-    loadUrl || `${process.env.PUBLIC_URL}/3dObject/Camera/Camera.obj`,
-    (loader) => {
-      materials.preload();
-      loader.setMaterials(materials);
-    },
-  );
+    if (extension === 'glt' || extension === 'gltf') {
+      const gltfLoader = new GLTFLoader();
+      gltfLoader.load(loadUrl, (obj) => {
+        setObject(obj);
+        setLoadingValue(false);
+      });
+    }
+  }, [objecturl, setLoadingValue]);
+
   useEffect(() => {
     if (object) {
       setLoadingValue(false);
@@ -58,22 +74,22 @@ function Model({ objecturl }) {
     const handleKeyDown = (event) => {
       switch (event.key) {
         case 'w':
-          movement.current.forward = 1;
+          movement.current.forward = 0.1;
           break;
         case 's':
-          movement.current.forward = -1;
+          movement.current.forward = -0.1;
           break;
         case 'a':
-          movement.current.right = 1;
+          movement.current.right = 0.1;
           break;
         case 'd':
-          movement.current.right = -1;
+          movement.current.right = -0.1;
           break;
         case 'Shift':
-          movement.current.up = -1;
+          movement.current.up = -0.1;
           break;
         case 'Control':
-          movement.current.up = 1;
+          movement.current.up = 0.1;
           break;
         default:
           break;
@@ -110,7 +126,9 @@ function Model({ objecturl }) {
 
   return (
     <mesh ref={modelRef} visible={!loadingValue}>
-      <primitive object={object} position={[0, 0, -1]} scale={0.03} />
+      {object && (
+        <primitive object={object} position={[0, 0, -1]} scale={0.03} />
+      )}
     </mesh>
   );
 }

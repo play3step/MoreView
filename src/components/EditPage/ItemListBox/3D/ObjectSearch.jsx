@@ -5,24 +5,65 @@ function ObjectSearch({ menuRef }) {
   const { addObject } = useObject();
 
   const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (!file) {
+    const { files } = event.target;
+    if (!files) {
       return;
     }
-    const fileName = file.name;
-    console.log(fileName);
-    const objExtension = fileName.split('.').pop();
-    console.log(objExtension);
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      addObject(reader.result);
+
+    const filesData = {
+      obj: null,
+      mtl: null,
+      bin: null,
+      gltf: null,
+      type: null,
     };
+
+    const fileReadPromises = Array.from(files).map(
+      (file) =>
+        new Promise((resolve, reject) => {
+          const fileName = file.name;
+          const extension = fileName.split('.').pop().toLowerCase();
+          const reader = new FileReader();
+
+          reader.onload = () => {
+            if (
+              extension === 'obj' ||
+              extension === 'mtl' ||
+              extension === 'bin' ||
+              extension === 'gltf'
+            ) {
+              if (extension === 'obj' || extension === 'gltf') {
+                filesData.type = extension;
+              }
+              filesData[extension] = reader.result;
+            }
+            resolve();
+          };
+
+          reader.onerror = reject;
+
+          reader.readAsDataURL(file);
+        }),
+    );
+
+    Promise.all(fileReadPromises)
+      .then(() => {
+        addObject(
+          filesData.obj,
+          filesData.mtl,
+          filesData.bin,
+          filesData.gltf,
+          filesData.type,
+        );
+      })
+      .catch((error) => {
+        console.error('Error reading files: ', error);
+      });
   };
 
   return (
     <ItemContainer ref={menuRef}>
-      <input type="file" onChange={handleFileChange} />
+      <input type="file" onChange={handleFileChange} multiple />
     </ItemContainer>
   );
 }

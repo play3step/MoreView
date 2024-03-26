@@ -6,13 +6,16 @@ const useObject = () => {
   const pageData = useRecoilValue(pageState);
   const currentPageObject = objectValue[pageData] || [];
 
-  const addObject = (objectUrl, objExtension) => {
+  const addObject = (objUrl, objMtl, objBin, gltfUrl, extensionUrl) => {
     const ObjectCountInCurrentPage = currentPageObject.length;
 
     const newObject = {
-      url: objectUrl,
       id: `object${ObjectCountInCurrentPage + 1}`,
-      extension: objExtension,
+      obj: objUrl,
+      mtl: objMtl,
+      gltf: gltfUrl,
+      bin: objBin,
+      extension: extensionUrl,
     };
     const updatedImages = {
       ...objectValue,

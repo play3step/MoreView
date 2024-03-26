@@ -185,7 +185,7 @@ function EditPage() {
                       height: '81.48148148148148vh',
                     }}
                   >
-                    <Edit3d objecturl={objectValue[pageRendering]?.[0]?.url} />
+                    <Edit3d objecturl={objectValue[pageRendering]?.[0]} />
                   </Canvas>
                 );
               }
