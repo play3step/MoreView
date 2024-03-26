@@ -3,20 +3,26 @@ import useObject from '../../../../hooks/AddItem/useObject';
 
 function ObjectSearch({ menuRef }) {
   const { addObject } = useObject();
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (!file) {
       return;
     }
+    const fileName = file.name;
+    console.log(fileName);
+    const objExtension = fileName.split('.').pop();
+    console.log(objExtension);
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
       addObject(reader.result);
     };
   };
+
   return (
     <ItemContainer ref={menuRef}>
-      <input type="file" onChange={handleFileChange} accept=".obj" />
+      <input type="file" onChange={handleFileChange} />
     </ItemContainer>
   );
 }

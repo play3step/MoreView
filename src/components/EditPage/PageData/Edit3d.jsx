@@ -24,10 +24,6 @@ function Model({ objecturl }) {
     setLoadingValue(true);
   }, [objecturl]);
 
-  // const obj = useLoader(
-  //   OBJLoader,
-  //   loadUrl || `${process.env.PUBLIC_URL}/3dObject/Camera.obj`,
-  // );
   const materials = useLoader(
     MTLLoader,
     `${process.env.PUBLIC_URL}/3dObject/Camera/10124_SLR_Camera_SG_V1_Iteration2.mtl`,
