@@ -10,11 +10,8 @@ function EditGltfLoader({ objecturl }) {
   const { camera, scene } = useThree();
   const [loadingValue, setLoadingValue] = useRecoilState(LodingState);
   const movement = useRef({ forward: 0, right: 0, up: 0 });
-
-  const gltf = useLoader(
-    GLTFLoader,
-    objecturl || `${process.env.PUBLIC_URL}/3dObject/shiba/scene.gltf`,
-  );
+  const gltfUrl = typeof objecturl === 'string' ? objecturl : objecturl.gltf;
+  const gltf = useLoader(GLTFLoader, gltfUrl);
 
   useEffect(() => {
     scene.background = new Color('#FFFFFF');
