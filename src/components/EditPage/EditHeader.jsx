@@ -1,13 +1,22 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import SvgIcon from './atom/SvgIcon';
 import useText from '../../hooks/AddItem/useText';
+import Logo from '../myPage/atom/Logo';
 
 function EditHeader({ pageValue, setMenu, fullScreen, redo, undo }) {
   const { addText } = useText();
   const is3dDisabled = pageValue.type !== '3d';
   const is2dDisabled = pageValue.type !== '2d';
+  const nav = useNavigate();
+  const backHandle = () => {
+    nav(-1);
+  };
   return (
     <HeaderContainer>
+      <BackLogo onClick={backHandle}>
+        <Logo width="5.416666666666667vw" height="6.481481481481481vh" />
+      </BackLogo>
       <LeftSection>
         <SvgIcon type="Undo" onClick={undo} />
         <SvgIcon type="Redo" onClick={redo} />
@@ -40,6 +49,10 @@ function EditHeader({ pageValue, setMenu, fullScreen, redo, undo }) {
 }
 
 export default EditHeader;
+
+const BackLogo = styled.div`
+  margin-left: 2.96875vw;
+`;
 
 const HeaderContainer = styled.div`
   position: relative;
