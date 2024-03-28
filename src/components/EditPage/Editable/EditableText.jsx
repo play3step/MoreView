@@ -18,9 +18,11 @@ function EditableText({ id, initialText, onTextChange, onDragEnd, x, y }) {
     setEditing(true);
     const textPosition = e.target.getAbsolutePosition();
     const stageBox = stage.container().getBoundingClientRect();
+    const scale = stage.scaleX();
+
     const areaPosition = {
-      x: stageBox.left + textPosition.x,
-      y: stageBox.top + textPosition.y,
+      x: (stageBox.left + window.scrollX + textPosition.x) * scale,
+      y: (stageBox.top + window.scrollY + textPosition.y) * scale,
     };
 
     const textarea = document.createElement('textarea');
