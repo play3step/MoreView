@@ -6,7 +6,9 @@ import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import EditHeader from '../components/EditPage/EditHeader';
 import PreviewSlide from '../components/EditPage/PreviewSlide/PreviewSlide';
 import Edit2d from '../components/EditPage/PageData/Edit2d';
-import { editState, interactiveState } from '../store/recoil';
+import { editState } from '../store/recoil';
+import { itemState } from '../store/toolState';
+
 import ShapeItem from '../components/EditPage/ItemListBox/2D/ShapeItem';
 import Edit3d from '../components/EditPage/PageData/Edit3d';
 import ImageItem from '../components/EditPage/ItemListBox/2D/ImageItem';
@@ -19,6 +21,7 @@ import useShapeHandlers from '../hooks/EditPage/Handlers/useShapeHandlers';
 import useKeyboardNavigation from '../hooks/EditPage/useKeyboardNavigation';
 import useDeleteItem from '../hooks/EditPage/useDeleteItem';
 import useHistory from '../hooks/EditPage/Handlers/useHistory';
+import TextTool from '../components/EditPage/EditTool/TextTool';
 
 function EditPage() {
   const {
@@ -41,7 +44,7 @@ function EditPage() {
   } = useItemValue();
 
   const isEditing = useRecoilValue(editState);
-  const [menu, setMenu] = useRecoilState(interactiveState);
+  const [menu, setMenu] = useRecoilState(itemState);
   const menuRef = useRef();
 
   const fullScreenHandle = useFullScreenHandle();
@@ -142,6 +145,7 @@ function EditPage() {
         imgValue={imgValue}
         addSlide={addSlide}
       />
+
       <CanvasContainer>
         <FullScreen handle={fullScreenHandle}>
           <div
@@ -194,11 +198,15 @@ function EditPage() {
           </div>
         </FullScreen>
       </CanvasContainer>
+
       <ItemListPosition>
         {menu === 1 && <ShapeItem menuRef={menuRef} />}
         {menu === 2 && <ImageItem menuRef={menuRef} />}
         {menu === 3 && <ObjectSearch menuRef={menuRef} />}
       </ItemListPosition>
+      <ToolPosition>
+        <TextTool />
+      </ToolPosition>
     </EditContainer>
   );
 }
@@ -225,4 +233,10 @@ const ItemListPosition = styled.div`
   position: absolute;
   left: 40%;
   top: 8%;
+`;
+
+const ToolPosition = styled.div`
+  position: absolute;
+  right: 1.1vw;
+  top: 40%;
 `;
