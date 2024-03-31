@@ -65,7 +65,7 @@ function Edit2d({
             id={textItem.id}
             x={textItem.x}
             y={textItem.y}
-            initialText={textItem.text}
+            initialText={textItem}
             onTextChange={(newText) => handleTextChange(textItem.id, newText)}
             onDragEnd={handleTextDragEnd}
           />

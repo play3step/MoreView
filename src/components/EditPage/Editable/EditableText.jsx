@@ -1,21 +1,27 @@
 import React, { useState } from 'react';
 import { Text } from 'react-konva';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { editState } from '../../../store/recoil';
+import { toolState } from '../../../store/toolState';
 
 function EditableText({ id, initialText, onTextChange, onDragEnd, x, y }) {
-  const [text, setText] = useState(initialText);
+  const [text, setText] = useState(initialText.text);
   const [editing, setEditing] = useRecoilState(editState);
+  const setTool = useSetRecoilState(toolState);
+
   const handleDragEnd = (e) => {
     const newX = e.target.x();
     const newY = e.target.y();
     onDragEnd(id, { x: newX, y: newY });
   };
+
   const handleDoubleClick = (e) => {
     const stage = e.target.getStage();
     if (!stage) return;
-
     setEditing(true);
+    setTool({
+      state: true,
+    });
     const textPosition = e.target.getAbsolutePosition();
     const stageBox = stage.container().getBoundingClientRect();
     const scale = stage.scaleX();
@@ -24,15 +30,15 @@ function EditableText({ id, initialText, onTextChange, onDragEnd, x, y }) {
       x: (stageBox.left + window.scrollX + textPosition.x) * scale,
       y: (stageBox.top + window.scrollY + textPosition.y) * scale,
     };
-
     const textarea = document.createElement('textarea');
     document.body.appendChild(textarea);
     textarea.value = text;
     textarea.style.position = 'absolute';
     textarea.style.top = `${areaPosition.y}px`;
     textarea.style.left = `${areaPosition.x}px`;
-    textarea.style.fontSize = '20px';
+    textarea.style.fontSize = `${initialText.size}px`;
     textarea.style.border = 'none';
+    textarea.style.color = initialText.color;
     textarea.style.padding = '0';
     textarea.style.margin = '0';
     textarea.style.overflow = 'hidden';
@@ -43,9 +49,10 @@ function EditableText({ id, initialText, onTextChange, onDragEnd, x, y }) {
     textarea.focus();
 
     const span = document.createElement('span');
-    span.style.fontSize = '20px';
+    span.style.fontSize = `${initialText.size}px`;
     span.style.whiteSpace = 'pre-wrap';
     span.style.visibility = 'hidden';
+
     document.body.appendChild(span);
 
     const adjustSize = () => {
@@ -66,6 +73,9 @@ function EditableText({ id, initialText, onTextChange, onDragEnd, x, y }) {
       }
       onTextChange(textarea.value);
       setEditing(false);
+      setTool({
+        state: false,
+      });
     };
 
     textarea.addEventListener('blur', () => {
@@ -80,7 +90,8 @@ function EditableText({ id, initialText, onTextChange, onDragEnd, x, y }) {
         text={text}
         x={x}
         y={y}
-        fontSize={20}
+        fontSize={initialText.size}
+        fill={initialText.color}
         draggable
         onDblClick={handleDoubleClick}
         onDragEnd={handleDragEnd}

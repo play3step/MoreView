@@ -5,6 +5,7 @@ function TextTool() {
     <ToolContainer>
       <p>Text</p>
       <p>Size</p>
+
       <p>Color</p>
     </ToolContainer>
   );

@@ -15,6 +15,9 @@ const useText = () => {
       x: randomX,
       y: randomY,
       text: 'New Text',
+      size: 24,
+      color: 'blue',
+
       id: `textBox${textCountInCurrentPage + 1}`,
     };
     const updatedTextBoxes = {
