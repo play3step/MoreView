@@ -22,7 +22,6 @@ function Preview2d({
     width: window.innerWidth,
     height: window.innerHeight,
   });
-  console.log(pageType);
   useEffect(() => {
     const handleResize = () => {
       setDimensions({
