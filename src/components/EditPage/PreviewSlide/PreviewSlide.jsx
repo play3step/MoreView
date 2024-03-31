@@ -7,6 +7,7 @@ import AddSlide from './atom/AddSlide';
 function PreviewSlide({ textValue, shapeValue, imgValue, addSlide }) {
   const [pageRendering, setPageRendering] = useRecoilState(pageState);
   const pageValue = useRecoilValue(pageData);
+
   return (
     <>
       <SlideContainer>
@@ -14,6 +15,7 @@ function PreviewSlide({ textValue, shapeValue, imgValue, addSlide }) {
           {pageValue.map((page, index) => (
             <Preview2d
               id={index}
+              pageType={page.type}
               pageRendering={pageRendering}
               textValue={textValue}
               shapeValue={shapeValue}

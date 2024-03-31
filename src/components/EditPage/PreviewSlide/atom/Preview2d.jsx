@@ -16,12 +16,13 @@ function Preview2d({
   pageSize,
   onClick,
   select,
+  pageType,
 }) {
   const [dimensions, setDimensions] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
   });
-
+  console.log(pageType);
   useEffect(() => {
     const handleResize = () => {
       setDimensions({
@@ -40,7 +41,9 @@ function Preview2d({
 
   return (
     <SlideListBox onClick={onClick} select={select}>
-      <SlideNum>{id + 1} </SlideNum>
+      <SlideNum>
+        {id + 1}. {pageType.toUpperCase()}
+      </SlideNum>
       <Stage
         width={dimensions.width * pageSize}
         height={dimensions.height * pageSize}
