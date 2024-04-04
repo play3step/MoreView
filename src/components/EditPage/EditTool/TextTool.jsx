@@ -1,12 +1,40 @@
+import React from 'react';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
+import { textPropertiesState } from '../../../store/toolState';
+import { editState } from '../../../store/recoil';
 
 function TextTool() {
+  const [textProps, setTextProps] = useRecoilState(textPropertiesState);
+  const setEditing = useSetRecoilState(editState);
+
+  const handleFontSizeChange = (e) => {
+    setTextProps((prevProps) => ({ ...prevProps, fontSize: e.target.value }));
+  };
+
+  const handleColorChange = (e) => {
+    setTextProps((prevProps) => ({ ...prevProps, color: e.target.value }));
+  };
+
+  const handleApply = () => {
+    setEditing(false);
+  };
   return (
     <ToolContainer>
       <p>Text</p>
-      <p>Size</p>
-
-      <p>Color</p>
+      <input
+        type="number"
+        value={textProps.fontSize}
+        onChange={handleFontSizeChange}
+      />
+      <input
+        type="color"
+        value={textProps.color}
+        onChange={handleColorChange}
+      />
+      <button onClick={handleApply} type="button">
+        Apply
+      </button>
     </ToolContainer>
   );
 }

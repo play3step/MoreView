@@ -9,3 +9,11 @@ export const toolState = atom({
   key: 'toolState',
   default: { toolType: '', state: false },
 });
+
+export const textPropertiesState = atom({
+  key: 'textPropertiesState',
+  default: {
+    fontSize: 20,
+    color: '#000000',
+  },
+});

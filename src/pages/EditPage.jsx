@@ -7,7 +7,7 @@ import EditHeader from '../components/EditPage/EditHeader';
 import PreviewSlide from '../components/EditPage/PreviewSlide/PreviewSlide';
 import Edit2d from '../components/EditPage/PageData/Edit2d';
 import { editState } from '../store/recoil';
-import { itemState, toolState } from '../store/toolState';
+import { itemState } from '../store/toolState';
 
 import ShapeItem from '../components/EditPage/ItemListBox/2D/ShapeItem';
 import Edit3d from '../components/EditPage/PageData/Edit3d';
@@ -45,7 +45,6 @@ function EditPage() {
 
   const isEditing = useRecoilValue(editState);
   const [menu, setMenu] = useRecoilState(itemState);
-  const tool = useRecoilValue(toolState);
 
   const menuRef = useRef();
 
@@ -131,7 +130,6 @@ function EditPage() {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [setMenu, menuRef]);
-
   return (
     <EditContainer>
       <EditHeader
@@ -184,7 +182,7 @@ function EditPage() {
                   />
                 ) : (
                   <Canvas
-                    backgroundColor="#FFFFFF" // 여기에 배경색을 직접 지정합니다.
+                    backgroundColor="#FFFFFF"
                     key={page.id}
                     style={{
                       width: '72.91666666666666vw',
@@ -206,7 +204,7 @@ function EditPage() {
         {menu === 2 && <ImageItem menuRef={menuRef} />}
         {menu === 3 && <ObjectSearch menuRef={menuRef} />}
       </ItemListPosition>
-      <ToolPosition>{tool.state && <TextTool />}</ToolPosition>
+      <ToolPosition>{isEditing && <TextTool />}</ToolPosition>
     </EditContainer>
   );
 }

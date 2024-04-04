@@ -17,7 +17,6 @@ const useText = () => {
       text: 'New Text',
       size: 24,
       color: 'blue',
-
       id: `textBox${textCountInCurrentPage + 1}`,
     };
     const updatedTextBoxes = {
