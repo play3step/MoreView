@@ -115,7 +115,7 @@ function EditObjLoader({ objecturl }) {
   return (
     <mesh ref={modelRef} visible={!loadingValue}>
       {object && (
-        <primitive object={object} position={[0, 0, -1]} scale={0.1} />
+        <primitive object={object} position={[0, 0, -1]} scale={0.25} />
       )}
     </mesh>
   );

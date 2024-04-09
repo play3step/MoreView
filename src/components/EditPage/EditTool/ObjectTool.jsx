@@ -1,14 +1,33 @@
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
 import ControlBox from './atom/ControlBox';
+import { objectSizeState } from '../../../store/toolState';
 
 function ObjectTool() {
+  const [sizeData, setSizeData] = useRecoilState(objectSizeState);
+
+  const plusEventHandle = () => {
+    setSizeData((prevSizeData) => ({
+      ...prevSizeData,
+      size: prevSizeData.size + 0.01,
+    }));
+  };
+  const minusEventHandle = () => {
+    setSizeData((prevSizeData) => ({
+      ...prevSizeData,
+      size: prevSizeData.size - 0.01,
+    }));
+  };
   return (
     <ObjectToolBox>
       <ToolText>Object Size</ToolText>
-      <ControlBox />
+      <ControlBox
+        sizeData={sizeData.size}
+        plus={plusEventHandle}
+        minus={minusEventHandle}
+      />
       <ToolText>Light intensity</ToolText>
-
-      <ControlBox />
+      <ControlBox sizeData={sizeData.size} />
     </ObjectToolBox>
   );
 }

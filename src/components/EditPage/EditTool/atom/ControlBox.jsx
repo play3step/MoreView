@@ -2,12 +2,20 @@ import styled from 'styled-components';
 import { ReactComponent as Plus } from '../../../../assets/toolIcon/plus.svg';
 import { ReactComponent as Minus } from '../../../../assets/toolIcon/minus.svg';
 
-function ControlBox() {
+function ControlBox({ sizeData, plus, minus }) {
   return (
     <BoxSize>
-      <Plus width="2.083333333333333vw" height="3.7037037037037033vh" />
-      <ControlData>0.75</ControlData>
-      <Minus width="2.083333333333333vw" height="3.7037037037037033vh" />
+      <Plus
+        width="2.083333333333333vw"
+        height="3.7037037037037033vh"
+        onClick={plus}
+      />
+      <ControlData>{sizeData.toFixed(2)}</ControlData>
+      <Minus
+        width="2.083333333333333vw"
+        height="3.7037037037037033vh"
+        onClick={minus}
+      />
     </BoxSize>
   );
 }

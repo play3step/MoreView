@@ -17,3 +17,10 @@ export const textPropertiesState = atom({
     color: '#000000',
   },
 });
+
+export const objectSizeState = atom({
+  key: 'objectSizeState',
+  default: {
+    size: 0.25,
+  },
+});
