@@ -131,6 +131,7 @@ function EditPage() {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [setMenu, menuRef]);
+
   return (
     <EditContainer>
       <EditHeader
@@ -207,7 +208,7 @@ function EditPage() {
       </ItemListPosition>
       <ToolPosition>{isEditing && <TextTool />}</ToolPosition>
       <ObjectToolPosition>
-        <ObjectTool />
+        {pageValue[pageRendering]?.type === '3d' && <ObjectTool />}
       </ObjectToolPosition>
     </EditContainer>
   );
