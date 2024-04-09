@@ -22,6 +22,7 @@ import useKeyboardNavigation from '../hooks/EditPage/useKeyboardNavigation';
 import useDeleteItem from '../hooks/EditPage/useDeleteItem';
 import useHistory from '../hooks/EditPage/Handlers/useHistory';
 import TextTool from '../components/EditPage/EditTool/TextTool';
+import ObjectTool from '../components/EditPage/EditTool/ObjectTool';
 
 function EditPage() {
   const {
@@ -205,6 +206,9 @@ function EditPage() {
         {menu === 3 && <ObjectSearch menuRef={menuRef} />}
       </ItemListPosition>
       <ToolPosition>{isEditing && <TextTool />}</ToolPosition>
+      <ObjectToolPosition>
+        <ObjectTool />
+      </ObjectToolPosition>
     </EditContainer>
   );
 }
@@ -237,4 +241,10 @@ const ToolPosition = styled.div`
   position: absolute;
   right: 1.1vw;
   top: 40%;
+`;
+
+const ObjectToolPosition = styled.div`
+  position: absolute;
+  left: 16.666666666666664vw;
+  bottom: 0;
 `;

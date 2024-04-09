@@ -5,7 +5,7 @@ import { Color, Vector3 } from 'three';
 import { useRecoilState } from 'recoil';
 import { LodingState } from '../../../../store/recoil';
 
-function EditGltfLoader({ objecturl }) {
+function EditGltfLoader({ objecturl, size }) {
   const modelRef = useRef();
   const { camera, scene } = useThree();
   const [loadingValue, setLoadingValue] = useRecoilState(LodingState);
@@ -90,7 +90,7 @@ function EditGltfLoader({ objecturl }) {
 
   return (
     <mesh ref={modelRef} visible={!loadingValue}>
-      <primitive object={gltf.scene} scale={1} />
+      <primitive object={gltf.scene} scale={size} />
     </mesh>
   );
 }
