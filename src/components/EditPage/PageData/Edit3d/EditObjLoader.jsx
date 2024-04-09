@@ -6,7 +6,7 @@ import { useRecoilState } from 'recoil';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
 import { LodingState } from '../../../../store/recoil';
 
-function EditObjLoader({ objecturl }) {
+function EditObjLoader({ objecturl, size }) {
   const modelRef = useRef();
   const { camera } = useThree();
   const [loadingValue, setLoadingValue] = useRecoilState(LodingState);
@@ -115,7 +115,7 @@ function EditObjLoader({ objecturl }) {
   return (
     <mesh ref={modelRef} visible={!loadingValue}>
       {object && (
-        <primitive object={object} position={[0, 0, -1]} scale={0.25} />
+        <primitive object={object} position={[0, 0, -1]} scale={size} />
       )}
     </mesh>
   );

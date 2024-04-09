@@ -22,5 +22,6 @@ export const objectSizeState = atom({
   key: 'objectSizeState',
   default: {
     size: 0.25,
+    light: 5,
   },
 });

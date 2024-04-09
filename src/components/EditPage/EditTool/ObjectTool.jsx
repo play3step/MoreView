@@ -6,16 +6,28 @@ import { objectSizeState } from '../../../store/toolState';
 function ObjectTool() {
   const [sizeData, setSizeData] = useRecoilState(objectSizeState);
 
-  const plusEventHandle = () => {
+  const plusSizeHandle = () => {
     setSizeData((prevSizeData) => ({
       ...prevSizeData,
       size: prevSizeData.size + 0.01,
     }));
   };
-  const minusEventHandle = () => {
+  const minusSizeHandle = () => {
     setSizeData((prevSizeData) => ({
       ...prevSizeData,
       size: prevSizeData.size - 0.01,
+    }));
+  };
+  const plusLightHandle = () => {
+    setSizeData((prevSizeData) => ({
+      ...prevSizeData,
+      light: prevSizeData.light + 0.5,
+    }));
+  };
+  const minusLightHandle = () => {
+    setSizeData((prevSizeData) => ({
+      ...prevSizeData,
+      light: prevSizeData.light - 0.5,
     }));
   };
   return (
@@ -23,11 +35,15 @@ function ObjectTool() {
       <ToolText>Object Size</ToolText>
       <ControlBox
         sizeData={sizeData.size}
-        plus={plusEventHandle}
-        minus={minusEventHandle}
+        plus={plusSizeHandle}
+        minus={minusSizeHandle}
       />
       <ToolText>Light intensity</ToolText>
-      <ControlBox sizeData={sizeData.size} />
+      <ControlBox
+        sizeData={sizeData.light}
+        plus={plusLightHandle}
+        minus={minusLightHandle}
+      />
     </ObjectToolBox>
   );
 }

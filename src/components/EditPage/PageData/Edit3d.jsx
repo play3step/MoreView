@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useThree } from '@react-three/fiber';
 import { PerspectiveCamera } from '@react-three/drei';
 // import EditGltfLoader from './Edit3d/EditGltfLoader';
+import { useRecoilValue } from 'recoil';
 import EditObjLoader from './Edit3d/EditObjLoader';
 import EditGltfLoader from './Edit3d/EditGltfLoader';
+import { objectSizeState } from '../../../store/toolState';
 
 function Edit3d({ objecturl }) {
   const { camera } = useThree();
-
+  const dataSize = useRecoilValue(objectSizeState);
   const [isMouseDown, setIsMouseDown] = useState(false);
 
   useEffect(() => {
@@ -40,16 +42,14 @@ function Edit3d({ objecturl }) {
         groundColor={0x080820}
         intensity={1}
       />
-      <directionalLight position={[0, 0, 5]} intensity={5} />
-      <directionalLight position={[5, 5, 5]} intensity={5} />
-      <directionalLight position={[-5, -5, -5]} intensity={10} />
-      {/* <EditGltfLoader objecturl={objecturl} /> */}
-      {/* <EditObjLoader objecturl={objecturl} /> */}
+      <directionalLight position={[0, 0, 5]} intensity={dataSize.light} />
+      <directionalLight position={[5, 5, 5]} intensity={dataSize.light} />
+      <directionalLight position={[-5, -5, -5]} intensity={dataSize.light} />
       {objecturl?.extension === 'obj' || objecturl?.extension === undefined ? (
-        <EditObjLoader objecturl={objecturl} />
+        <EditObjLoader objecturl={objecturl} size={dataSize.size} />
       ) : null}
       {objecturl?.extension === 'gltf' ? (
-        <EditGltfLoader objecturl={objecturl} />
+        <EditGltfLoader objecturl={objecturl} size={dataSize.size} />
       ) : null}
     </>
   );
