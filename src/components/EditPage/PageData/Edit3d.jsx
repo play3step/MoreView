@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useThree } from '@react-three/fiber';
 import { PerspectiveCamera } from '@react-three/drei';
-// import EditGltfLoader from './Edit3d/EditGltfLoader';
 import { useRecoilValue } from 'recoil';
+import { Euler } from 'three';
 import EditObjLoader from './Edit3d/EditObjLoader';
 import EditGltfLoader from './Edit3d/EditGltfLoader';
 import { objectSizeState } from '../../../store/toolState';
@@ -13,11 +13,22 @@ function Edit3d({ objecturl }) {
   const [isMouseDown, setIsMouseDown] = useState(false);
 
   useEffect(() => {
+    const sensitivity = 0.002;
+    const euler = new Euler(0, 0, 0, 'YXZ');
+
     const handleMouseMove = (event) => {
       if (!isMouseDown) return;
-      const { movementX } = event;
-      const rotationSpeed = 0.005;
-      camera.rotation.y -= movementX * rotationSpeed;
+
+      const { movementX, movementY } = event;
+
+      euler.setFromQuaternion(camera.quaternion);
+
+      euler.y -= movementX * sensitivity;
+      euler.x -= movementY * sensitivity;
+
+      euler.x = Math.max(Math.PI / -2, Math.min(Math.PI / 2, euler.x));
+
+      camera.quaternion.setFromEuler(euler);
     };
 
     const handleMouseDown = () => setIsMouseDown(true);

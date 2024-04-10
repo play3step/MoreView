@@ -8,7 +8,7 @@ export const pageState = atom({
 export const pageData = atom({
   key: 'pageData',
   default: [
-    { id: 0, type: '2d' },
+    { id: 0, type: '3d' },
     { id: 1, type: '2d' },
   ],
 });
