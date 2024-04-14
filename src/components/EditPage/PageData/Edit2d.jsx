@@ -21,6 +21,7 @@ function Edit2d({
   handleImgDragEnd,
   pageSize,
   handleImgTransform,
+  isFullScreen,
 }) {
   const [dimensions, setDimensions] = useState({
     width: window.innerWidth,
@@ -41,13 +42,16 @@ function Edit2d({
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [isFullScreen]);
+
+  const adjustedPageSize = isFullScreen ? 1 : pageSize; // 풀스크린일 때는 1, 아닐 때는 기본 pageSize 사용
+
   return (
     <Stage
-      width={dimensions.width * pageSize}
-      height={dimensions.height * pageSize}
-      scaleX={pageSize} // 모든 콘텐츠를 축소하기 위한 스케일 조정
-      scaleY={pageSize}
+      width={dimensions.width * adjustedPageSize}
+      height={dimensions.height * adjustedPageSize}
+      scaleX={adjustedPageSize}
+      scaleY={adjustedPageSize}
       onMouseDown={checkDeselect}
       onTouchStart={checkDeselect}
     >

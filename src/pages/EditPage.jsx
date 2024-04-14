@@ -179,17 +179,25 @@ function EditPage() {
                     selectedId={selectedId}
                     selectShape={setSelectedId}
                     onLineUpdate={onLineUpdate}
-                    pageSize={0.733}
+                    pageSize={0.73}
                     handleImgTransform={handleImgTransform}
+                    isFullScreen={isFullScreen}
                   />
                 ) : (
                   <Canvas
                     backgroundColor="#FFFFFF"
                     key={page.id}
-                    style={{
-                      width: '72.91666666666666vw',
-                      height: '81.48148148148148vh',
-                    }}
+                    style={
+                      isFullScreen
+                        ? {
+                            width: '100vw',
+                            height: '100vh',
+                          }
+                        : {
+                            width: '72.91666666666666vw',
+                            height: '76.48148148148148vh',
+                          }
+                    }
                   >
                     <Edit3d objecturl={objectValue[pageRendering]?.[0]} />
                   </Canvas>
