@@ -15,7 +15,7 @@ function ObjectTool() {
   const minusSizeHandle = () => {
     setSizeData((prevSizeData) => ({
       ...prevSizeData,
-      size: prevSizeData.size - 0.01,
+      size: prevSizeData.size > 0 ? prevSizeData.size - 0.01 : 0,
     }));
   };
   const plusLightHandle = () => {
@@ -27,7 +27,7 @@ function ObjectTool() {
   const minusLightHandle = () => {
     setSizeData((prevSizeData) => ({
       ...prevSizeData,
-      light: prevSizeData.light - 0.5,
+      light: prevSizeData.light > 0 ? prevSizeData.light - 0.5 : 0,
     }));
   };
   return (

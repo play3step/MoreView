@@ -150,18 +150,7 @@ function EditPage() {
 
       <CanvasContainer>
         <FullScreen handle={fullScreenHandle}>
-          <div
-            style={{
-              ...(isFullScreen
-                ? {
-                    position: 'fixed',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                  }
-                : {}),
-            }}
-          >
+          <div>
             {pageValue.map((page) => {
               if (page.id === pageRendering) {
                 return page.type === '2d' ? (
