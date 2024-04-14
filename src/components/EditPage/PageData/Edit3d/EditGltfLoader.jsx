@@ -55,6 +55,11 @@ function EditGltfLoader({ objecturl, size }) {
         case 'Control':
           movement.current.up = 1;
           break;
+        case 'r':
+          if (modelRef.current) {
+            modelRef.current.position.set(0, 0, -1);
+          }
+          break;
         default:
           break;
       }
