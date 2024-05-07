@@ -7,5 +7,5 @@ export const LodingState = atom({
 
 export const CreateModalState = atom({
   key: 'CreateModalState',
-  default: true,
+  default: false,
 });

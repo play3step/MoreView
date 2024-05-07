@@ -1,13 +1,16 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
 import SvgIcon from './atom/SvgIcon';
 import useText from '../../hooks/AddItem/useText';
 import Logo from '../myPage/atom/Logo';
+import { CreateModalState } from '../../store/modalState';
 
 function EditHeader({ pageValue, setMenu, fullScreen, redo, undo }) {
   const { addText } = useText();
   const is3dDisabled = pageValue.type !== '3d';
   const is2dDisabled = pageValue.type !== '2d';
+  const setModal = useSetRecoilState(CreateModalState);
   const nav = useNavigate();
   const backHandle = () => {
     nav(-1);
@@ -38,7 +41,10 @@ function EditHeader({ pageValue, setMenu, fullScreen, redo, undo }) {
             type="Search"
             onClick={() => (is2dDisabled ? setMenu(3) : null)}
           />
-          <SvgIcon type="Creation" />
+          <SvgIcon
+            type="Creation"
+            onClick={() => (is2dDisabled ? setModal(true) : null)}
+          />
         </Editor3DBox>
       </CenterSection>
       <RightSection>
