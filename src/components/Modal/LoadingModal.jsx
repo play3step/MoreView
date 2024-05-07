@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { LodingState } from '../../store/recoil';
+import { LodingState } from '../../store/modalState';
 
 function LoadingModal() {
   const lodingValue = useRecoilValue(LodingState);

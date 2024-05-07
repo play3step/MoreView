@@ -4,7 +4,7 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { Color, Vector3 } from 'three';
 import { useRecoilState } from 'recoil';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
-import { LodingState } from '../../../../store/recoil';
+import { LodingState } from '../../../../store/modalState';
 import useKeyDown from '../../../../hooks/EditPage/Handlers/useKeyDown';
 
 function EditObjLoader({ objecturl, size }) {

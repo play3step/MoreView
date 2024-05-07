@@ -10,6 +10,7 @@ import SideMenu from './components/myPage/SideMenu';
 import ItemPage from './pages/ItemPage';
 import EditPage from './pages/EditPage';
 import LoadingModal from './components/Modal/LoadingModal';
+import CreateObjectModal from './components/Modal/CreateObjectModal';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <BrowserRouter>
           <SideMenu />
           <LoadingModal />
+          <CreateObjectModal />
           <Routes>
             {/* <Route path="/" element={<MainPage />} /> */}
             <Route path="/" element={<MyPage />} />

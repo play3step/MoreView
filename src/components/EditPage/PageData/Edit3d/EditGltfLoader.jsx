@@ -3,7 +3,7 @@ import { useLoader, useFrame, useThree } from '@react-three/fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { Color, Vector3 } from 'three';
 import { useRecoilState } from 'recoil';
-import { LodingState } from '../../../../store/recoil';
+import { LodingState } from '../../../../store/modalState';
 import useKeyDown from '../../../../hooks/EditPage/Handlers/useKeyDown';
 
 function EditGltfLoader({ objecturl, size }) {
