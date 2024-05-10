@@ -26,6 +26,9 @@ function TextTool() {
         type="number"
         value={textProps.fontSize}
         onChange={handleFontSizeChange}
+        style={{
+          width: '3.5vw',
+        }}
       />
       <input
         type="color"
