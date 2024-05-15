@@ -5,17 +5,13 @@ import { ReactComponent as Minus } from '../../../../assets/toolIcon/minus.svg';
 function ControlBox({ sizeData, plus, minus }) {
   return (
     <BoxSize>
-      <Plus
-        width="2.083333333333333vw"
-        height="3.7037037037037033vh"
-        onClick={plus}
-      />
+      <Button onClick={plus}>
+        <PlusIcon />
+      </Button>
       <ControlData>{sizeData.toFixed(2)}</ControlData>
-      <Minus
-        width="2.083333333333333vw"
-        height="3.7037037037037033vh"
-        onClick={minus}
-      />
+      <Button onClick={minus}>
+        <MinusIcon />
+      </Button>
     </BoxSize>
   );
 }
@@ -33,4 +29,21 @@ const BoxSize = styled.div`
 
 const ControlData = styled.p`
   font-size: 1.4vw;
+`;
+
+const Button = styled.button`
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+`;
+
+const PlusIcon = styled(Plus)`
+  width: 2.083333333333333vw;
+  height: 3.7037037037037033vh;
+`;
+
+const MinusIcon = styled(Minus)`
+  width: 2.083333333333333vw;
+  height: 3.7037037037037033vh;
 `;
