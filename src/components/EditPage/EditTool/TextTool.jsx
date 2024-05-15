@@ -15,9 +15,11 @@ function TextTool() {
   const handleColorChange = (e) => {
     setTextProps((prevProps) => ({ ...prevProps, color: e.target.value }));
   };
-
   const handleApply = () => {
     setEditing(false);
+  };
+  const handleKeyDown = (e) => {
+    e.preventDefault();
   };
   return (
     <ToolContainer>
@@ -26,6 +28,7 @@ function TextTool() {
         type="number"
         value={textProps.fontSize}
         onChange={handleFontSizeChange}
+        onKeyDown={handleKeyDown}
         style={{
           width: '3.5vw',
         }}
