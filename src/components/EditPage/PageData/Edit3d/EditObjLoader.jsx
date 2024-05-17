@@ -21,13 +21,15 @@ function EditObjLoader({ objecturl, size }) {
   }, [scene]);
 
   useEffect(() => {
+    if (!objecturl?.obj) {
+      setLoadingValue(false);
+      setObject(null);
+      return;
+    }
     setLoadingValue(true);
 
-    const materialUrl =
-      objecturl?.mtl ||
-      `${process.env.PUBLIC_URL}/3dObject/Camera/10124_SLR_Camera_SG_V1_Iteration2.mtl`;
-    const loadUrl =
-      objecturl?.obj || `${process.env.PUBLIC_URL}/3dObject/Camera/Camera.obj`;
+    const materialUrl = objecturl?.mtl || null;
+    const loadUrl = objecturl?.obj || null;
 
     const mtlLoader = new MTLLoader();
     mtlLoader.load(materialUrl, (materials) => {
@@ -62,9 +64,9 @@ function EditObjLoader({ objecturl, size }) {
 
   return (
     <mesh ref={modelRef} visible={!loadingValue}>
-      {object && (
+      {object ? (
         <primitive object={object} position={[0, 0, -1]} scale={size} />
-      )}
+      ) : null}
     </mesh>
   );
 }
