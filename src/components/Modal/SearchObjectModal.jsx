@@ -4,6 +4,7 @@ import { useRecoilState } from 'recoil';
 import CancelBtn from './atom/CancelBtn';
 import { SearchModalState } from '../../store/modalState';
 import useObject from '../../hooks/AddItem/useObject';
+import { ReactComponent as Add } from '../../assets/svgIcon/Add.svg';
 
 function updateGltfReferences(gltfContent, urls, textures) {
   const gltfJson = JSON.parse(gltfContent);
@@ -143,7 +144,9 @@ function SearchObjectModal() {
             ref={fileInputRef}
           />
           <Button onClick={handleButtonClick}>
-            <PlusIcon>+</PlusIcon>
+            <PlusIcon>
+              <Add width="3.3333333333333335vw" height="5.9259259259259265vh" />
+            </PlusIcon>
             <ButtonText>내 3D 모델 넣기</ButtonText>
           </Button>
         </ContentContainer>
@@ -187,7 +190,6 @@ const CancelPostion = styled.div`
 const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
 `;
 
 const HiddenInput = styled.input`
@@ -195,20 +197,21 @@ const HiddenInput = styled.input`
 `;
 
 const Button = styled.button`
+  position: absolute;
+  top: 2vw;
+  left: 3vw;
   display: flex;
   align-items: center;
-  border: 1px solid #000;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
+  padding: 1vw;
+  border: none;
   background-color: #ffffff;
   cursor: pointer;
 `;
 
 const PlusIcon = styled.span`
-  font-size: 1.5rem;
-  margin-right: 0.5rem;
+  margin-right: 1vw;
 `;
 
 const ButtonText = styled.span`
-  font-size: 1rem;
+  font-size: 1.4vw;
 `;
