@@ -132,6 +132,8 @@ function EditPage() {
     };
   }, [setMenu, menuRef]);
 
+  console.log(objectValue);
+
   return (
     <EditContainer>
       <EditHeader
@@ -188,7 +190,7 @@ function EditPage() {
                           }
                     }
                   >
-                    <Edit3d objecturl={objectValue[pageRendering]?.[0]} />
+                    <Edit3d objecturl={objectValue[pageRendering]} />
                   </Canvas>
                 );
               }

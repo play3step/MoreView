@@ -44,6 +44,7 @@ function Edit3d({ objecturl }) {
       window.removeEventListener('mouseup', handleMouseUp);
     };
   }, [camera, isMouseDown]);
+  const objectList = Object.values(objecturl || {});
 
   return (
     <>
@@ -56,12 +57,14 @@ function Edit3d({ objecturl }) {
       <directionalLight position={[0, 0, 5]} intensity={dataSize.light} />
       <directionalLight position={[5, 5, 5]} intensity={dataSize.light} />
       <directionalLight position={[-5, -5, -5]} intensity={dataSize.light} />
-      {objecturl?.extension === 'obj' || objecturl?.extension === undefined ? (
-        <EditObjLoader objecturl={objecturl} size={dataSize.size} />
-      ) : null}
-      {objecturl?.extension === 'gltf' ? (
-        <EditGltfLoader objecturl={objecturl} size={dataSize.size} />
-      ) : null}
+
+      {objectList?.map((url, index) =>
+        url?.extension === 'obj' || url?.extension === undefined ? (
+          <EditObjLoader key={index} objecturl={url} size={dataSize.size} />
+        ) : url?.extension === 'gltf' ? (
+          <EditGltfLoader key={index} objecturl={url} size={dataSize.size} />
+        ) : null,
+      )}
     </>
   );
 }
