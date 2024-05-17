@@ -167,7 +167,7 @@ const ModalBackdrop = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999;
+  z-index: 99;
 `;
 
 const ModalBox = styled.div`
