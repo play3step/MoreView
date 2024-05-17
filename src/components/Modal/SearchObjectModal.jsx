@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
-import useObject from '../../../../hooks/AddItem/useObject';
+import { useRecoilState } from 'recoil';
+import CancelBtn from './atom/CancelBtn';
+import { SearchModalState } from '../../store/modalState';
+import useObject from '../../hooks/AddItem/useObject';
 
 function updateGltfReferences(gltfContent, urls, textures) {
   const gltfJson = JSON.parse(gltfContent);
@@ -26,8 +29,15 @@ function updateGltfReferences(gltfContent, urls, textures) {
   const gltfBlob = new Blob([updatedGltfContent], { type: 'model/gltf+json' });
   return URL.createObjectURL(gltfBlob);
 }
-function ObjectSearch({ menuRef }) {
+
+function SearchObjectModal() {
+  const [modalValue, setModalValue] = useRecoilState(SearchModalState);
   const { addObject } = useObject();
+  const fileInputRef = useRef(null);
+
+  if (!modalValue) {
+    return null;
+  }
 
   const handleFileChange = async (event) => {
     const { files } = event.target;
@@ -45,7 +55,6 @@ function ObjectSearch({ menuRef }) {
       textures: {},
     };
 
-    // 이미지 파일을 별도로 처리하기 위해 임시 저장소 준비
     const tempTextureFiles = [];
 
     const fileReadPromises = Array.from(files).map((file) => {
@@ -66,7 +75,6 @@ function ObjectSearch({ menuRef }) {
           filesData[extension] = blobUrl;
 
           if (extension === 'gltf') {
-            // GLTF 파일의 경우 내용을 읽어서 나중에 처리
             const reader = new FileReader();
             reader.onload = (e) => {
               filesData.gltfContent = e.target.result;
@@ -78,7 +86,6 @@ function ObjectSearch({ menuRef }) {
             resolve();
           }
         } else if (['jpeg', 'jpg', 'png'].includes(extension)) {
-          // 텍스처 이미지 파일 처리
           tempTextureFiles.push(file);
           resolve();
         } else {
@@ -89,20 +96,18 @@ function ObjectSearch({ menuRef }) {
 
     await Promise.all(fileReadPromises);
 
-    // 이미지 파일들에 대한 Blob URL 생성 및 저장
     tempTextureFiles.forEach((file) => {
       const blobUrl = URL.createObjectURL(file);
       filesData.textures[file.name] = blobUrl;
     });
 
-    // GLTF 파일 내 참조 업데이트 로직 호출
     if (filesData.gltfContent) {
       const updatedGltfBlobUrl = updateGltfReferences(
         filesData.gltfContent,
         filesData.urls,
         filesData.textures,
       );
-      filesData.urls.gltf = updatedGltfBlobUrl; // 업데이트된 GLTF Blob URL 사용
+      filesData.urls.gltf = updatedGltfBlobUrl;
     }
 
     addObject(
@@ -115,29 +120,95 @@ function ObjectSearch({ menuRef }) {
     );
   };
 
+  const handleButtonClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const CancelHandler = () => {
+    setModalValue(false);
+  };
+
   return (
-    <ItemContainer ref={menuRef}>
-      <input
-        type="file"
-        onChange={handleFileChange}
-        multiple
-        accept=".gltf,.bin,.obj,.mtl,.jpeg,.jpg,.png"
-      />
-    </ItemContainer>
+    <ModalBackdrop>
+      <ModalBox>
+        <CancelPostion>
+          <CancelBtn CancelHandler={CancelHandler} />
+        </CancelPostion>
+        <ContentContainer>
+          <HiddenInput
+            type="file"
+            onChange={handleFileChange}
+            multiple
+            accept=".gltf,.bin,.obj,.mtl,.jpeg,.jpg,.png"
+            ref={fileInputRef}
+          />
+          <Button onClick={handleButtonClick}>
+            <PlusIcon>+</PlusIcon>
+            <ButtonText>내 3D 모델 넣기</ButtonText>
+          </Button>
+        </ContentContainer>
+      </ModalBox>
+    </ModalBackdrop>
   );
 }
 
-export default ObjectSearch;
+export default SearchObjectModal;
 
-const ItemContainer = styled.div`
-  width: 21.458333333333332vw;
-  height: 12.592592592592592vh;
-  padding: 1.4583333333333333vw;
-  border-radius: 8px;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+const ModalBackdrop = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2.2395833333333335vw;
+  z-index: 999;
+`;
+
+const ModalBox = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48.125vw;
+  height: 57.96296296296296vh;
   background-color: #ffffff;
+  border-radius: 12px;
+`;
+
+const CancelPostion = styled.div`
+  position: absolute;
+  top: 1vw;
+  right: 1vw;
+`;
+
+const ContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const HiddenInput = styled.input`
+  display: none;
+`;
+
+const Button = styled.button`
+  display: flex;
+  align-items: center;
+  border: 1px solid #000;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background-color: #ffffff;
+  cursor: pointer;
+`;
+
+const PlusIcon = styled.span`
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+`;
+
+const ButtonText = styled.span`
+  font-size: 1rem;
 `;

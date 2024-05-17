@@ -4,13 +4,14 @@ import { useSetRecoilState } from 'recoil';
 import SvgIcon from './atom/SvgIcon';
 import useText from '../../hooks/AddItem/useText';
 import Logo from '../myPage/atom/Logo';
-import { CreateModalState } from '../../store/modalState';
+import { CreateModalState, SearchModalState } from '../../store/modalState';
 
 function EditHeader({ pageValue, setMenu, fullScreen, redo, undo }) {
   const { addText } = useText();
   const is3dDisabled = pageValue.type !== '3d';
   const is2dDisabled = pageValue.type !== '2d';
   const setModal = useSetRecoilState(CreateModalState);
+  const setSearchModal = useSetRecoilState(SearchModalState);
   const nav = useNavigate();
   const backHandle = () => {
     nav(-1);
@@ -39,7 +40,7 @@ function EditHeader({ pageValue, setMenu, fullScreen, redo, undo }) {
         <Editor3DBox>
           <SvgIcon
             type="Search"
-            onClick={() => (is2dDisabled ? setMenu(3) : null)}
+            onClick={() => (is2dDisabled ? setSearchModal(true) : null)}
           />
           <SvgIcon
             type="Creation"
