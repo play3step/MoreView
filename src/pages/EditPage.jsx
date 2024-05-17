@@ -132,8 +132,6 @@ function EditPage() {
     };
   }, [setMenu, menuRef]);
 
-  console.log(objectValue);
-
   return (
     <EditContainer>
       <EditHeader
