@@ -29,7 +29,8 @@
     "react/jsx-props-no-spreading": "off",
     "react/no-unknown-property": "off",
     "no-param-reassign": ["error", { "props": false }],
-    "react/no-array-index-key": "off"
+    "react/no-array-index-key": "off",
+    "no-nested-ternary": "off"
 
   }
 }

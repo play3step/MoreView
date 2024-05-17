@@ -25,7 +25,6 @@ function EditGltfLoader({ objecturl, size }) {
 
   useFrame(() => {
     if (!modelRef.current) return;
-    modelRef.current.rotation.y += 0.01;
     const speed = 0.1;
     const direction = new Vector3(
       movement.current.right,

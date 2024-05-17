@@ -11,6 +11,7 @@ import ItemPage from './pages/ItemPage';
 import EditPage from './pages/EditPage';
 import LoadingModal from './components/Modal/LoadingModal';
 import CreateObjectModal from './components/Modal/CreateObjectModal';
+import SearchObjectModal from './components/Modal/SearchObjectModal';
 
 function App() {
   return (
@@ -24,8 +25,8 @@ function App() {
           <SideMenu />
           <LoadingModal />
           <CreateObjectModal />
+          <SearchObjectModal />
           <Routes>
-            {/* <Route path="/" element={<MainPage />} /> */}
             <Route path="/" element={<MyPage />} />
             <Route path="/About" element={<MyPage />} />
             <Route path="/Edit/:EditId" element={<EditPage />} />

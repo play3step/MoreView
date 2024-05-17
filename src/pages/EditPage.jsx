@@ -12,7 +12,7 @@ import { itemState } from '../store/toolState';
 import ShapeItem from '../components/EditPage/ItemListBox/2D/ShapeItem';
 import Edit3d from '../components/EditPage/PageData/Edit3d';
 import ImageItem from '../components/EditPage/ItemListBox/2D/ImageItem';
-import ObjectSearch from '../components/EditPage/ItemListBox/3D/ObjectSearch';
+
 import useEditorState from '../hooks/EditPage/useEditorState';
 import useItemValue from '../hooks/EditPage/useItemValue';
 import useImageHandlers from '../hooks/EditPage/Handlers/useImageHandlers';
@@ -132,6 +132,8 @@ function EditPage() {
     };
   }, [setMenu, menuRef]);
 
+  console.log(objectValue);
+
   return (
     <EditContainer>
       <EditHeader
@@ -188,7 +190,7 @@ function EditPage() {
                           }
                     }
                   >
-                    <Edit3d objecturl={objectValue[pageRendering]?.[0]} />
+                    <Edit3d objecturl={objectValue[pageRendering]} />
                   </Canvas>
                 );
               }
@@ -201,7 +203,6 @@ function EditPage() {
       <ItemListPosition>
         {menu === 1 && <ShapeItem menuRef={menuRef} />}
         {menu === 2 && <ImageItem menuRef={menuRef} />}
-        {menu === 3 && <ObjectSearch menuRef={menuRef} />}
       </ItemListPosition>
       <ToolPosition>{isEditing && <TextTool />}</ToolPosition>
       <ObjectToolPosition>

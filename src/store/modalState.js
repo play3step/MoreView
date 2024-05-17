@@ -9,3 +9,8 @@ export const CreateModalState = atom({
   key: 'CreateModalState',
   default: false,
 });
+
+export const SearchModalState = atom({
+  key: 'SearchModalState',
+  default: false,
+});
