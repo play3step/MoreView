@@ -23,6 +23,7 @@ import useDeleteItem from '../hooks/EditPage/useDeleteItem';
 import useHistory from '../hooks/EditPage/Handlers/useHistory';
 import TextTool from '../components/EditPage/EditTool/TextTool';
 import ObjectTool from '../components/EditPage/EditTool/ObjectTool';
+import ControllerItem from '../components/EditPage/ItemListBox/3D/ControllerItem';
 
 function EditPage() {
   const {
@@ -131,7 +132,6 @@ function EditPage() {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [setMenu, menuRef]);
-
   return (
     <EditContainer>
       <EditHeader
@@ -202,7 +202,10 @@ function EditPage() {
         {menu === 1 && <ShapeItem menuRef={menuRef} />}
         {menu === 2 && <ImageItem menuRef={menuRef} />}
       </ItemListPosition>
-      <ToolPosition>{isEditing && <TextTool />}</ToolPosition>
+      <ToolPosition>
+        {isEditing && <TextTool />}
+        {pageValue[pageRendering].type === '3d' && <ControllerItem />}
+      </ToolPosition>
       <ObjectToolPosition>
         {pageValue[pageRendering]?.type === '3d' && <ObjectTool />}
       </ObjectToolPosition>

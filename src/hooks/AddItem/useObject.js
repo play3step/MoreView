@@ -26,6 +26,10 @@ const useObject = () => {
       extension: extensionUrl,
       urls: urlsData,
       textures: texturesUrl,
+      size: 0.25,
+      x: 0,
+      y: 0,
+      z: -1,
     };
     const updatedImages = {
       ...objectValue,

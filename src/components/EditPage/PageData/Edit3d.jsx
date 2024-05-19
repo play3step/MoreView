@@ -10,6 +10,7 @@ import { objectSizeState } from '../../../store/toolState';
 function Edit3d({ objecturl }) {
   const { camera } = useThree();
   const dataSize = useRecoilValue(objectSizeState);
+
   const [isMouseDown, setIsMouseDown] = useState(false);
 
   useEffect(() => {
@@ -60,9 +61,9 @@ function Edit3d({ objecturl }) {
 
       {objectList?.map((url, index) =>
         url?.extension === 'obj' || url?.extension === undefined ? (
-          <EditObjLoader key={index} objecturl={url} size={dataSize.size} />
+          <EditObjLoader key={index} objecturl={url} size={url.size} />
         ) : url?.extension === 'gltf' ? (
-          <EditGltfLoader key={index} objecturl={url} size={dataSize.size} />
+          <EditGltfLoader key={index} objecturl={url} size={url.size} />
         ) : null,
       )}
     </>
