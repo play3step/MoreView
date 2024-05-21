@@ -36,7 +36,7 @@ function EditGltfLoader({ objecturl, size }) {
   useKeyDown(movement, modelRef);
   return (
     <mesh ref={modelRef} visible={!loadingValue}>
-      <primitive object={gltf.scene} scale={size} />
+      <primitive object={gltf.scene} position={[0, 0, -1]} scale={size} />
     </mesh>
   );
 }
