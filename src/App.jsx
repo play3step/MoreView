@@ -12,6 +12,7 @@ import EditPage from './pages/EditPage';
 import LoadingModal from './components/Modal/LoadingModal';
 import CreateObjectModal from './components/Modal/CreateObjectModal';
 import SearchObjectModal from './components/Modal/SearchObjectModal';
+import ControllerObjectModal from './components/Modal/ControllerObjectModal';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <LoadingModal />
           <CreateObjectModal />
           <SearchObjectModal />
+          <ControllerObjectModal />
           <Routes>
             <Route path="/" element={<MyPage />} />
             <Route path="/About" element={<MyPage />} />

@@ -14,3 +14,8 @@ export const SearchModalState = atom({
   key: 'SearchModalState',
   default: false,
 });
+
+export const ControllerModalState = atom({
+  key: 'ControllerModalState',
+  default: false,
+});
