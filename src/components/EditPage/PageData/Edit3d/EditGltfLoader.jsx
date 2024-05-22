@@ -6,7 +6,7 @@ import { useRecoilState } from 'recoil';
 import { LodingState } from '../../../../store/modalState';
 import useKeyDown from '../../../../hooks/EditPage/Handlers/useKeyDown';
 
-function EditGltfLoader({ objecturl, size }) {
+function EditGltfLoader({ objecturl, size, x, y, z }) {
   const modelRef = useRef();
   const { camera, scene } = useThree();
   const [loadingValue, setLoadingValue] = useRecoilState(LodingState);
@@ -36,7 +36,7 @@ function EditGltfLoader({ objecturl, size }) {
   useKeyDown(movement, modelRef);
   return (
     <mesh ref={modelRef} visible={!loadingValue}>
-      <primitive object={gltf.scene} position={[0, 0, -1]} scale={size} />
+      <primitive object={gltf.scene} position={[x, y, z]} scale={size} />
     </mesh>
   );
 }

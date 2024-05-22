@@ -61,9 +61,23 @@ function Edit3d({ objecturl }) {
 
       {objectList?.map((url, index) =>
         url?.extension === 'obj' || url?.extension === undefined ? (
-          <EditObjLoader key={index} objecturl={url} size={url.size} />
+          <EditObjLoader
+            key={index}
+            objecturl={url}
+            size={url.size}
+            x={url.x}
+            y={url.y}
+            z={url.z}
+          />
         ) : url?.extension === 'gltf' ? (
-          <EditGltfLoader key={index} objecturl={url} size={url.size} />
+          <EditGltfLoader
+            key={index}
+            objecturl={url}
+            size={url.size}
+            x={url.x}
+            y={url.y}
+            z={url.z}
+          />
         ) : null,
       )}
     </>

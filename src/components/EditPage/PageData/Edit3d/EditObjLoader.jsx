@@ -7,7 +7,7 @@ import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
 import { LodingState } from '../../../../store/modalState';
 import useKeyDown from '../../../../hooks/EditPage/Handlers/useKeyDown';
 
-function EditObjLoader({ objecturl, size }) {
+function EditObjLoader({ objecturl, size, x, y, z }) {
   const modelRef = useRef();
   const { camera } = useThree();
   const [loadingValue, setLoadingValue] = useRecoilState(LodingState);
@@ -65,7 +65,7 @@ function EditObjLoader({ objecturl, size }) {
   return (
     <mesh ref={modelRef} visible={!loadingValue}>
       {object ? (
-        <primitive object={object} position={[0, 0, -1]} scale={size} />
+        <primitive object={object} position={[x, y, z]} scale={size} />
       ) : null}
     </mesh>
   );

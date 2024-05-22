@@ -39,7 +39,14 @@ function ControllerObjectModal() {
       ),
     }));
   };
-
+  const handlePositionChange = (id, axis, value) => {
+    setObjectState((prevObjectValues) => ({
+      ...prevObjectValues,
+      [pageData]: prevObjectValues[pageData].map((obj) =>
+        obj.id === id ? { ...obj, [axis]: value } : obj,
+      ),
+    }));
+  };
   return (
     <ModalBackdrop>
       <ModalBox>
@@ -60,6 +67,7 @@ function ControllerObjectModal() {
               objectValue={value}
               plusSizeHandle={() => plusSizeHandle(value.id)}
               minusSizeHandle={() => minusSizeHandle(value.id)}
+              handlePositionChange={handlePositionChange}
             />
           ))}
         </div>
