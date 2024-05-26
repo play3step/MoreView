@@ -22,7 +22,6 @@ import useKeyboardNavigation from '../hooks/EditPage/useKeyboardNavigation';
 import useDeleteItem from '../hooks/EditPage/useDeleteItem';
 import useHistory from '../hooks/EditPage/Handlers/useHistory';
 import TextTool from '../components/EditPage/EditTool/TextTool';
-import ObjectTool from '../components/EditPage/EditTool/ObjectTool';
 import ControllerItem from '../components/EditPage/ItemListBox/3D/ControllerItem';
 
 function EditPage() {
@@ -206,9 +205,6 @@ function EditPage() {
         {isEditing && <TextTool />}
         {pageValue[pageRendering].type === '3d' && <ControllerItem />}
       </ToolPosition>
-      <ObjectToolPosition>
-        {pageValue[pageRendering]?.type === '3d' && <ObjectTool />}
-      </ObjectToolPosition>
     </EditContainer>
   );
 }
@@ -241,10 +237,4 @@ const ToolPosition = styled.div`
   position: absolute;
   right: 1.1vw;
   top: 40%;
-`;
-
-const ObjectToolPosition = styled.div`
-  position: absolute;
-  left: 16.666666666666664vw;
-  bottom: 0;
 `;
