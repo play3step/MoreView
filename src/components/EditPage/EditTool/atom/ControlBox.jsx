@@ -24,7 +24,8 @@ const BoxSize = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1.4583333333333333vw;
+  gap: 0.6vw;
+  margin-left: 1.5vw;
 `;
 
 const ControlData = styled.p`

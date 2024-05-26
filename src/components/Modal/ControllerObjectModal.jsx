@@ -94,8 +94,7 @@ const ModalBackdrop = styled.div`
 const ModalBox = styled.div`
   position: relative;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 8vw;
   width: 48.125vw;
   height: 57.96296296296296vh;
   background-color: #ffffff;
@@ -112,5 +111,5 @@ const FunctionList = styled.div`
   position: absolute;
   top: 5vw;
   display: flex;
-  gap: 1vw;
+  gap: 7vw;
 `;

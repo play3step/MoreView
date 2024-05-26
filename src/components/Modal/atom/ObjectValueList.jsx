@@ -46,13 +46,33 @@ const ObjectList = styled.div`
   align-items: center;
 `;
 
-const ObjectName = styled.p``;
-const ObjectX = styled.input``;
-const ObjectY = styled.input``;
-const ObjectZ = styled.input``;
+const ObjectName = styled.p`
+  margin-left: -0.8vw;
+`;
+const ObjectX = styled.input`
+  width: 4vw;
+  height: 1.7vw;
+  padding: 0.6vw;
+  font-size: 2wv;
+  margin-left: 0.6vw;
+`;
+const ObjectY = styled.input`
+  width: 4vw;
+  height: 1.7vw;
+  padding: 0.6vw;
+  font-size: 2wv;
+  margin-left: 2.6vw;
+`;
+const ObjectZ = styled.input`
+  width: 4vw;
+  height: 1.7vw;
+  padding: 0.6vw;
+  font-size: 2wv;
+  margin-left: 2.6vw;
+`;
 const ConfirmButton = styled.button`
-  margin-left: 1vw;
-  padding: 0.5vw 1vw;
+  margin-left: 0.6vw;
+  padding: 0.4vw 1vw;
   background-color: #4caf50;
   color: white;
   border: none;
