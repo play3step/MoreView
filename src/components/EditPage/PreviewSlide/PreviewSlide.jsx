@@ -46,7 +46,7 @@ function PreviewSlide({ textValue, shapeValue, imgValue, addSlide }) {
                     height: '13vh',
                   }}
                 >
-                  <Preview3d objecturl={objectValue[pageRendering]} />
+                  <Preview3d objecturl={objectValue[index]} />
                 </Canvas>
               </SlideListBox>
             ),
