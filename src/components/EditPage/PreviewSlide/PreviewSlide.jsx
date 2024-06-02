@@ -39,6 +39,9 @@ function PreviewSlide({ textValue, shapeValue, imgValue, addSlide }) {
                   setPageRendering(index);
                 }}
               >
+                <SlideNum>
+                  {index + 1}. {page.type.toUpperCase()}
+                </SlideNum>
                 <Canvas
                   backgroundColor="#FFFFFF"
                   style={{
@@ -83,4 +86,11 @@ const SlideListBox = styled.button`
   position: relative;
   width: 14vw;
   height: 13.4vh;
+`;
+const SlideNum = styled.p`
+  font-size: 1vw;
+  position: absolute;
+  top: 0.25vw;
+  left: 0.45vw;
+  z-index: 2;
 `;
