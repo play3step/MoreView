@@ -14,5 +14,5 @@ export const imageState = atom({
 
 export const objectState = atom({
   key: 'objectState',
-  default: {},
+  default: [],
 });
