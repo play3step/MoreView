@@ -4,7 +4,7 @@ import PreviewGltf from './PreviewGltf';
 
 function Preview3d({ objecturl }) {
   const objectList = Object.values(objecturl || {});
-  console.log(objecturl);
+
   return (
     <>
       <PerspectiveCamera makeDefault position={[5, 0, 20]} />
