@@ -1,32 +1,59 @@
 import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { pageData, pageState } from '../../../store/recoil';
+import { Canvas } from '@react-three/fiber';
+import { object3dState, pageData, pageState } from '../../../store/recoil';
 import Preview2d from './atom/Preview2d';
 import AddSlide from './atom/AddSlide';
+import Preview3d from './atom/Preview3d';
 
 function PreviewSlide({ textValue, shapeValue, imgValue, addSlide }) {
   const [pageRendering, setPageRendering] = useRecoilState(pageState);
   const pageValue = useRecoilValue(pageData);
+  const objectValue = useRecoilValue(object3dState);
 
   return (
     <>
       <SlideContainer>
         <SlideBoxContainer>
-          {pageValue.map((page, index) => (
-            <Preview2d
-              id={index}
-              pageType={page.type}
-              pageRendering={pageRendering}
-              textValue={textValue}
-              shapeValue={shapeValue}
-              imgValue={imgValue}
-              pageSize={0.14}
-              onClick={() => {
-                setPageRendering(index);
-              }}
-              select={index === pageRendering}
-            />
-          ))}
+          {pageValue.map((page, index) =>
+            page.type === '2d' ? (
+              <Preview2d
+                key={index} // key 추가
+                id={index}
+                pageType={page.type}
+                pageRendering={pageRendering}
+                textValue={textValue}
+                shapeValue={shapeValue}
+                imgValue={imgValue}
+                pageSize={0.14}
+                onClick={() => {
+                  setPageRendering(index);
+                }}
+                select={index === pageRendering}
+              />
+            ) : (
+              <SlideListBox
+                key={page.id}
+                select={index === pageRendering}
+                onClick={() => {
+                  setPageRendering(index);
+                }}
+              >
+                <SlideNum>
+                  {index + 1}. {page.type.toUpperCase()}
+                </SlideNum>
+                <Canvas
+                  backgroundColor="#FFFFFF"
+                  style={{
+                    width: '13.8vw',
+                    height: '13vh',
+                  }}
+                >
+                  <Preview3d objecturl={objectValue[index]} />
+                </Canvas>
+              </SlideListBox>
+            ),
+          )}
         </SlideBoxContainer>
       </SlideContainer>
       <AddSlide onClick={addSlide} />
@@ -51,4 +78,19 @@ const SlideBoxContainer = styled.div`
   gap: 30px;
   flex-direction: column;
   overflow: hidden;
+`;
+const SlideListBox = styled.button`
+  border: 2px solid ${({ select }) => (select ? '#4D7DF3' : '#747684')};
+  background-color: #d9d9d9;
+  flex-shrink: 0;
+  position: relative;
+  width: 14vw;
+  height: 13.4vh;
+`;
+const SlideNum = styled.p`
+  font-size: 1vw;
+  position: absolute;
+  top: 0.25vw;
+  left: 0.45vw;
+  z-index: 2;
 `;

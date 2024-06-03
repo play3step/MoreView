@@ -1,10 +1,14 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
+import { Canvas } from '@react-three/fiber';
 import CancelBtn from './atom/CancelBtn';
 import { SearchModalState } from '../../store/modalState';
 import useObject from '../../hooks/AddItem/useObject';
 import { ReactComponent as Add } from '../../assets/svgIcon/Add.svg';
+import { objectState } from '../../store/initialState';
+import PreviewObj from '../EditPage/PreviewSlide/atom/PreviewObj';
+// import PreviewGltf from '../EditPage/PreviewSlide/atom/PreviewGltf';
 
 function updateGltfReferences(gltfContent, urls, textures) {
   const gltfJson = JSON.parse(gltfContent);
@@ -35,6 +39,7 @@ function SearchObjectModal() {
   const [modalValue, setModalValue] = useRecoilState(SearchModalState);
   const { addObject } = useObject();
   const fileInputRef = useRef(null);
+  const [objects, setObjects] = useRecoilState(objectState);
 
   if (!modalValue) {
     return null;
@@ -54,6 +59,10 @@ function SearchObjectModal() {
       type: null,
       urls: {},
       textures: {},
+      size: 0.25,
+      x: 0,
+      y: 0,
+      z: -1,
     };
 
     const tempTextureFiles = [];
@@ -119,6 +128,7 @@ function SearchObjectModal() {
       filesData.type,
       filesData.urls,
     );
+    setObjects((prevObjects) => [...prevObjects, filesData]);
   };
 
   const handleButtonClick = () => {
@@ -150,6 +160,37 @@ function SearchObjectModal() {
             <ButtonText>내 3D 모델 넣기</ButtonText>
           </Button>
         </ContentContainer>
+        <ItemContainer>
+          {objects.map((object, index) => (
+            <Canvas
+              key={index}
+              backgroundColor="#FFFFFF"
+              style={{
+                width: '7.8125vw',
+                height: '7.8125vw',
+                border: '1px solid',
+              }}
+            >
+              {object.type === 'obj' ? (
+                <PreviewObj
+                  objecturl={object}
+                  size={object.size}
+                  x={object.x}
+                  y={object.y}
+                  z={object.z}
+                />
+              ) : object.type === 'gltf' ? (
+                <PreviewObj
+                  objecturl={object}
+                  size={object.size}
+                  x={object.x}
+                  y={object.y}
+                  z={object.z}
+                />
+              ) : null}
+            </Canvas>
+          ))}
+        </ItemContainer>
       </ModalBox>
     </ModalBackdrop>
   );
@@ -214,4 +255,15 @@ const PlusIcon = styled.span`
 
 const ButtonText = styled.span`
   font-size: 1.4vw;
+`;
+
+const ItemContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5vw;
+  z-index: 999;
+  background-color: #ffffff;
 `;
