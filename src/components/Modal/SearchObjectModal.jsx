@@ -8,7 +8,7 @@ import useObject from '../../hooks/AddItem/useObject';
 import { ReactComponent as Add } from '../../assets/svgIcon/Add.svg';
 import { objectState } from '../../store/initialState';
 import PreviewObj from '../EditPage/PreviewSlide/atom/PreviewObj';
-// import PreviewGltf from '../EditPage/PreviewSlide/atom/PreviewGltf';
+import PreviewGltf from '../EditPage/PreviewSlide/atom/PreviewGltf';
 
 function updateGltfReferences(gltfContent, urls, textures) {
   const gltfJson = JSON.parse(gltfContent);
@@ -138,7 +138,16 @@ function SearchObjectModal() {
   const CancelHandler = () => {
     setModalValue(false);
   };
-
+  const handlePreviewClick = (object) => {
+    addObject(
+      object.obj,
+      object.mtl,
+      object.bin,
+      object.urls.gltf,
+      object.type,
+      object.urls,
+    );
+  };
   return (
     <ModalBackdrop>
       <ModalBox>
@@ -170,6 +179,7 @@ function SearchObjectModal() {
                 height: '7.8125vw',
                 border: '1px solid',
               }}
+              onClick={() => handlePreviewClick(object)}
             >
               {object.type === 'obj' ? (
                 <PreviewObj
@@ -180,8 +190,8 @@ function SearchObjectModal() {
                   z={object.z}
                 />
               ) : object.type === 'gltf' ? (
-                <PreviewObj
-                  objecturl={object}
+                <PreviewGltf
+                  objecturl={object.urls}
                   size={object.size}
                   x={object.x}
                   y={object.y}
