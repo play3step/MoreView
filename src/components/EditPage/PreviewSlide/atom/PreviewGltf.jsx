@@ -30,8 +30,7 @@ function PreviewGltf({ objecturl, size, x, y, z }) {
         setLoadingValue(false);
       },
       undefined,
-      (error) => {
-        console.error('An error happened', error);
+      () => {
         setLoadingValue(false);
         setGltf(null);
       },
