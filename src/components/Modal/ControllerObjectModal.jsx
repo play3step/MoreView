@@ -20,25 +20,6 @@ function ControllerObjectModal() {
     setModalValue(false);
   };
 
-  const plusSizeHandle = (id) => {
-    setObjectState((prevObjectValues) => ({
-      ...prevObjectValues,
-      [pageData]: prevObjectValues[pageData].map((obj) =>
-        obj.id === id ? { ...obj, size: obj.size + 0.01 } : obj,
-      ),
-    }));
-  };
-
-  const minusSizeHandle = (id) => {
-    setObjectState((prevObjectValues) => ({
-      ...prevObjectValues,
-      [pageData]: prevObjectValues[pageData].map((obj) =>
-        obj.id === id
-          ? { ...obj, size: obj.size > 0 ? obj.size - 0.01 : 0 }
-          : obj,
-      ),
-    }));
-  };
   const handlePositionChange = (id, axis, value) => {
     setObjectState((prevObjectValues) => ({
       ...prevObjectValues,
@@ -65,8 +46,6 @@ function ControllerObjectModal() {
             <ObjectValueList
               key={value.id}
               objectValue={value}
-              plusSizeHandle={() => plusSizeHandle(value.id)}
-              minusSizeHandle={() => minusSizeHandle(value.id)}
               handlePositionChange={handlePositionChange}
             />
           ))}

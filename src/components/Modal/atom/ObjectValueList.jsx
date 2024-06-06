@@ -1,22 +1,19 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import ControlBox from '../../EditPage/EditTool/atom/ControlBox';
 
-function ObjectValueList({
-  objectValue,
-  plusSizeHandle,
-  minusSizeHandle,
-  handlePositionChange,
-}) {
+function ObjectValueList({ objectValue, handlePositionChange }) {
+  const [tempSize, setTempSize] = useState(objectValue.size);
   const [tempX, setTempX] = useState(objectValue.x);
   const [tempY, setTempY] = useState(objectValue.y);
   const [tempZ, setTempZ] = useState(objectValue.z);
 
+  const handleChangeSize = (e) => setTempSize(parseFloat(e.target.value));
   const handleChangeX = (e) => setTempX(parseFloat(e.target.value));
   const handleChangeY = (e) => setTempY(parseFloat(e.target.value));
   const handleChangeZ = (e) => setTempZ(parseFloat(e.target.value));
 
   const handleConfirm = () => {
+    handlePositionChange(objectValue.id, 'size', tempSize);
     handlePositionChange(objectValue.id, 'x', tempX);
     handlePositionChange(objectValue.id, 'y', tempY);
     handlePositionChange(objectValue.id, 'z', tempZ);
@@ -25,11 +22,7 @@ function ObjectValueList({
   return (
     <ObjectList>
       <ObjectName>{objectValue.id}</ObjectName>
-      <ControlBox
-        sizeData={objectValue.size}
-        plus={plusSizeHandle}
-        minus={minusSizeHandle}
-      />
+      <ObjectSize type="number" value={tempSize} onChange={handleChangeSize} />
       <ObjectX type="number" value={tempX} onChange={handleChangeX} />
       <ObjectY type="number" value={tempY} onChange={handleChangeY} />
       <ObjectZ type="number" value={tempZ} onChange={handleChangeZ} />
@@ -49,12 +42,21 @@ const ObjectList = styled.div`
 const ObjectName = styled.p`
   margin-left: -0.8vw;
 `;
+
+const ObjectSize = styled.input`
+  width: 4.6vw;
+  height: 1.7vw;
+  padding: 0.6vw;
+  font-size: 2wv;
+  margin-left: 4.2vw;
+`;
+
 const ObjectX = styled.input`
   width: 4vw;
   height: 1.7vw;
   padding: 0.6vw;
   font-size: 2wv;
-  margin-left: 0.6vw;
+  margin-left: 2.6vw;
 `;
 const ObjectY = styled.input`
   width: 4vw;
