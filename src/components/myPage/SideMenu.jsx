@@ -4,7 +4,7 @@ import Logo from './atom/Logo';
 import MenuBtn from './atom/MenuBtn';
 import SearchProject from './atom/SearchProject';
 
-const types = ['About', 'OverView', 'Comments', 'Projects', 'Starred'];
+const types = ['About_test', 'OverView_test', 'Comments_test', 'Projects_test', 'Starred_test'];
 
 function SideMenu() {
   const location = useLocation();
