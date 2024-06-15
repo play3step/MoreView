@@ -195,18 +195,18 @@ function SearchObjectModal() {
                   key={index}
                   objecturl={object}
                   size={object.size}
-                  x={object.x}
-                  y={object.y}
-                  z={object.z}
+                  x="0"
+                  y="-2"
+                  z="-3"
                 />
               ) : object.type === 'gltf' ? (
                 <PreviewGltf
                   key={index}
                   objecturl={object.urls}
                   size={object.size}
-                  x={object.x}
-                  y={object.y}
-                  z={object.z}
+                  x="0"
+                  y="-2"
+                  z="-3"
                 />
               ) : null}
             </Canvas>

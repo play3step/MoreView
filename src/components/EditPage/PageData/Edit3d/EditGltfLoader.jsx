@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { Color, Vector3 } from 'three';
+import { Color, Box3, Vector3 } from 'three';
 import { useRecoilState } from 'recoil';
 import { LodingState } from '../../../../store/modalState';
 import useKeyDown from '../../../../hooks/EditPage/Handlers/useKeyDown';
@@ -11,6 +11,7 @@ function EditGltfLoader({ objecturl, size, x, y, z }) {
   const { camera, scene } = useThree();
   const [loadingValue, setLoadingValue] = useRecoilState(LodingState);
   const [gltf, setGltf] = useState(null);
+  const [initialScale, setInitialScale] = useState([1, 1, 1]);
   const movement = useRef({ forward: 0, right: 0, up: 0 });
   const gltfUrl = typeof objecturl === 'string' ? objecturl : objecturl.gltf;
 
@@ -27,7 +28,16 @@ function EditGltfLoader({ objecturl, size, x, y, z }) {
     loader.load(
       gltfUrl,
       (loadedGltf) => {
+        const box = new Box3().setFromObject(loadedGltf.scene);
+        const dimensions = new Vector3();
+        box.getSize(dimensions);
+        const maxDimension = Math.max(dimensions.x, dimensions.y, dimensions.z);
+
+        const scale = 5 / maxDimension;
+        loadedGltf.scene.scale.set(scale, scale, scale);
+
         setGltf(loadedGltf);
+        setInitialScale([scale, scale, scale]);
         setLoadingValue(false);
       },
       undefined,
@@ -54,7 +64,13 @@ function EditGltfLoader({ objecturl, size, x, y, z }) {
   return (
     <mesh ref={modelRef} visible={!loadingValue}>
       {gltf ? (
-        <primitive object={gltf.scene} position={[x, y, z]} scale={size} />
+        <primitive
+          object={gltf.scene}
+          position={[x, y, z]}
+          scale={initialScale.map(
+            (s, i) => s * (Array.isArray(size) ? size[i] : size),
+          )}
+        />
       ) : null}
     </mesh>
   );

@@ -16,7 +16,7 @@ const useObject = () => {
     texturesUrl,
   ) => {
     const ObjectCountInCurrentPage = currentPageObject.length;
-    const getRandomCoordinate = () => Math.floor(Math.random() * 6);
+    const getRandomCoordinate = () => Math.floor(Math.random() * 4);
 
     const newObject = {
       id: `object${ObjectCountInCurrentPage + 1}`,

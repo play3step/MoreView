@@ -10,7 +10,7 @@ function Preview3d({ objecturl }) {
 
   return (
     <>
-      <PerspectiveCamera makeDefault position={[5, 0, 20]} />
+      <PerspectiveCamera makeDefault position={[2, 5, 25]} />
       <hemisphereLight
         skyColor={0xffffbb}
         groundColor={0x080820}
