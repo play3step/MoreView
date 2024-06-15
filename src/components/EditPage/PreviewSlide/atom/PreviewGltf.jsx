@@ -1,11 +1,11 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { Color, Vector3 } from 'three';
+import { Color, Box3, Vector3 } from 'three';
 import { useRecoilState } from 'recoil';
 import { LodingState } from '../../../../store/modalState';
 
-function PreviewGltf({ objecturl, size, x, y, z }) {
+function PreviewGltf({ objecturl, x, y, z }) {
   const modelRef = useRef();
   const { camera, scene } = useThree();
   const [loadingValue, setLoadingValue] = useRecoilState(LodingState);
@@ -26,6 +26,15 @@ function PreviewGltf({ objecturl, size, x, y, z }) {
     loader.load(
       gltfUrl,
       (loadedGltf) => {
+        const box = new Box3().setFromObject(loadedGltf.scene);
+        const size = new Vector3();
+        box.getSize(size);
+        const maxDimension = Math.max(size.x, size.y, size.z);
+
+        const scale = 5 / maxDimension;
+
+        loadedGltf.scene.scale.set(scale, scale, scale);
+
         setGltf(loadedGltf);
         setLoadingValue(false);
       },
@@ -50,9 +59,7 @@ function PreviewGltf({ objecturl, size, x, y, z }) {
 
   return (
     <mesh ref={modelRef} visible={!loadingValue}>
-      {gltf ? (
-        <primitive object={gltf.scene} position={[x, y, z]} scale={size} />
-      ) : null}
+      {gltf ? <primitive object={gltf.scene} position={[x, y, z]} /> : null}
     </mesh>
   );
 }

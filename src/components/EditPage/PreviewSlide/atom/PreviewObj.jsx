@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useThree } from '@react-three/fiber';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-import { Color } from 'three';
+import { Color, Box3, Vector3 } from 'three';
 import { useRecoilState } from 'recoil';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
 import { LodingState } from '../../../../store/modalState';
 
-function PreviewObj({ objecturl, size, x, y, z }) {
+function PreviewObj({ objecturl, x, y, z }) {
   const modelRef = useRef();
   const [loadingValue, setLoadingValue] = useRecoilState(LodingState);
   const [object, setObject] = useState(null);
@@ -28,16 +28,36 @@ function PreviewObj({ objecturl, size, x, y, z }) {
     const materialUrl = objecturl?.mtl || null;
     const loadUrl = objecturl?.obj || null;
 
-    const mtlLoader = new MTLLoader();
-    mtlLoader.load(materialUrl, (materials) => {
-      materials.preload();
+    const loadModel = () => {
       const objLoader = new OBJLoader();
-      objLoader.setMaterials(materials);
-      objLoader.load(loadUrl, (obj) => {
+      const onLoad = (obj) => {
+        // 모델의 경계 계산
+        const box = new Box3().setFromObject(obj);
+        const size = new Vector3();
+        box.getSize(size);
+        const maxDimension = Math.max(size.x, size.y, size.z);
+
+        const scale = 5 / maxDimension;
+
+        obj.scale.set(scale, scale, scale);
+
         setObject(obj);
         setLoadingValue(false);
-      });
-    });
+      };
+
+      if (materialUrl) {
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load(materialUrl, (materials) => {
+          materials.preload();
+          objLoader.setMaterials(materials);
+          objLoader.load(loadUrl, onLoad);
+        });
+      } else {
+        objLoader.load(loadUrl, onLoad);
+      }
+    };
+
+    loadModel();
   }, [objecturl, setLoadingValue]);
 
   useEffect(() => {
@@ -48,9 +68,7 @@ function PreviewObj({ objecturl, size, x, y, z }) {
 
   return (
     <mesh ref={modelRef} visible={!loadingValue}>
-      {object ? (
-        <primitive object={object} position={[x, y, z]} scale={size} />
-      ) : null}
+      {object ? <primitive object={object} position={[x, y, z]} /> : null}
     </mesh>
   );
 }
