@@ -170,6 +170,7 @@ function SearchObjectModal() {
           </Button>
         </ContentContainer>
         <ItemContainer>
+          <directionalLight position={[5, 5, 5]} intensity={1} />
           {objects.map((object, index) => (
             <Canvas
               key={index}
@@ -181,8 +182,17 @@ function SearchObjectModal() {
               }}
               onClick={() => handlePreviewClick(object)}
             >
+              <hemisphereLight
+                skyColor={0xffffbb}
+                groundColor={0x080820}
+                intensity={0.35}
+              />
+              <directionalLight position={[0, 0, 5]} intensity={5} />
+              <directionalLight position={[5, 5, 5]} intensity={5} />
+              <directionalLight position={[-5, -5, -5]} intensity={5} />
               {object.type === 'obj' ? (
                 <PreviewObj
+                  key={index}
                   objecturl={object}
                   size={object.size}
                   x={object.x}
@@ -191,6 +201,7 @@ function SearchObjectModal() {
                 />
               ) : object.type === 'gltf' ? (
                 <PreviewGltf
+                  key={index}
                   objecturl={object.urls}
                   size={object.size}
                   x={object.x}

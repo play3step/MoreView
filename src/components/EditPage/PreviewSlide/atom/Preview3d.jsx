@@ -1,9 +1,12 @@
 import { PerspectiveCamera } from '@react-three/drei';
+import { useRecoilValue } from 'recoil';
 import PreviewObj from './PreviewObj';
 import PreviewGltf from './PreviewGltf';
+import { objectSizeState } from '../../../../store/toolState';
 
 function Preview3d({ objecturl }) {
   const objectList = Object.values(objecturl || {});
+  const dataSize = useRecoilValue(objectSizeState);
 
   return (
     <>
@@ -13,9 +16,9 @@ function Preview3d({ objecturl }) {
         groundColor={0x080820}
         intensity={1}
       />
-      <directionalLight position={[0, 0, 5]} intensity={5} />
-      <directionalLight position={[5, 5, 5]} intensity={5} />
-      <directionalLight position={[-5, -5, -5]} intensity={5} />
+      <directionalLight position={[0, 0, 5]} intensity={dataSize.light} />
+      <directionalLight position={[5, 5, 5]} intensity={dataSize.light} />
+      <directionalLight position={[-5, -5, -5]} intensity={dataSize.light} />
 
       {objectList?.map((url, index) =>
         url?.extension === 'obj' || url?.extension === undefined ? (

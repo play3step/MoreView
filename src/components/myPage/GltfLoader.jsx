@@ -3,6 +3,9 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { useRef } from 'react';
 import { OrbitControls } from '@react-three/drei';
 
+function getRandomColor() {
+  return Math.floor(Math.random() * 16777215).toString(16);
+}
 function Model() {
   const modelRef = useRef();
 
@@ -14,8 +17,11 @@ function Model() {
     modelRef.current.rotation.y += 0.01;
   });
 
+  const changeHandler = (e) => {
+    e.object.material.color.setHex(`0x${getRandomColor()}`);
+  };
   return (
-    <mesh ref={modelRef}>
+    <mesh ref={modelRef} onClick={changeHandler}>
       <primitive object={gltf.scene} scale={1} />;
     </mesh>
   );
