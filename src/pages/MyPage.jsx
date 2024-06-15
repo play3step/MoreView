@@ -1,6 +1,6 @@
 import FriendBox from '../components/myPage/FriendBox';
-import GltfLoader from '../components/myPage/GltfLoader';
-// import Load3dObject from '../components/myPage/Load3dObject';
+import TestObject from '../components/myPage/TestObject';
+
 import AddProject from '../components/myPage/atom/AddProject';
 
 function MyPage() {
@@ -10,9 +10,7 @@ function MyPage() {
         flexDirection: 'column',
       }}
     >
-      {/* <Load3dObject /> */}
-      <GltfLoader />
-
+      <TestObject />
       <div
         style={{
           display: 'flex',
