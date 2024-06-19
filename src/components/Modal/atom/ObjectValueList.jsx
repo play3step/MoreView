@@ -6,7 +6,9 @@ function ObjectValueList({ objectValue, handlePositionChange }) {
   const [tempX, setTempX] = useState(objectValue.x);
   const [tempY, setTempY] = useState(objectValue.y);
   const [tempZ, setTempZ] = useState(objectValue.z);
+  const [tempName, setTempName] = useState(objectValue.name);
 
+  const handleChangeName = (e) => setTempName(e.target.value);
   const handleChangeSize = (e) => setTempSize(parseFloat(e.target.value));
   const handleChangeX = (e) => setTempX(parseFloat(e.target.value));
   const handleChangeY = (e) => setTempY(parseFloat(e.target.value));
@@ -17,11 +19,12 @@ function ObjectValueList({ objectValue, handlePositionChange }) {
     handlePositionChange(objectValue.id, 'x', tempX);
     handlePositionChange(objectValue.id, 'y', tempY);
     handlePositionChange(objectValue.id, 'z', tempZ);
+    handlePositionChange(objectValue.id, 'name', tempName);
   };
-
+  console.log(objectValue);
   return (
     <ObjectList>
-      <ObjectName>{objectValue.id}</ObjectName>
+      <ObjectName type="text" value={tempName} onChange={handleChangeName} />
       <ObjectSize type="number" value={tempSize} onChange={handleChangeSize} />
       <ObjectX type="number" value={tempX} onChange={handleChangeX} />
       <ObjectY type="number" value={tempY} onChange={handleChangeY} />
@@ -39,8 +42,10 @@ const ObjectList = styled.div`
   align-items: center;
 `;
 
-const ObjectName = styled.p`
-  margin-left: -0.8vw;
+const ObjectName = styled.input`
+  margin-left: -1.2vw;
+  width: 4.6vw;
+  height: 1.7vw;
 `;
 
 const ObjectSize = styled.input`
@@ -48,7 +53,7 @@ const ObjectSize = styled.input`
   height: 1.7vw;
   padding: 0.6vw;
   font-size: 2wv;
-  margin-left: 4.2vw;
+  margin-left: 2.6vw;
 `;
 
 const ObjectX = styled.input`

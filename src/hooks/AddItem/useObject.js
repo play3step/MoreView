@@ -20,6 +20,7 @@ const useObject = () => {
 
     const newObject = {
       id: `object${ObjectCountInCurrentPage + 1}`,
+      name: `object${ObjectCountInCurrentPage + 1}`,
       obj: objUrl,
       mtl: objMtl,
       gltf: gltfUrl,
