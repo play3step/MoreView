@@ -21,7 +21,7 @@ function ObjectValueList({ objectValue, handlePositionChange }) {
     handlePositionChange(objectValue.id, 'z', tempZ);
     handlePositionChange(objectValue.id, 'name', tempName);
   };
-  console.log(objectValue);
+
   return (
     <ObjectList>
       <ObjectName type="text" value={tempName} onChange={handleChangeName} />
