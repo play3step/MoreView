@@ -12,13 +12,14 @@ function Edit3d({ objecturl }) {
   const dataSize = useRecoilValue(objectSizeState);
 
   const [isMouseDown, setIsMouseDown] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
     const sensitivity = 0.002;
     const euler = new Euler(0, 0, 0, 'YXZ');
 
     const handleMouseMove = (event) => {
-      if (!isMouseDown) return;
+      if (!isMouseDown || isDragging) return;
 
       const { movementX, movementY } = event;
 
@@ -44,7 +45,7 @@ function Edit3d({ objecturl }) {
       window.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [camera, isMouseDown]);
+  }, [camera, isMouseDown, isDragging]);
   const objectList = Object.values(objecturl || {});
 
   return (
@@ -77,6 +78,7 @@ function Edit3d({ objecturl }) {
             x={url.x}
             y={url.y}
             z={url.z}
+            setIsDragging={setIsDragging}
           />
         ) : null,
       )}
