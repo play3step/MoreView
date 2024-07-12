@@ -36,6 +36,7 @@ function EditPage() {
 
   const {
     objectValue,
+    setObjectValue,
     shapeValue,
     setShapeValue,
     textValue,
@@ -187,7 +188,11 @@ function EditPage() {
                           }
                     }
                   >
-                    <Edit3d objecturl={objectValue[pageRendering]} />
+                    <Edit3d
+                      objecturl={objectValue[pageRendering]}
+                      setObjectValue={setObjectValue}
+                      pageRendering={pageRendering}
+                    />
                   </Canvas>
                 );
               }

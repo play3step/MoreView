@@ -30,7 +30,7 @@ const useObject = () => {
       textures: texturesUrl,
       size: 0.25,
       x: getRandomCoordinate(),
-      y: getRandomCoordinate(),
+      y: 0,
       z: getRandomCoordinate(),
     };
     const updatedImages = {

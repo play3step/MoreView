@@ -7,7 +7,7 @@ import EditObjLoader from './Edit3d/EditObjLoader';
 import EditGltfLoader from './Edit3d/EditGltfLoader';
 import { objectSizeState } from '../../../store/toolState';
 
-function Edit3d({ objecturl }) {
+function Edit3d({ objecturl, setObjectValue, pageRendering }) {
   const { camera } = useThree();
   const dataSize = useRecoilValue(objectSizeState);
 
@@ -50,7 +50,7 @@ function Edit3d({ objecturl }) {
 
   return (
     <>
-      <PerspectiveCamera makeDefault position={[2, 5, 15]} />
+      <PerspectiveCamera makeDefault position={[0, 0, 10]} />
       <hemisphereLight
         skyColor={0xffffbb}
         groundColor={0x080820}
@@ -69,6 +69,9 @@ function Edit3d({ objecturl }) {
             x={url.x}
             y={url.y}
             z={url.z}
+            setIsDragging={setIsDragging}
+            setObjectValue={setObjectValue}
+            pageRendering={pageRendering}
           />
         ) : url?.extension === 'gltf' ? (
           <EditGltfLoader
@@ -79,6 +82,8 @@ function Edit3d({ objecturl }) {
             y={url.y}
             z={url.z}
             setIsDragging={setIsDragging}
+            setObjectValue={setObjectValue}
+            pageRendering={pageRendering}
           />
         ) : null,
       )}
