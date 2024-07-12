@@ -1,4 +1,4 @@
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import {
   imageList,
   object3dState,
@@ -7,13 +7,14 @@ import {
 } from '../../store/recoil';
 
 const useItemValue = () => {
-  const objectValue = useRecoilValue(object3dState);
+  const [objectValue, setObjectValue] = useRecoilState(object3dState);
   const [shapeValue, setShapeValue] = useRecoilState(shapeList);
   const [textValue, setTextValue] = useRecoilState(textList);
   const [imgValue, setImgValue] = useRecoilState(imageList);
 
   return {
     objectValue,
+    setObjectValue,
     shapeValue,
     setShapeValue,
     textValue,
