@@ -69,6 +69,9 @@ function Edit3d({ objecturl, setObjectValue, pageRendering }) {
             x={url.x}
             y={url.y}
             z={url.z}
+            setIsDragging={setIsDragging}
+            setObjectValue={setObjectValue}
+            pageRendering={pageRendering}
           />
         ) : url?.extension === 'gltf' ? (
           <EditGltfLoader
