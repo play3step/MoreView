@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { Color, Box3, Vector3, AxesHelper } from 'three';
+import { Color, Box3, Vector3 } from 'three';
 import { useRecoilState } from 'recoil';
 import { DragControls } from 'three/examples/jsm/controls/DragControls';
 import { LodingState } from '../../../../store/modalState';
@@ -74,6 +74,10 @@ function EditGltfLoader({ objecturl, size, x, y, z, setIsDragging }) {
         event.object.material.emissive.set(0xaaaaaa);
         setIsDragging(true);
       });
+      controlsRef.current.addEventListener('drag', (event) => {
+        const { object } = event;
+        object.position.y = 0; // y축 고정
+      });
 
       controlsRef.current.addEventListener('dragend', (event) => {
         event.object.material.emissive.set(0x000000);
@@ -86,13 +90,7 @@ function EditGltfLoader({ objecturl, size, x, y, z, setIsDragging }) {
     }
     return undefined;
   }, [camera, gl]);
-  useEffect(() => {
-    const axesHelper = new AxesHelper(100);
-    scene.add(axesHelper);
-    return () => {
-      scene.remove(axesHelper);
-    };
-  }, [scene]);
+
   return (
     <mesh ref={modelRef} visible={!loadingValue}>
       {gltf ? (
