@@ -13,6 +13,7 @@ import LoadingModal from './components/Modal/LoadingModal';
 import CreateObjectModal from './components/Modal/CreateObjectModal';
 import SearchObjectModal from './components/Modal/SearchObjectModal';
 import ControllerObjectModal from './components/Modal/ControllerObjectModal';
+import CreateProjectModal from './components/Modal/CreateProjectModal';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <BrowserRouter>
           <SideMenu />
           <LoadingModal />
+          <CreateProjectModal />
           <CreateObjectModal />
           <SearchObjectModal />
           <ControllerObjectModal />
