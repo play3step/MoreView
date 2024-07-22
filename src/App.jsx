@@ -14,6 +14,7 @@ import CreateObjectModal from './components/Modal/CreateObjectModal';
 import SearchObjectModal from './components/Modal/SearchObjectModal';
 import ControllerObjectModal from './components/Modal/ControllerObjectModal';
 import CreateProjectModal from './components/Modal/CreateProjectModal';
+import LoginModal from './components/Modal/LoginModal';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <CreateObjectModal />
           <SearchObjectModal />
           <ControllerObjectModal />
+          <LoginModal />
           <Routes>
             <Route path="/" element={<MyPage />} />
             <Route path="/About" element={<MyPage />} />

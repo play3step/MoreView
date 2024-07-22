@@ -22,5 +22,10 @@ export const ControllerModalState = atom({
 
 export const CreateProjectModalState = atom({
   key: 'CreateProjectModalState',
-  default: true,
+  default: false,
+});
+
+export const LoginModalState = atom({
+  key: 'LoginModalState',
+  default: false,
 });
