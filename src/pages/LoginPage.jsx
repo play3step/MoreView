@@ -9,11 +9,16 @@ function LoginPage() {
   const nav = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const LoginHandle = () => {
-    loginController(email, password);
-    setEmail('');
-    setPassword('');
-    nav('/list');
+  const LoginHandle = async (e) => {
+    e.preventDefault(); // 폼 제출 시 페이지 리로드 방지
+    try {
+      await loginController(email, password);
+      setEmail('');
+      setPassword('');
+      nav('/list');
+    } catch (error) {
+      console.error('Login failed:', error);
+    }
   };
   return (
     <Container>
