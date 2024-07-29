@@ -30,7 +30,8 @@
     "react/no-unknown-property": "off",
     "no-param-reassign": ["error", { "props": false }],
     "react/no-array-index-key": "off",
-    "no-nested-ternary": "off"
+    "no-nested-ternary": "off",
+    "no-console": "off"  // 추가된 부분
 
   }
 }
