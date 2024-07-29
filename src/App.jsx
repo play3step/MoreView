@@ -33,11 +33,11 @@ function App() {
           <ControllerObjectModal />
           <LoginModal />
           <Routes>
-            <Route path="/" element={<MyPage />} />
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/list" element={<MyPage />} />
             <Route path="/About" element={<MyPage />} />
             <Route path="/Edit/:EditId" element={<EditPage />} />
             <Route path="/Projects" element={<ItemPage />} />
-            <Route path="/login" element={<LoginPage />} />
           </Routes>
         </BrowserRouter>
       </RecoilRoot>

@@ -12,7 +12,7 @@ function SideMenu() {
   const location = useLocation();
   const setLoginModal = useSetRecoilState(LoginModalState);
   const shouldShow = [
-    '/',
+    '/list',
     '/Projects',
     '/About',
     '/OverView',
