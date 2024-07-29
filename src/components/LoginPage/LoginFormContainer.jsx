@@ -34,16 +34,16 @@ export default LoginFormContainer;
 const Container = styled.form`
   width: 308px;
   height: 221px;
-  margin-top: 32px;
+  margin-top: 24px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 12px;
 `;
 
 const InputBox = styled.input`
   width: 308px;
   height: 48px;
   padding: 0 18px;
-  border: 1px solid #6b7684;
+  border: 1px solid rgba(0, 0, 0, 0.25);
   border-radius: 8px;
 `;
