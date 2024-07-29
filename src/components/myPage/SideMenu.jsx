@@ -1,15 +1,18 @@
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
 import Logo from './atom/Logo';
 import MenuBtn from './atom/MenuBtn';
 import SearchProject from './atom/SearchProject';
+import { LoginModalState } from '../../store/modalState';
 
 const types = ['About', 'OverView', 'Comments', 'Projects', 'Starred'];
 
 function SideMenu() {
   const location = useLocation();
+  const setLoginModal = useSetRecoilState(LoginModalState);
   const shouldShow = [
-    '/',
+    '/list',
     '/Projects',
     '/About',
     '/OverView',
@@ -34,6 +37,9 @@ function SideMenu() {
           <MenuBtn type={value} key={index} />
         ))}
       </div>
+      <button type="button" onClick={() => setLoginModal(true)}>
+        로그인
+      </button>
     </MenuContainer>
   );
 }
