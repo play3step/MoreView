@@ -1,20 +1,20 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { ReactComponent as About } from '../../../assets/myPage/about.svg';
-import { ReactComponent as OverView } from '../../../assets/myPage/overView.svg';
+import { ReactComponent as Home } from '../../../assets/myPage/about.svg';
+import { ReactComponent as NewTech } from '../../../assets/myPage/overView.svg';
 import { ReactComponent as Comments } from '../../../assets/myPage/comments.svg';
 import { ReactComponent as Projects } from '../../../assets/myPage/projects.svg';
 import { ReactComponent as Starred } from '../../../assets/myPage/starred.svg';
-import { ReactComponent as User } from '../../../assets/myPage/user.svg';
+import { ReactComponent as Friends } from '../../../assets/myPage/user.svg';
 import { ReactComponent as Setting } from '../../../assets/myPage/settings.svg';
 
 const ICONS = {
-  About,
-  OverView,
+  Home,
+  NewTech,
   Comments,
   Projects,
   Starred,
-  User,
+  Friends,
   Setting,
 };
 
@@ -41,8 +41,7 @@ export default MenuBtn;
 const MenuContainer = styled.div`
   background-color: transparent;
   display: flex;
-  margin-left: 2.7083333333333335vw;
-  margin-bottom: 3.7037037037037033vh;
+  margin-bottom: 3.7vh;
   align-items: center;
 `;
 

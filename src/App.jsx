@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-// import MainPage from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
 
 import './App.css';
@@ -14,7 +13,8 @@ import CreateObjectModal from './components/Modal/CreateObjectModal';
 import SearchObjectModal from './components/Modal/SearchObjectModal';
 import ControllerObjectModal from './components/Modal/ControllerObjectModal';
 import CreateProjectModal from './components/Modal/CreateProjectModal';
-import LoginModal from './components/Modal/LoginModal';
+import FriendsPage from './pages/FriendsPage';
+import NewTechPage from './pages/NewTechPage';
 
 function App() {
   return (
@@ -31,13 +31,13 @@ function App() {
           <CreateObjectModal />
           <SearchObjectModal />
           <ControllerObjectModal />
-          <LoginModal />
           <Routes>
             <Route path="/" element={<LoginPage />} />
-            <Route path="/list" element={<MyPage />} />
-            <Route path="/About" element={<MyPage />} />
+            <Route path="/Home" element={<MyPage />} />
             <Route path="/Edit/:EditId" element={<EditPage />} />
             <Route path="/Projects" element={<ItemPage />} />
+            <Route path="/Friends" element={<FriendsPage />} />
+            <Route path="/NewTech" element={<NewTechPage />} />
           </Routes>
         </BrowserRouter>
       </RecoilRoot>
