@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
 
-import MenuBtn from './atom/MenuBtn';
+import MenuBtn from '../myPage/atom/MenuBtn';
 
 const types = ['Home', 'Projects', 'Friends', 'NewTech'];
 
