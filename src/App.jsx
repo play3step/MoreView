@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import LoginPage from './pages/LoginPage';
 
@@ -19,51 +19,53 @@ import HeaderMenu from './components/Menu/HeaderMenu';
 
 function App() {
   return (
-    <div
-      style={{
-        display: 'flex',
-        height: '100vh',
-      }}
-    >
-      <RecoilRoot>
-        <BrowserRouter>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              width: '14.47916vw',
-              height: '100%',
-            }}
-          >
-            <header>
-              <HeaderMenu />
-            </header>
-            <aside style={{ flex: 1 }}>
-              <SideMenu />
-            </aside>
-          </div>
-          <LoadingModal />
-          <CreateProjectModal />
-          <CreateObjectModal />
-          <SearchObjectModal />
-          <ControllerObjectModal />
-          <main
-            style={{
-              flex: 1,
-              paddingTop: ' 7.77vh',
-            }}
-          >
-            <Routes>
-              <Route path="/" element={<LoginPage />} />
-              <Route path="/Home" element={<MyPage />} />
-              <Route path="/Edit/:EditId" element={<EditPage />} />
-              <Route path="/Projects" element={<ItemPage />} />
-              <Route path="/Friends" element={<FriendsPage />} />
-              <Route path="/NewTech" element={<NewTechPage />} />
-            </Routes>
-          </main>
-        </BrowserRouter>
-      </RecoilRoot>
+    <RecoilRoot>
+      <BrowserRouter>
+        <MainContent />
+      </BrowserRouter>
+    </RecoilRoot>
+  );
+}
+
+function MainContent() {
+  const location = useLocation();
+  const isPage =
+    location.pathname.startsWith('/Edit') || location.pathname === '/';
+
+  return (
+    <div style={{ display: 'flex', height: '100vh' }}>
+      {!isPage && (
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            width: '14.47916vw',
+            height: '100%',
+          }}
+        >
+          <header>
+            <HeaderMenu />
+          </header>
+          <aside style={{ flex: 1 }}>
+            <SideMenu />
+          </aside>
+        </div>
+      )}
+      <main style={{ flex: 1, paddingTop: !isPage ? '7.77vh' : '0' }}>
+        <LoadingModal />
+        <CreateProjectModal />
+        <CreateObjectModal />
+        <SearchObjectModal />
+        <ControllerObjectModal />
+        <Routes>
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/Home" element={<MyPage />} />
+          <Route path="/Edit/:EditId" element={<EditPage />} />
+          <Route path="/Projects" element={<ItemPage />} />
+          <Route path="/Friends" element={<FriendsPage />} />
+          <Route path="/NewTech" element={<NewTechPage />} />
+        </Routes>
+      </main>
     </div>
   );
 }

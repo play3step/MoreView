@@ -1,19 +1,10 @@
 import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
 
 import MenuBtn from '../myPage/atom/MenuBtn';
 
 const types = ['Home', 'Projects', 'Friends', 'NewTech'];
 
 function SideMenu() {
-  const location = useLocation();
-  const shouldShow = ['/Projects', '/Home', '/NewTech', '/Friends'].includes(
-    location.pathname,
-  );
-
-  if (!shouldShow) {
-    return null;
-  }
   return (
     <SideContainer>
       <div
