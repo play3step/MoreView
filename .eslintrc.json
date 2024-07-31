@@ -32,6 +32,5 @@
     "react/no-array-index-key": "off",
     "no-nested-ternary": "off",
     "no-console": "off"  // 추가된 부분
-
   }
 }
