@@ -1,21 +1,26 @@
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
-import { useState } from 'react';
-import CancelBtn from './atom/CancelBtn';
 import { CreateProjectModalState } from '../../store/modalState';
 import { postFile, postProject } from '../../apis/Project/ProjectController';
+import SubmitBtn from './atom/SubmitBtn';
+import Cancel from './atom/Cancel';
 
 function CreateProjectModal() {
   const [modalValue, setModalValue] = useRecoilState(CreateProjectModalState);
   const [title, setTitle] = useState('');
   const [file, setFile] = useState(null);
+  const [preview, setPreview] = useState(null);
 
   if (!modalValue) {
     return null;
   }
-
-  const CancelHandler = () => {
-    setModalValue(false);
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+      setPreview(URL.createObjectURL(selectedFile));
+    }
   };
 
   const handleSummit = async () => {
@@ -34,27 +39,51 @@ function CreateProjectModal() {
     }
   };
 
+  const CancelHandle = () => {
+    setModalValue(false);
+  };
   return (
     <ModalBackdrop>
       <ModalBox>
-        <CancelPostion>
-          <CancelBtn CancelHandler={CancelHandler} />
-        </CancelPostion>
-        <MainTitle>프로젝트 만들기</MainTitle>
-        <input
-          placeholder="이름을 지어주세요"
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <input
-          id="thumbnail"
-          type="file"
-          onChange={(e) => setFile(e.target.files[0])} // 파일 선택 처리
-        />
-        <button type="button" onClick={handleSummit}>
-          생성
-        </button>
+        <InsideBox>
+          <TopBox>
+            <MainTitle>프로젝트 만들기</MainTitle>
+          </TopBox>
+          <MiddleBox>
+            <ImageForm
+              onClick={() => document.getElementById('thumbnail').click()}
+            >
+              <input
+                type="file"
+                accept="image/*"
+                id="thumbnail"
+                hidden
+                onChange={handleFileChange}
+              />
+              {preview ? (
+                <img
+                  src={preview}
+                  alt="업로드한 이미지"
+                  width="90%"
+                  height="90%"
+                />
+              ) : null}
+            </ImageForm>
+          </MiddleBox>
+          <BottomBox>
+            <SubTitle>프로젝트 이름</SubTitle>
+            <InputTitle
+              type="text"
+              value={title}
+              placeholder="이름을 지어주세요"
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </BottomBox>
+          <ButtonPosition>
+            <SubmitBtn onClick={handleSummit} />
+            <Cancel onClick={CancelHandle} />
+          </ButtonPosition>
+        </InsideBox>
       </ModalBox>
     </ModalBackdrop>
   );
@@ -77,21 +106,78 @@ const ModalBackdrop = styled.div`
 
 const ModalBox = styled.div`
   position: absolute;
-  display: flex;
-  flex-direction: column;
-  width: 22.5vw;
-  height: 56.388888888888886vh;
+
+  width: 24.583vw;
+  height: 46.94vh;
   background-color: #ffffff;
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 1.04vw;
 `;
 
-const CancelPostion = styled.div`
-  position: absolute;
-  top: 1vw;
-  right: 1vw;
+const InsideBox = styled.div`
+  width: 100%;
+  height: 100%;
+  border: 1px solid #c0c2f5;
+  border-radius: 8px;
+  padding: 1.04vw;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25vw;
+`;
+
+const TopBox = styled.div`
+  width: 100%;
+  height: 7.5vh;
+`;
+
+const MiddleBox = styled.div`
+  width: 100%;
+  height: 15vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const BottomBox = styled.div`
+  width: 100%;
+  height: 7.2vh;
+  display: flex;
+  flex-direction: column;
+`;
+
+const ImageForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed #3182f6;
+  border-radius: 8px;
+  width: 100%;
+  height: 100%;
 `;
 
 const MainTitle = styled.p`
   font-size: 1.2vw;
+  color: #3e418c;
+`;
+
+const SubTitle = styled.p`
+  font-size: 0.833vw;
+  color: #3e418c;
+`;
+
+const InputTitle = styled.input`
+  width: 100%;
+  height: 3.703vh;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+  margin-top: 0.4vw;
+  padding-left: 0.4vw;
+`;
+
+const ButtonPosition = styled.div`
+  display: flex;
+  gap: 0.4vw;
+  justify-content: end;
 `;
