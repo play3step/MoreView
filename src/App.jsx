@@ -3,7 +3,7 @@ import { RecoilRoot } from 'recoil';
 import LoginPage from './pages/LoginPage';
 
 import './App.css';
-import MyPage from './pages/MyPage';
+import HomePage from './pages/HomePage';
 
 import SideMenu from './components/Menu/SideMenu';
 import ItemPage from './pages/ItemPage';
@@ -59,7 +59,7 @@ function MainContent() {
         <ControllerObjectModal />
         <Routes>
           <Route path="/" element={<LoginPage />} />
-          <Route path="/Home" element={<MyPage />} />
+          <Route path="/Home" element={<HomePage />} />
           <Route path="/Edit/:EditId" element={<EditPage />} />
           <Route path="/Projects" element={<ItemPage />} />
           <Route path="/Friends" element={<FriendsPage />} />
