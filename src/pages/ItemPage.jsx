@@ -1,20 +1,31 @@
 import { useEffect } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import ProjectCard from '../components/ItemPage/ProjectCard';
 import { getProjectList } from '../apis/Project/ProjectController';
 import CreateProjectBtn from '../components/ItemPage/CreateProjectBtn';
 import { CreateProjectModalState } from '../store/modalState';
+import { ProjectList } from '../store/projectState';
 
 function ItemPage() {
   const setModalState = useSetRecoilState(CreateProjectModalState);
-  useEffect(() => {
-    getProjectList(8);
-  }, []);
+  const [projectData, setProjectData] = useRecoilState(ProjectList);
+  console.log(projectData);
 
   const createProject = () => {
     setModalState(true);
   };
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const projects = await getProjectList(1);
+        setProjectData(projects);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
+    fetchProjects();
+  }, [setProjectData]);
   return (
     <div
       style={{
@@ -41,9 +52,9 @@ function ItemPage() {
           marginLeft: '10vw',
         }}
       >
-        <ProjectCard />
-        <ProjectCard />
-        <ProjectCard />
+        {projectData.projects?.map((data, index) => (
+          <ProjectCard data={data} key={index} />
+        ))}
       </div>
     </div>
   );
