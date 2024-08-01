@@ -39,12 +39,10 @@ function TestObject() {
   return (
     <Canvas
       style={{
-        width: '68.75vw',
-        height: '51.85185185185185vh',
+        width: '27.08vw',
+        height: '37.037vh',
         backgroundColor: '#FFFFFF',
-        marginLeft: '6.25vw',
-        marginTop: '3.2407407407407405vh',
-        boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
+        border: '1px solid rgba(0, 0, 0, 0.25)',
       }}
       camera={{ position: [4, 4, 10], fov: 50 }}
     >

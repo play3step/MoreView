@@ -18,8 +18,6 @@ const Container = styled.div`
   width: 9.892vw;
   height: 3.518vh;
   display: flex;
-  margin-right: 4.1875vw;
-  justify-content: center;
   align-items: center;
 `;
 
@@ -35,6 +33,7 @@ const UserProfile = styled.div`
 const RightBox = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 0.3vw;
 `;
 const UserName = styled.p``;
 const UserEmail = styled.p``;
