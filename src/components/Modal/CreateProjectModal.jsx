@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 import { CreateProjectModalState } from '../../store/modalState';
-import { postFile, postProject } from '../../apis/Project/ProjectController';
+import { postProject } from '../../apis/Project/ProjectController';
 import SubmitBtn from './atom/SubmitBtn';
 import Cancel from './atom/Cancel';
 
@@ -26,11 +26,12 @@ function CreateProjectModal() {
   const handleSummit = async () => {
     if (file) {
       try {
-        const fileUrl = await postFile(file);
-        await postProject(title, fileUrl);
+        // const fileUrl = await postFile(file);
+        await postProject(title);
         setTitle('');
         setFile(null);
         setModalValue(false);
+        setPreview(null);
       } catch (error) {
         console.error(error);
       }

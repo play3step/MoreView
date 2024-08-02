@@ -13,7 +13,7 @@ function ProjectCard({ data }) {
     >
       <Logo width="17.708333333333336vw" height="17.708333333333336vw" />
       <CardTextBox>
-        <CardTitle>Project A</CardTitle>
+        <CardTitle>{data.name}</CardTitle>
         <CardDate>2024-10-16</CardDate>
       </CardTextBox>
     </CardContainer>

@@ -31,18 +31,19 @@ export const postFile = async (file) => {
   }
 };
 
-export const postProject = async (title, file) => {
+export const postProject = async (title, memberId = 1) => {
   try {
     const data = {
       name: title,
-      thumbnailUrl: file,
-      memberId: 1,
+      thumbnailUrl: '111',
+      memberId,
     };
     const response = await basicApi.post('api/project', data, {
       headers: {
         'Content-Type': 'application/json',
       },
     });
+    getProjectList(1);
     return response.data;
   } catch (error) {
     console.error(error);

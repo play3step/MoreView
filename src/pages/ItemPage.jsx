@@ -46,10 +46,11 @@ function ItemPage() {
       <div
         style={{
           display: 'flex',
-          justifyContent: 'center',
+          justifyContent: 'flex-start',
           alignItems: 'center',
           gap: '2vw',
-          marginLeft: '10vw',
+          flexWrap: 'wrap',
+          paddingLeft: '8vw',
         }}
       >
         {projectData.projects?.map((data, index) => (
