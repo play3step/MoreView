@@ -60,7 +60,7 @@ function MainContent() {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/Home" element={<HomePage />} />
-          <Route path="/Edit/:EditId" element={<EditPage />} />
+          <Route path="/Edit/:code" element={<EditPage />} />
           <Route path="/Projects" element={<ItemPage />} />
           <Route path="/Friends" element={<FriendsPage />} />
           <Route path="/NewTech" element={<NewTechPage />} />

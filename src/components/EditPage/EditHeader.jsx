@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import SvgIcon from './atom/SvgIcon';
 import useText from '../../hooks/AddItem/useText';
-import Logo from '../myPage/atom/Logo';
+import { ReactComponent as MainLogo } from '../../assets/logo.svg';
 import { CreateModalState, SearchModalState } from '../../store/modalState';
 
 function EditHeader({ pageValue, setMenu, fullScreen, redo, undo }) {
@@ -19,7 +19,7 @@ function EditHeader({ pageValue, setMenu, fullScreen, redo, undo }) {
   return (
     <HeaderContainer>
       <BackLogo onClick={backHandle}>
-        <Logo width="5.416666666666667vw" height="6.481481481481481vh" />
+        <MainLogo width="11.97vw" height="4.81vh" />
       </BackLogo>
       <LeftSection>
         <SvgIcon type="Undo" onClick={undo} />
@@ -58,7 +58,7 @@ function EditHeader({ pageValue, setMenu, fullScreen, redo, undo }) {
 export default EditHeader;
 
 const BackLogo = styled.div`
-  margin-left: 2.96875vw;
+  margin-left: 1.25vw;
 `;
 
 const HeaderContainer = styled.div`
