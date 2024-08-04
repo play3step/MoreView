@@ -1,24 +1,70 @@
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { CreateModalState } from '../../store/modalState';
 import CancelBtn from './atom/CancelBtn';
 import SearchInput from './atom/SearchInput';
 
 function CreateObjectModal() {
   const [modalValue, setModalValue] = useRecoilState(CreateModalState);
-  if (!modalValue) {
-    return null;
-  }
+  const [text, setText] = useState('');
+  const [modelUrl, setModelUrl] = useState('');
+  const [createdTaskId, setCreatedTaskId] = useState('');
+  console.log(setModelUrl);
+
   const CancelHandler = () => {
     setModalValue(false);
   };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post(
+        'http://localhost:8000/api/text-to-3d',
+        { prompt: text },
+      );
+      const { result } = response.data;
+      setCreatedTaskId(result);
+      setText('');
+    } catch (error) {
+      console.error('Error creating 3D model:', error);
+    }
+  };
+
+  useEffect(() => {
+    const checkModelStatus = async (taskId) => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8000/api/text-to-3d/${taskId}`,
+        );
+        console.log(response.data);
+      } catch (error) {
+        console.error('Error fetching model status:', error);
+      }
+    };
+
+    if (createdTaskId) {
+      checkModelStatus(createdTaskId);
+    }
+  }, [createdTaskId]);
+  if (!modalValue) {
+    return null;
+  }
   return (
     <ModalBackdrop>
       <ModalBox>
         <CancelPostion>
           <CancelBtn CancelHandler={CancelHandler} />
         </CancelPostion>
-        <SearchInput />
+        <SearchInput text={text} setText={setText} onClick={handleSubmit} />
+        {modelUrl && (
+          <div>
+            <h3>Generated 3D Model</h3>
+            <a href={modelUrl} target="_blank" rel="noopener noreferrer">
+              View Model
+            </a>
+          </div>
+        )}
       </ModalBox>
     </ModalBackdrop>
   );
