@@ -2,12 +2,16 @@ import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 // import { useEffect, useState } from 'react';
 // import axios from 'axios';
+import { useState } from 'react';
 import { CreateModalState } from '../../store/modalState';
 import CancelBtn from './atom/CancelBtn';
 import SelectBtn from './atom/SelectBtn';
 
 function CreateObjectModal() {
   const [modalValue, setModalValue] = useRecoilState(CreateModalState);
+  const [selectState, setSelectState] = useState(null);
+  const [file, setFile] = useState(null);
+  const [preview, setPreview] = useState(null);
   // const [text, setText] = useState('');
   // const [modelUrl, setModelUrl] = useState('');
   // const [createdTaskId, setCreatedTaskId] = useState('');
@@ -15,7 +19,14 @@ function CreateObjectModal() {
   const CancelHandler = () => {
     setModalValue(false);
   };
-
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+      setPreview(URL.createObjectURL(selectedFile));
+    }
+  };
+  console.log(file);
   // const handleSubmit = async () => {
   //   try {
   //     const response = await axios.post(
@@ -55,11 +66,58 @@ function CreateObjectModal() {
         <CancelPostion>
           <CancelBtn CancelHandler={CancelHandler} />
         </CancelPostion>
-        <MainText>Select an option</MainText>
-        <SubText>Choose between text or image to continue.</SubText>
+
+        <MainText>
+          {selectState === 1
+            ? 'Prompt'
+            : selectState === 2
+              ? 'Image'
+              : 'Select an option'}
+        </MainText>
+
+        {selectState === 1 ? (
+          <PromptInput
+            type="text"
+            placeholder="Describe the object you want to generate. You can use your native language"
+          />
+        ) : selectState === 2 ? (
+          <ImageBox>
+            <ImageForm
+              onClick={() => document.getElementById('thumbnail').click()}
+            >
+              <input
+                type="file"
+                accept="image/*"
+                id="thumbnail"
+                hidden
+                onChange={handleFileChange}
+              />
+              {preview ? (
+                <img
+                  src={preview}
+                  alt="업로드한 이미지"
+                  width="90%"
+                  height="90%"
+                />
+              ) : null}
+            </ImageForm>
+          </ImageBox>
+        ) : (
+          <SubText>Choose between text or image to continue.</SubText>
+        )}
         <SelectBox>
-          <SelectBtn text="Text" />
-          <SelectBtn text="Image" />
+          <SelectBtn
+            text={selectState === null ? 'Text' : '생성하기'}
+            onClick={selectState === null ? () => setSelectState(1) : () => {}}
+          />
+          <SelectBtn
+            text={selectState === null ? 'Image' : '취소'}
+            onClick={
+              selectState === null
+                ? () => setSelectState(2)
+                : () => setSelectState(null)
+            }
+          />
         </SelectBox>
       </ModalBox>
     </ModalBackdrop>
@@ -112,4 +170,32 @@ const SubText = styled.p`
 const SelectBox = styled.div`
   display: flex;
   gap: 1.4583vw;
+`;
+
+const PromptInput = styled.textarea`
+  width: 100%;
+  height: 21.48vh;
+  border-radius: 8px;
+  padding: 0.8vw;
+  resize: none;
+  overflow: hidden;
+`;
+const ImageBox = styled.div`
+  width: 100%;
+  height: 21.48vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ImageForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed #3182f6;
+  border-radius: 8px;
+  width: 100%;
+  height: 100%;
 `;
