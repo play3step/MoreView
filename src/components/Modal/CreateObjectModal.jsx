@@ -1,52 +1,51 @@
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+// import { useEffect, useState } from 'react';
+// import axios from 'axios';
 import { CreateModalState } from '../../store/modalState';
 import CancelBtn from './atom/CancelBtn';
-import SearchInput from './atom/SearchInput';
+import SelectBtn from './atom/SelectBtn';
 
 function CreateObjectModal() {
   const [modalValue, setModalValue] = useRecoilState(CreateModalState);
-  const [text, setText] = useState('');
-  const [modelUrl, setModelUrl] = useState('');
-  const [createdTaskId, setCreatedTaskId] = useState('');
-  console.log(setModelUrl);
+  // const [text, setText] = useState('');
+  // const [modelUrl, setModelUrl] = useState('');
+  // const [createdTaskId, setCreatedTaskId] = useState('');
 
   const CancelHandler = () => {
     setModalValue(false);
   };
 
-  const handleSubmit = async () => {
-    try {
-      const response = await axios.post(
-        'http://localhost:8000/api/text-to-3d',
-        { prompt: text },
-      );
-      const { result } = response.data;
-      setCreatedTaskId(result);
-      setText('');
-    } catch (error) {
-      console.error('Error creating 3D model:', error);
-    }
-  };
+  // const handleSubmit = async () => {
+  //   try {
+  //     const response = await axios.post(
+  //       'http://localhost:8000/api/text-to-3d',
+  //       { prompt: text },
+  //     );
+  //     const { result } = response.data;
+  //     setCreatedTaskId(result);
+  //     setText('');
+  //   } catch (error) {
+  //     console.error('Error creating 3D model:', error);
+  //   }
+  // };
 
-  useEffect(() => {
-    const checkModelStatus = async (taskId) => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8000/api/text-to-3d/${taskId}`,
-        );
-        console.log(response.data);
-      } catch (error) {
-        console.error('Error fetching model status:', error);
-      }
-    };
+  // useEffect(() => {
+  //   const checkModelStatus = async (taskId) => {
+  //     try {
+  //       const response = await axios.get(
+  //         `http://localhost:8000/api/text-to-3d/${taskId}`,
+  //       );
+  //       console.log(response.data);
+  //     } catch (error) {
+  //       console.error('Error fetching model status:', error);
+  //     }
+  //   };
 
-    if (createdTaskId) {
-      checkModelStatus(createdTaskId);
-    }
-  }, [createdTaskId]);
+  //   if (createdTaskId) {
+  //     checkModelStatus(createdTaskId);
+  //   }
+  // }, [createdTaskId]);
   if (!modalValue) {
     return null;
   }
@@ -56,15 +55,12 @@ function CreateObjectModal() {
         <CancelPostion>
           <CancelBtn CancelHandler={CancelHandler} />
         </CancelPostion>
-        <SearchInput text={text} setText={setText} onClick={handleSubmit} />
-        {modelUrl && (
-          <div>
-            <h3>Generated 3D Model</h3>
-            <a href={modelUrl} target="_blank" rel="noopener noreferrer">
-              View Model
-            </a>
-          </div>
-        )}
+        <MainText>Select an option</MainText>
+        <SubText>Choose between text or image to continue.</SubText>
+        <SelectBox>
+          <SelectBtn text="Text" />
+          <SelectBtn text="Image" />
+        </SelectBox>
       </ModalBox>
     </ModalBackdrop>
   );
@@ -87,16 +83,33 @@ const ModalBackdrop = styled.div`
 const ModalBox = styled.div`
   position: absolute;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 27.083333333333332vw;
-  height: 32.592592592592595vh;
+  flex-direction: column;
+  gap: 2.592vh;
+  width: 33.958vw;
+  min-height: 25.83vh;
   background-color: #ffffff;
   border-radius: 12px;
+  padding: 2.395vw;
 `;
 
 const CancelPostion = styled.div`
   position: absolute;
   top: 1vw;
   right: 1vw;
+`;
+
+const MainText = styled.p`
+  font-weight: bold;
+  font-size: 1.66vw;
+  color: #000000;
+`;
+
+const SubText = styled.p`
+  font-size: 1.04166vw;
+  color: #000000;
+`;
+
+const SelectBox = styled.div`
+  display: flex;
+  gap: 1.4583vw;
 `;
