@@ -9,6 +9,7 @@ import { ReactComponent as Shape } from '../../../assets/svgIcon/SmallIcon/shape
 import { ReactComponent as Search } from '../../../assets/svgIcon/SmallIcon/search3DIcon.svg';
 import { ReactComponent as Text } from '../../../assets/svgIcon/SmallIcon/textIcon.svg';
 import { ReactComponent as Undo } from '../../../assets/svgIcon/SmallIcon/undoIcon.svg';
+import { ReactComponent as Folder } from '../../../assets/svgIcon/SmallIcon/folderIcon.svg';
 
 const ICONS = [
   { id: 'Comment', type: Comment, text: 'Comment' },
@@ -21,6 +22,7 @@ const ICONS = [
   { id: 'Search', type: Search, text: '3D Search' },
   { id: 'Text', type: Text, text: 'Text' },
   { id: 'Undo', type: Undo, text: 'Undo' },
+  { id: 'Folder', type: Folder, text: 'Meshy' },
 ];
 
 function SvgIcon({ type, onClick }) {

@@ -29,3 +29,8 @@ export const LoginModalState = atom({
   key: 'LoginModalState',
   default: false,
 });
+
+export const MeshyModalState = atom({
+  key: 'MeshyModalState',
+  default: false,
+});

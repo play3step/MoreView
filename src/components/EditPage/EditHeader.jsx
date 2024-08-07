@@ -4,7 +4,11 @@ import { useSetRecoilState } from 'recoil';
 import SvgIcon from './atom/SvgIcon';
 import useText from '../../hooks/AddItem/useText';
 import { ReactComponent as MainLogo } from '../../assets/logo.svg';
-import { CreateModalState, SearchModalState } from '../../store/modalState';
+import {
+  CreateModalState,
+  MeshyModalState,
+  SearchModalState,
+} from '../../store/modalState';
 
 function EditHeader({ pageValue, setMenu, fullScreen, redo, undo }) {
   const { addText } = useText();
@@ -12,6 +16,7 @@ function EditHeader({ pageValue, setMenu, fullScreen, redo, undo }) {
   const is2dDisabled = pageValue.type !== '2d';
   const setModal = useSetRecoilState(CreateModalState);
   const setSearchModal = useSetRecoilState(SearchModalState);
+  const setMeshyModal = useSetRecoilState(MeshyModalState);
   const nav = useNavigate();
   const backHandle = () => {
     nav(-1);
@@ -45,6 +50,10 @@ function EditHeader({ pageValue, setMenu, fullScreen, redo, undo }) {
           <SvgIcon
             type="Creation"
             onClick={() => (is2dDisabled ? setModal(true) : null)}
+          />
+          <SvgIcon
+            type="Folder"
+            onClick={() => (is2dDisabled ? setMeshyModal(true) : null)}
           />
         </Editor3DBox>
       </CenterSection>

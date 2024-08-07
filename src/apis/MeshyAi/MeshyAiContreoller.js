@@ -27,3 +27,13 @@ export const postImgCreate = async (text) => {
     throw error;
   }
 };
+
+export const getMeshList = async () => {
+  try {
+    const response = await axios.get('http://localhost:8000/meshy/objects/1');
+    return response.data;
+  } catch (error) {
+    console.error('Error creating 3D model:', error);
+    throw error;
+  }
+};
