@@ -1,22 +1,20 @@
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-// import { useEffect, useState } from 'react';
-// import axios from 'axios';
 import { useState } from 'react';
 import { CreateModalState } from '../../store/modalState';
 import CancelBtn from './atom/CancelBtn';
 import SelectBtn from './atom/SelectBtn';
+import { postTextCreate } from '../../apis/MeshyAi/MeshyAiContreoller';
 
 function CreateObjectModal() {
   const [modalValue, setModalValue] = useRecoilState(CreateModalState);
   const [selectState, setSelectState] = useState(null);
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
-  // const [text, setText] = useState('');
-  // const [modelUrl, setModelUrl] = useState('');
-  // const [createdTaskId, setCreatedTaskId] = useState('');
+  const [text, setText] = useState('');
 
   const CancelHandler = () => {
+    setSelectState(null);
     setModalValue(false);
   };
   const handleFileChange = (e) => {
@@ -27,36 +25,15 @@ function CreateObjectModal() {
     }
   };
   console.log(file);
-  // const handleSubmit = async () => {
-  //   try {
-  //     const response = await axios.post(
-  //       'http://localhost:8000/api/text-to-3d',
-  //       { prompt: text },
-  //     );
-  //     const { result } = response.data;
-  //     setCreatedTaskId(result);
-  //     setText('');
-  //   } catch (error) {
-  //     console.error('Error creating 3D model:', error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const checkModelStatus = async (taskId) => {
-  //     try {
-  //       const response = await axios.get(
-  //         `http://localhost:8000/api/text-to-3d/${taskId}`,
-  //       );
-  //       console.log(response.data);
-  //     } catch (error) {
-  //       console.error('Error fetching model status:', error);
-  //     }
-  //   };
-
-  //   if (createdTaskId) {
-  //     checkModelStatus(createdTaskId);
-  //   }
-  // }, [createdTaskId]);
+  const createObjectText = () => {
+    try {
+      postTextCreate(text);
+      setModalValue(false);
+      setText('');
+    } catch (error) {
+      console.error(error);
+    }
+  };
   if (!modalValue) {
     return null;
   }
@@ -79,6 +56,8 @@ function CreateObjectModal() {
           <PromptInput
             type="text"
             placeholder="Describe the object you want to generate. You can use your native language"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
           />
         ) : selectState === 2 ? (
           <ImageBox>
@@ -108,7 +87,13 @@ function CreateObjectModal() {
         <SelectBox>
           <SelectBtn
             text={selectState === null ? 'Text' : '생성하기'}
-            onClick={selectState === null ? () => setSelectState(1) : () => {}}
+            onClick={
+              selectState === 1
+                ? () => createObjectText()
+                : selectState === 2
+                  ? () => alert('이미지 생성')
+                  : () => setSelectState(1)
+            }
           />
           <SelectBtn
             text={selectState === null ? 'Image' : '취소'}
