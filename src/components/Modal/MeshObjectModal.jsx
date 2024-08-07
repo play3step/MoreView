@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import CancelBtn from './atom/CancelBtn';
 import { MeshyModalState } from '../../store/modalState';
 import { getMeshList } from '../../apis/MeshyAi/MeshyAiContreoller';
+import MeshyItem from './atom/MeshyItem';
 
 function MeshObjectModal() {
   const [modalValue, setModalValue] = useRecoilState(MeshyModalState);
@@ -31,7 +32,11 @@ function MeshObjectModal() {
           <CancelBtn CancelHandler={CancelHandler} />
         </CancelPostion>
         <MainText>Meshy List</MainText>
-        <ListBox>asd</ListBox>
+        <ListBox>
+          {listData?.map((data, index) => (
+            <MeshyItem key={index} data={data} />
+          ))}
+        </ListBox>
       </ModalBox>
     </ModalBackdrop>
   );
@@ -74,9 +79,12 @@ const MainText = styled.p`
   font-size: 1.66vw;
   color: #000000;
 `;
-
 const ListBox = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
   width: 100%;
   height: 24.72vh;
   margin-top: 3.33vh;
+  overflow-y: auto;
 `;
