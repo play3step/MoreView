@@ -91,7 +91,7 @@ function CreateObjectModal() {
               selectState === 1
                 ? () => createObjectText()
                 : selectState === 2
-                  ? () => alert('이미지 생성')
+                  ? () => null
                   : () => setSelectState(1)
             }
           />
