@@ -73,7 +73,7 @@ function Edit3d({ objecturl, setObjectValue, pageRendering }) {
             setObjectValue={setObjectValue}
             pageRendering={pageRendering}
           />
-        ) : url?.extension === 'gltf' ? (
+        ) : url?.extension === 'gltf' || url?.extension === 'glb' ? (
           <EditGltfLoader
             key={index}
             objecturl={url}

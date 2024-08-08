@@ -75,9 +75,14 @@ function SearchObjectModal() {
           extension === 'obj' ||
           extension === 'mtl' ||
           extension === 'bin' ||
-          extension === 'gltf'
+          extension === 'gltf' ||
+          extension === 'glb'
         ) {
-          if (extension === 'obj' || extension === 'gltf') {
+          if (
+            extension === 'obj' ||
+            extension === 'gltf' ||
+            extension === 'glb'
+          ) {
             filesData.type = extension;
           }
           const blobUrl = URL.createObjectURL(file);
@@ -124,7 +129,7 @@ function SearchObjectModal() {
       filesData.obj,
       filesData.mtl,
       filesData.bin,
-      filesData.urls.gltf,
+      filesData.urls.gltf || filesData.urls.glb,
       filesData.type,
       filesData.urls,
     );
@@ -143,11 +148,12 @@ function SearchObjectModal() {
       object.obj,
       object.mtl,
       object.bin,
-      object.urls.gltf,
+      object.urls.gltf || object.urls.glb,
       object.type,
       object.urls,
     );
   };
+  console.log(objects);
   return (
     <ModalBackdrop>
       <ModalBox>
@@ -159,7 +165,7 @@ function SearchObjectModal() {
             type="file"
             onChange={handleFileChange}
             multiple
-            accept=".gltf,.bin,.obj,.mtl,.jpeg,.jpg,.png"
+            accept=".gltf,.glb,.bin,.obj,.mtl,.jpeg,.jpg,.png"
             ref={fileInputRef}
           />
           <Button onClick={handleButtonClick}>
@@ -199,7 +205,7 @@ function SearchObjectModal() {
                   y="-2"
                   z="-3"
                 />
-              ) : object.type === 'gltf' ? (
+              ) : object.type === 'gltf' || object.type === 'glb' ? (
                 <PreviewGltf
                   key={index}
                   objecturl={object.urls}

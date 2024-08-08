@@ -2,6 +2,7 @@ import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import { useEffect, useState } from 'react';
+
 import CancelBtn from './atom/CancelBtn';
 import { MeshyModalState } from '../../store/modalState';
 import { getMeshList } from '../../apis/MeshyAi/MeshyAiContreoller';
@@ -14,13 +15,15 @@ function MeshObjectModal() {
     setModalValue(false);
   };
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await getMeshList();
-      setListData(data);
-    };
+    if (modalValue) {
+      const fetchData = async () => {
+        const data = await getMeshList();
+        setListData(data);
+      };
 
-    fetchData();
-  }, []);
+      fetchData();
+    }
+  }, [modalValue]);
   console.log(listData);
   if (!modalValue) {
     return null;

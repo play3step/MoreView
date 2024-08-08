@@ -11,8 +11,8 @@ function PreviewGltf({ objecturl, x, y, z }) {
   const [loadingValue, setLoadingValue] = useRecoilState(LodingState);
   const [gltf, setGltf] = useState(null);
   const movement = useRef({ forward: 0, right: 0, up: 0 });
-  const gltfUrl = typeof objecturl === 'string' ? objecturl : objecturl.gltf;
-
+  const gltfUrl =
+    typeof objecturl === 'string' ? objecturl : objecturl.gltf || objecturl.glb;
   useEffect(() => {
     scene.background = new Color('#FFFFFF');
     if (!gltfUrl) {
