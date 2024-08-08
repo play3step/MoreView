@@ -30,10 +30,12 @@ export const postImgCreate = async (text) => {
 
 export const getMeshList = async () => {
   try {
-    const response = await axios.get('http://localhost:8000/meshy/objects/1');
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_URL}/meshy/objects/1`,
+    );
     return response.data;
   } catch (error) {
-    console.error('Error creating 3D model:', error);
+    console.error('Error fetching mesh list:', error);
     throw error;
   }
 };

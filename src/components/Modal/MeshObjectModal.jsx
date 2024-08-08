@@ -3,14 +3,27 @@ import styled from 'styled-components';
 
 import { useEffect, useState } from 'react';
 
+import { Canvas } from '@react-three/fiber';
 import CancelBtn from './atom/CancelBtn';
 import { MeshyModalState } from '../../store/modalState';
 import { getMeshList } from '../../apis/MeshyAi/MeshyAiContreoller';
-import MeshyItem from './atom/MeshyItem';
+
+import useObject from '../../hooks/AddItem/useObject';
+import PreviewGltf from '../EditPage/PreviewSlide/atom/PreviewGltf';
 
 function MeshObjectModal() {
   const [modalValue, setModalValue] = useRecoilState(MeshyModalState);
   const [listData, setListData] = useState([]);
+  const { addObject } = useObject();
+
+  const handlePreviewClick = (object) => {
+    console.log(object);
+
+    const glbUrl = `${process.env.REACT_APP_API_URL}/${object.glb}`;
+    const type = 'glb';
+
+    addObject(object.obj, object.mtl, object.bin, glbUrl, type, object.urls);
+  };
   const CancelHandler = () => {
     setModalValue(false);
   };
@@ -18,13 +31,15 @@ function MeshObjectModal() {
     if (modalValue) {
       const fetchData = async () => {
         const data = await getMeshList();
+        console.log('Fetched data:', data); // API 응답 데이터 확인
+
         setListData(data);
       };
 
       fetchData();
     }
   }, [modalValue]);
-  console.log(listData);
+
   if (!modalValue) {
     return null;
   }
@@ -37,7 +52,33 @@ function MeshObjectModal() {
         <MainText>Meshy List</MainText>
         <ListBox>
           {listData?.map((data, index) => (
-            <MeshyItem key={index} data={data} />
+            <Canvas
+              key={index}
+              backgroundColor="#FFFFFF"
+              style={{
+                width: '6.25vw',
+                height: '6.25vw',
+                border: '1px solid',
+                borderRadius: '4px',
+              }}
+              onClick={() => handlePreviewClick(data.model_urls)}
+            >
+              <hemisphereLight
+                skyColor={0xffffbb}
+                groundColor={0x080820}
+                intensity={0.35}
+              />
+              <directionalLight position={[0, 0, 5]} intensity={5} />
+              <directionalLight position={[5, 5, 5]} intensity={5} />
+              <directionalLight position={[-5, -5, -5]} intensity={5} />
+              <PreviewGltf
+                key={index}
+                objecturl={`${process.env.REACT_APP_API_URL}/${data.model_urls.glb}`}
+                x="0"
+                y="-2"
+                z="-3"
+              />
+            </Canvas>
           ))}
         </ListBox>
       </ModalBox>
