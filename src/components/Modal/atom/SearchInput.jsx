@@ -1,12 +1,16 @@
 import styled from 'styled-components';
 import { ReactComponent as Search } from '../../../assets/svgIcon/Search.svg';
 
-function SearchInput() {
+function SearchInput({ text, setText, onClick }) {
   return (
     <>
-      <InputBox />
+      <InputBox value={text} onChange={(e) => setText(e.target.value)} />
       <SearchBtn>
-        <Search width="1.7708333333333333vw" height="3.148148148148148vh" />
+        <Search
+          width="1.7708333333333333vw"
+          height="3.148148148148148vh"
+          onClick={onClick}
+        />
       </SearchBtn>
     </>
   );

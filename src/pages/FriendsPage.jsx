@@ -1,8 +1,23 @@
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 import FriendRequestsContainer from '../components/FriendsPage/FriendRequestsContainer';
 import FriendsContainer from '../components/FriendsPage/FriendsContainer';
+import { requestedFriend } from '../apis/User/FriendController';
 
 function FriendsPage() {
+  const [requests, setRequests] = useState([]);
+  useEffect(() => {
+    const setFriends = async () => {
+      try {
+        const data = await requestedFriend(1);
+        setRequests(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    setFriends();
+  }, []);
+  console.log(requests);
   return (
     <PageContainer>
       <FriendRequestsContainer />
