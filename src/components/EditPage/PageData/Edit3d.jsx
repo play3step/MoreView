@@ -13,7 +13,7 @@ function Edit3d({ objecturl, setObjectValue, pageRendering }) {
 
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
-  console.log(objecturl);
+
   useEffect(() => {
     const sensitivity = 0.002;
     const euler = new Euler(0, 0, 0, 'YXZ');

@@ -153,7 +153,7 @@ function SearchObjectModal() {
       object.urls,
     );
   };
-  console.log(objects);
+
   return (
     <ModalBackdrop>
       <ModalBox>

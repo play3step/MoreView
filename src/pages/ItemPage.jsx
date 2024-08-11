@@ -9,7 +9,6 @@ import { ProjectList } from '../store/projectState';
 function ItemPage() {
   const setModalState = useSetRecoilState(CreateProjectModalState);
   const [projectData, setProjectData] = useRecoilState(ProjectList);
-  console.log(projectData);
 
   const createProject = () => {
     setModalState(true);

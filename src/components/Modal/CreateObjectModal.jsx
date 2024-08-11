@@ -4,7 +4,11 @@ import { useState } from 'react';
 import { CreateModalState } from '../../store/modalState';
 import CancelBtn from './atom/CancelBtn';
 import SelectBtn from './atom/SelectBtn';
-import { postTextCreate } from '../../apis/MeshyAi/MeshyAiContreoller';
+import {
+  postImgCreate,
+  postTextCreate,
+  uploadImg,
+} from '../../apis/MeshyAi/MeshyAiContreoller';
 
 function CreateObjectModal() {
   const [modalValue, setModalValue] = useRecoilState(CreateModalState);
@@ -24,14 +28,27 @@ function CreateObjectModal() {
       setPreview(URL.createObjectURL(selectedFile));
     }
   };
-  console.log(file);
   const createObjectText = () => {
     try {
       postTextCreate(text);
       setModalValue(false);
+      setSelectState(null);
       setText('');
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const createObjectImg = async () => {
+    if (!file) return;
+    try {
+      const imgUrl = await uploadImg(file);
+
+      await postImgCreate(imgUrl.fileUrl);
+      setModalValue(false);
+      setSelectState(null);
+    } catch (error) {
+      console.error('Error creating 3D model:', error);
     }
   };
   if (!modalValue) {
@@ -91,7 +108,7 @@ function CreateObjectModal() {
               selectState === 1
                 ? () => createObjectText()
                 : selectState === 2
-                  ? () => null
+                  ? () => createObjectImg()
                   : () => setSelectState(1)
             }
           />

@@ -17,8 +17,6 @@ function MeshObjectModal() {
   const { addObject } = useObject();
 
   const handlePreviewClick = (object) => {
-    console.log(object);
-
     const glbUrl = `${process.env.REACT_APP_API_URL}/${object.glb}`;
     const type = 'glb';
 
@@ -31,8 +29,6 @@ function MeshObjectModal() {
     if (modalValue) {
       const fetchData = async () => {
         const data = await getMeshList();
-        console.log('Fetched data:', data); // API 응답 데이터 확인
-
         setListData(data);
       };
 
