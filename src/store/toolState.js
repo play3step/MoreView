@@ -10,14 +10,6 @@ export const toolState = atom({
   default: { toolType: '', state: false },
 });
 
-export const textPropertiesState = atom({
-  key: 'textPropertiesState',
-  default: {
-    fontSize: 20,
-    color: '#000000',
-  },
-});
-
 export const objectSizeState = atom({
   key: 'objectSizeState',
   default: {

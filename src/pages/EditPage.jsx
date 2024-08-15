@@ -21,7 +21,6 @@ import useShapeHandlers from '../hooks/EditPage/Handlers/useShapeHandlers';
 import useKeyboardNavigation from '../hooks/EditPage/useKeyboardNavigation';
 import useDeleteItem from '../hooks/EditPage/useDeleteItem';
 import useHistory from '../hooks/EditPage/Handlers/useHistory';
-import TextTool from '../components/EditPage/EditTool/TextTool';
 import ControllerItem from '../components/EditPage/ItemListBox/3D/ControllerItem';
 
 function EditPage() {
@@ -207,7 +206,6 @@ function EditPage() {
         {menu === 2 && <ImageItem menuRef={menuRef} />}
       </ItemListPosition>
       <ToolPosition>
-        {isEditing && <TextTool />}
         {pageValue[pageRendering].type === '3d' && <ControllerItem />}
       </ToolPosition>
     </EditContainer>
