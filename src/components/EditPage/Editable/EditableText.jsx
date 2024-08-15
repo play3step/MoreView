@@ -1,66 +1,88 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Text } from 'react-konva';
-import { useRecoilState } from 'recoil';
-import { editState } from '../../../store/recoil';
-import { textPropertiesState } from '../../../store/toolState';
+import { useSetRecoilState } from 'recoil';
+
+import { toolState } from '../../../store/toolState';
 
 function EditableText({ id, initialText, onTextChange, onDragEnd, x, y }) {
   const [text, setText] = useState(initialText.text);
-  const [editing, setEditing] = useRecoilState(editState);
-  const [textProps] = useRecoilState(textPropertiesState);
+  const [editing, setEditing] = useState(false); // 개별 컴포넌트에 대한 로컬 상태
 
-  useEffect(() => {
-    let textarea;
-    if (editing) {
-      textarea = document.createElement('textarea');
-      textarea.value = text;
-      textarea.style.position = 'absolute';
-      textarea.style.top = `${y}px`;
-      textarea.style.left = `${x}px`;
-      textarea.style.fontSize = `${textProps.fontSize}px`;
-      textarea.style.color = textProps.color;
-      textarea.style.border = 'none';
-      textarea.style.outline = 'none';
-      textarea.style.background = 'none';
-      textarea.style.resize = 'none';
-      textarea.style.overflow = 'hidden';
-
-      document.body.appendChild(textarea);
-      textarea.focus();
-
-      const handleInput = (e) => {
-        setText(e.target.value);
-      };
-
-      textarea.addEventListener('input', handleInput);
-
-      const handleBlur = () => {
-        setEditing(false);
-        onTextChange(text);
-        if (textarea && document.body.contains(textarea)) {
-          document.body.removeChild(textarea);
-        }
-      };
-
-      return () => {
-        textarea.removeEventListener('input', handleInput);
-        textarea.removeEventListener('blur', handleBlur);
-        if (document.body.contains(textarea)) {
-          document.body.removeChild(textarea);
-        }
-      };
-    }
-    return () => {};
-  }, [editing, text, textProps, onTextChange, setEditing, x, y]);
-
-  const handleDoubleClick = () => {
-    setEditing(true);
-  };
+  const setTool = useSetRecoilState(toolState);
 
   const handleDragEnd = (e) => {
     const newX = e.target.x();
     const newY = e.target.y();
     onDragEnd(id, { x: newX, y: newY });
+  };
+
+  const handleDoubleClick = (e) => {
+    const stage = e.target.getStage();
+    if (!stage) return;
+    setEditing(true);
+    setTool({
+      state: true,
+    });
+    const textPosition = e.target.getAbsolutePosition();
+    const stageBox = stage.container().getBoundingClientRect();
+    const scale = stage.scaleX();
+
+    const areaPosition = {
+      x: (stageBox.left + window.scrollX + textPosition.x) * scale,
+      y: (stageBox.top + window.scrollY + textPosition.y) * scale,
+    };
+    const textarea = document.createElement('textarea');
+    document.body.appendChild(textarea);
+    textarea.value = text;
+    textarea.style.position = 'absolute';
+    textarea.style.top = `${areaPosition.y}px`;
+    textarea.style.left = `${areaPosition.x}px`;
+    textarea.style.fontSize = `${initialText.size}px`;
+    textarea.style.border = 'none';
+    textarea.style.color = initialText.color;
+    textarea.style.padding = '0';
+    textarea.style.margin = '0';
+    textarea.style.overflow = 'hidden';
+    textarea.style.resize = 'none';
+    textarea.style.whiteSpace = 'pre-wrap';
+    textarea.style.background = 'none';
+
+    textarea.focus();
+
+    const span = document.createElement('span');
+    span.style.fontSize = `${initialText.size}px`;
+    span.style.whiteSpace = 'pre-wrap';
+    span.style.visibility = 'hidden';
+
+    document.body.appendChild(span);
+
+    const adjustSize = () => {
+      span.textContent = textarea.value;
+      textarea.style.width = `${span.offsetWidth + 10}px`;
+      textarea.style.height = `${span.offsetHeight + 10}px`;
+    };
+
+    adjustSize(); // 초기 크기 조절
+    textarea.addEventListener('input', adjustSize); // 입력 시 크기 조절
+
+    const removeTextarea = () => {
+      if (textarea.parentNode) {
+        textarea.parentNode.removeChild(textarea);
+      }
+      if (span.parentNode) {
+        span.parentNode.removeChild(span);
+      }
+      onTextChange(textarea.value);
+      setEditing(false);
+      setTool({
+        state: false,
+      });
+    };
+
+    textarea.addEventListener('blur', () => {
+      setText(textarea.value);
+      removeTextarea();
+    });
   };
 
   return (
@@ -69,8 +91,8 @@ function EditableText({ id, initialText, onTextChange, onDragEnd, x, y }) {
         text={text}
         x={x}
         y={y}
-        fontSize={Number(textProps.fontSize)}
-        fill={textProps.color}
+        fontSize={initialText.size}
+        fill={initialText.color}
         draggable
         onDblClick={handleDoubleClick}
         onDragEnd={handleDragEnd}
