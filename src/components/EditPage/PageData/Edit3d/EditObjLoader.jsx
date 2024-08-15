@@ -6,7 +6,7 @@ import { useRecoilState } from 'recoil';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
 import { LodingState } from '../../../../store/modalState';
 import useKeyDown from '../../../../hooks/EditPage/Handlers/useKeyDown';
-import useObjectDrag from '../../../../hooks/EditPage/useObjectDrag';
+// import useObjectDrag from '../../../../hooks/EditPage/useObjectDrag';
 
 function EditObjLoader({
   objecturl,
@@ -14,12 +14,12 @@ function EditObjLoader({
   x,
   y,
   z,
-  setIsDragging,
-  setObjectValue,
-  pageRendering,
+  // setIsDragging,
+  // setObjectValue,
+  // pageRendering,
 }) {
   const modelRef = useRef();
-  const { camera, gl } = useThree();
+  const { camera } = useThree();
   const [loadingValue, setLoadingValue] = useRecoilState(LodingState);
   const [object, setObject] = useState(null);
   const [initialScale, setInitialScale] = useState([1, 1, 1]);
@@ -88,15 +88,15 @@ function EditObjLoader({
 
   useKeyDown(movement, modelRef);
 
-  useObjectDrag({
-    modelRef,
-    camera,
-    domElement: gl.domElement,
-    setIsDragging,
-    setObjectValue,
-    pageRendering,
-    objectId: objecturl.id,
-  });
+  // useObjectDrag({
+  //   modelRef,
+  //   camera,
+  //   domElement: gl.domElement,
+  //   setIsDragging,
+  //   setObjectValue,
+  //   pageRendering,
+  //   objectId: objecturl.id,
+  // });
 
   return (
     <mesh ref={modelRef} visible={!loadingValue}>
