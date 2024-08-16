@@ -34,31 +34,34 @@ function EditHeader({ pageValue, setMenu, fullScreen, redo, undo }) {
         <SvgIcon type="Redo" onClick={redo} />
       </LeftSection>
       <CenterSection>
-        <Editor2DBox>
-          <SvgIcon type="Text" onClick={is3dDisabled ? addText : undefined} />
-          <SvgIcon
-            type="Shape"
-            onClick={() => (is3dDisabled ? setMenu(1) : null)}
-          />
-          <SvgIcon
-            type="Image"
-            onClick={() => (is3dDisabled ? setMenu(2) : null)}
-          />
-        </Editor2DBox>
-        <Editor3DBox>
-          <SvgIcon
-            type="Search"
-            onClick={() => (is2dDisabled ? setSearchModal(true) : null)}
-          />
-          <SvgIcon
-            type="Creation"
-            onClick={() => (is2dDisabled ? setModal(true) : null)}
-          />
-          <SvgIcon
-            type="Folder"
-            onClick={() => (is2dDisabled ? setMeshyModal(true) : null)}
-          />
-        </Editor3DBox>
+        {pageValue.type !== '3d' ? (
+          <EditorBox>
+            <SvgIcon type="Text" onClick={is3dDisabled ? addText : undefined} />
+            <SvgIcon
+              type="Shape"
+              onClick={() => (is3dDisabled ? setMenu(1) : null)}
+            />
+            <SvgIcon
+              type="Image"
+              onClick={() => (is3dDisabled ? setMenu(2) : null)}
+            />
+          </EditorBox>
+        ) : (
+          <EditorBox>
+            <SvgIcon
+              type="Search"
+              onClick={() => (is2dDisabled ? setSearchModal(true) : null)}
+            />
+            <SvgIcon
+              type="Creation"
+              onClick={() => (is2dDisabled ? setModal(true) : null)}
+            />
+            <SvgIcon
+              type="Folder"
+              onClick={() => (is2dDisabled ? setMeshyModal(true) : null)}
+            />
+          </EditorBox>
+        )}
       </CenterSection>
       <RightSection>
         <ShareBtn setShareModal={setShareModal} />
@@ -98,14 +101,9 @@ const CenterSection = styled.div`
   flex: 1;
 `;
 
-const Editor2DBox = styled.div`
+const EditorBox = styled.div`
   display: flex;
   gap: 1.4583333333333333vw;
-`;
-
-const Editor3DBox = styled.div`
-  display: flex;
-  gap: 1.0416666666666665vw;
 `;
 
 const RightSection = styled.div`
