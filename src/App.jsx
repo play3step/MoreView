@@ -17,6 +17,7 @@ import FriendsPage from './pages/FriendsPage';
 import NewTechPage from './pages/NewTechPage';
 import HeaderMenu from './components/Menu/HeaderMenu';
 import MeshObjectModal from './components/Modal/MeshObjectModal';
+import ShareModal from './components/Modal/ShareModal';
 
 function App() {
   return (
@@ -58,6 +59,7 @@ function MainContent() {
         <CreateObjectModal />
         <SearchObjectModal />
         <MeshObjectModal />
+        <ShareModal />
         <ControllerObjectModal />
         <Routes>
           <Route path="/" element={<LoginPage />} />

@@ -34,3 +34,8 @@ export const MeshyModalState = atom({
   key: 'MeshyModalState',
   default: false,
 });
+
+export const ShareModalState = atom({
+  key: 'ShareModalState',
+  default: false,
+});

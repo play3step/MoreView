@@ -8,7 +8,9 @@ import {
   CreateModalState,
   MeshyModalState,
   SearchModalState,
+  ShareModalState,
 } from '../../store/modalState';
+import ShareBtn from './PreviewSlide/atom/ShareBtn';
 
 function EditHeader({ pageValue, setMenu, fullScreen, redo, undo }) {
   const { addText } = useText();
@@ -17,6 +19,7 @@ function EditHeader({ pageValue, setMenu, fullScreen, redo, undo }) {
   const setModal = useSetRecoilState(CreateModalState);
   const setSearchModal = useSetRecoilState(SearchModalState);
   const setMeshyModal = useSetRecoilState(MeshyModalState);
+  const setShareModal = useSetRecoilState(ShareModalState);
   const nav = useNavigate();
   const backHandle = () => {
     nav(-1);
@@ -58,6 +61,7 @@ function EditHeader({ pageValue, setMenu, fullScreen, redo, undo }) {
         </Editor3DBox>
       </CenterSection>
       <RightSection>
+        <ShareBtn setShareModal={setShareModal} />
         <SvgIcon type="Play" onClick={fullScreen} />
       </RightSection>
     </HeaderContainer>
@@ -107,5 +111,7 @@ const Editor3DBox = styled.div`
 const RightSection = styled.div`
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   margin-right: 2.2395833333333335vw;
+  gap: 1.5vw;
 `;
