@@ -17,3 +17,8 @@ export const objectSizeState = atom({
     light: 5,
   },
 });
+
+export const meshyLoadingState = atom({
+  key: 'meshyLodingState',
+  default: false,
+});

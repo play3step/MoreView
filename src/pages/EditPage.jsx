@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
@@ -7,7 +7,7 @@ import EditHeader from '../components/EditPage/EditHeader';
 import PreviewSlide from '../components/EditPage/PreviewSlide/PreviewSlide';
 import Edit2d from '../components/EditPage/PageData/Edit2d';
 import { editState } from '../store/recoil';
-import { itemState } from '../store/toolState';
+import { itemState, meshyLoadingState } from '../store/toolState';
 
 import ShapeItem from '../components/EditPage/ItemListBox/2D/ShapeItem';
 import Edit3d from '../components/EditPage/PageData/Edit3d';
@@ -46,6 +46,7 @@ function EditPage() {
 
   const isEditing = useRecoilValue(editState);
   const [menu, setMenu] = useRecoilState(itemState);
+  const setMeshyState = useSetRecoilState(meshyLoadingState);
 
   const menuRef = useRef();
 
@@ -135,9 +136,8 @@ function EditPage() {
   useEffect(() => {
     const eventSource = new EventSource('http://localhost:8000/events');
 
-    eventSource.onmessage = (event) => {
-      const newMessage = JSON.parse(event.data);
-      alert(newMessage);
+    eventSource.onmessage = () => {
+      setMeshyState(false);
     };
 
     // 에러 처리 (선택 사항)

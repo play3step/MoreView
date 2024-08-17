@@ -9,6 +9,8 @@ import {
   postTextCreate,
   uploadImg,
 } from '../../apis/MeshyAi/MeshyAiContreoller';
+import Spinner from './atom/Spinner';
+import { meshyLoadingState } from '../../store/toolState';
 
 function CreateObjectModal() {
   const [modalValue, setModalValue] = useRecoilState(CreateModalState);
@@ -16,6 +18,7 @@ function CreateObjectModal() {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [text, setText] = useState('');
+  const [createState, setCreateState] = useRecoilState(meshyLoadingState);
 
   const CancelHandler = () => {
     setSelectState(null);
@@ -31,9 +34,10 @@ function CreateObjectModal() {
   const createObjectText = () => {
     try {
       postTextCreate(text);
-      setModalValue(false);
       setSelectState(null);
+      setCreateState(true);
       setText('');
+      setModalValue(false);
     } catch (error) {
       console.error(error);
     }
@@ -45,8 +49,10 @@ function CreateObjectModal() {
       const imgUrl = await uploadImg(file);
 
       await postImgCreate(imgUrl.fileUrl);
-      setModalValue(false);
+      setCreateState(true);
       setSelectState(null);
+      setFile(null);
+      setModalValue(false);
     } catch (error) {
       console.error('Error creating 3D model:', error);
     }
@@ -69,58 +75,64 @@ function CreateObjectModal() {
               : 'Select an option'}
         </MainText>
 
-        {selectState === 1 ? (
-          <PromptInput
-            type="text"
-            placeholder="Describe the object you want to generate. You can use your native language"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-          />
-        ) : selectState === 2 ? (
-          <ImageBox>
-            <ImageForm
-              onClick={() => document.getElementById('thumbnail').click()}
-            >
-              <input
-                type="file"
-                accept="image/*"
-                id="thumbnail"
-                hidden
-                onChange={handleFileChange}
+        {!createState && (
+          <>
+            {selectState === 1 ? (
+              <PromptInput
+                type="text"
+                placeholder="Describe the object you want to generate. You can use your native language"
+                value={text}
+                onChange={(e) => setText(e.target.value)}
               />
-              {preview ? (
-                <img
-                  src={preview}
-                  alt="업로드한 이미지"
-                  width="90%"
-                  height="90%"
-                />
-              ) : null}
-            </ImageForm>
-          </ImageBox>
-        ) : (
-          <SubText>Choose between text or image to continue.</SubText>
+            ) : selectState === 2 ? (
+              <ImageBox>
+                <ImageForm
+                  onClick={() => document.getElementById('thumbnail').click()}
+                >
+                  <input
+                    type="file"
+                    accept="image/*"
+                    id="thumbnail"
+                    hidden
+                    onChange={handleFileChange}
+                  />
+                  {preview ? (
+                    <img
+                      src={preview}
+                      alt="업로드한 이미지"
+                      width="90%"
+                      height="90%"
+                    />
+                  ) : null}
+                </ImageForm>
+              </ImageBox>
+            ) : (
+              <SubText>Choose between text or image to continue.</SubText>
+            )}
+
+            <SelectBox>
+              <SelectBtn
+                text={selectState === null ? 'Text' : '생성하기'}
+                onClick={
+                  selectState === 1
+                    ? () => createObjectText()
+                    : selectState === 2
+                      ? () => createObjectImg()
+                      : () => setSelectState(1)
+                }
+              />
+              <SelectBtn
+                text={selectState === null ? 'Image' : '취소'}
+                onClick={
+                  selectState === null
+                    ? () => setSelectState(2)
+                    : () => setSelectState(null)
+                }
+              />
+            </SelectBox>
+          </>
         )}
-        <SelectBox>
-          <SelectBtn
-            text={selectState === null ? 'Text' : '생성하기'}
-            onClick={
-              selectState === 1
-                ? () => createObjectText()
-                : selectState === 2
-                  ? () => createObjectImg()
-                  : () => setSelectState(1)
-            }
-          />
-          <SelectBtn
-            text={selectState === null ? 'Image' : '취소'}
-            onClick={
-              selectState === null
-                ? () => setSelectState(2)
-                : () => setSelectState(null)
-            }
-          />
-        </SelectBox>
+        {createState && <Spinner />}
       </ModalBox>
     </ModalBackdrop>
   );

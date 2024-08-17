@@ -1,6 +1,7 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useEffect, useState } from 'react';
 import SvgIcon from './atom/SvgIcon';
 import useText from '../../hooks/AddItem/useText';
 import { ReactComponent as MainLogo } from '../../assets/logo.svg';
@@ -11,6 +12,8 @@ import {
   ShareModalState,
 } from '../../store/modalState';
 import ShareBtn from './PreviewSlide/atom/ShareBtn';
+import { meshyLoadingState } from '../../store/toolState';
+import Spinner from '../Modal/atom/Spinner';
 
 function EditHeader({ pageValue, setMenu, fullScreen, redo, undo }) {
   const { addText } = useText();
@@ -20,10 +23,32 @@ function EditHeader({ pageValue, setMenu, fullScreen, redo, undo }) {
   const setSearchModal = useSetRecoilState(SearchModalState);
   const setMeshyModal = useSetRecoilState(MeshyModalState);
   const setShareModal = useSetRecoilState(ShareModalState);
+  const meshyState = useRecoilValue(meshyLoadingState);
+  const [showCheckMark, setShowCheckMark] = useState(false);
+  const [hasLoaded, setHasLoaded] = useState(false);
+
   const nav = useNavigate();
   const backHandle = () => {
     nav(-1);
   };
+  useEffect(() => {
+    // 최초 로딩이 완료된 이후에만 체크 마크를 표시
+    if (hasLoaded && meshyState === false) {
+      setShowCheckMark(true);
+
+      const timer = setTimeout(() => {
+        setShowCheckMark(false);
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
+    return () => {};
+  }, [meshyState, hasLoaded]);
+  useEffect(() => {
+    if (meshyState === true) {
+      setHasLoaded(true); // 로딩이 시작되면 로딩 완료 상태로 간주
+    }
+  }, [meshyState]);
   return (
     <HeaderContainer>
       <BackLogo onClick={backHandle}>
@@ -52,10 +77,16 @@ function EditHeader({ pageValue, setMenu, fullScreen, redo, undo }) {
               type="Search"
               onClick={() => (is2dDisabled ? setSearchModal(true) : null)}
             />
-            <SvgIcon
-              type="Creation"
-              onClick={() => (is2dDisabled ? setModal(true) : null)}
-            />
+            {meshyState ? (
+              <Spinner type="small" />
+            ) : showCheckMark ? (
+              <CheckMark>✔</CheckMark>
+            ) : (
+              <SvgIcon
+                type="Creation"
+                onClick={() => (is2dDisabled ? setModal(true) : null)}
+              />
+            )}
             <SvgIcon
               type="Folder"
               onClick={() => (is2dDisabled ? setMeshyModal(true) : null)}
@@ -112,4 +143,26 @@ const RightSection = styled.div`
   align-items: center;
   margin-right: 2.2395833333333335vw;
   gap: 1.5vw;
+`;
+const fadeInOut = keyframes`
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.2);
+  }
+`;
+
+const CheckMark = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 1.4vw;
+  color: green;
+  animation: ${fadeInOut} 2s ease-in-out;
 `;
