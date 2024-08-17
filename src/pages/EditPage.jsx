@@ -131,6 +131,26 @@ function EditPage() {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [setMenu, menuRef]);
+
+  useEffect(() => {
+    const eventSource = new EventSource('http://localhost:8000/events');
+
+    eventSource.onmessage = (event) => {
+      const newMessage = JSON.parse(event.data);
+      alert(newMessage);
+    };
+
+    // 에러 처리 (선택 사항)
+    eventSource.onerror = (error) => {
+      console.error('EventSource failed:', error);
+      eventSource.close(); // 에러 발생 시 연결 종료
+    };
+
+    return () => {
+      eventSource.close();
+    };
+  }, []);
+
   return (
     <EditContainer>
       <EditHeader
