@@ -10,7 +10,7 @@ function HeaderMenu() {
       <div
         style={{
           display: 'flex',
-          gap: '2.5vw',
+          gap: '5vw',
         }}
       >
         <UserInfoBox />
