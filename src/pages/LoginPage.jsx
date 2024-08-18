@@ -1,18 +1,28 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
 import { ReactComponent as Logo } from '../assets/logo.svg';
 import LoginFormContainer from '../components/LoginPage/LoginFormContainer';
 import { loginController } from '../apis/User/LoginController';
+import { userInfo } from '../store/userState';
 
 function LoginPage() {
   const nav = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const setUserData = useSetRecoilState(userInfo);
+
   const LoginHandle = async (e) => {
     e.preventDefault(); // 폼 제출 시 페이지 리로드 방지
     try {
-      await loginController(email, password);
+      const member = await loginController(email, password);
+
+      setUserData({
+        memberId: member.memberId,
+        token: member.token,
+        email,
+      });
       setEmail('');
       setPassword('');
       nav('/list');

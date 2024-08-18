@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { CreateProjectModalState } from '../../store/modalState';
 import { postProject } from '../../apis/Project/ProjectController';
 import SubmitBtn from './atom/SubmitBtn';
 import Cancel from './atom/Cancel';
+import { userInfo } from '../../store/userState';
 
 function CreateProjectModal() {
   const [modalValue, setModalValue] = useRecoilState(CreateProjectModalState);
   const [title, setTitle] = useState('');
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
+  const userData = useRecoilValue(userInfo);
 
   if (!modalValue) {
     return null;
@@ -27,7 +29,7 @@ function CreateProjectModal() {
     if (file) {
       try {
         // const fileUrl = await postFile(file);
-        await postProject(title);
+        await postProject(title, userData.memberId);
         setTitle('');
         setFile(null);
         setModalValue(false);

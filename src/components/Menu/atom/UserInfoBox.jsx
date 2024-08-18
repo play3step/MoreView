@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
-function UserInfoBox() {
+function UserInfoBox({ userData }) {
+  console.log(userData);
   return (
     <Container>
       <UserProfile />
       <RightBox>
         <UserName>박철현</UserName>
-        <UserEmail>play3step@naver.com</UserEmail>
+        <UserEmail>{userData?.email}</UserEmail>
       </RightBox>
     </Container>
   );

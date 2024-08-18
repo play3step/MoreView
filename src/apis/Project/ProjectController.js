@@ -31,7 +31,7 @@ export const postFile = async (file) => {
   }
 };
 
-export const postProject = async (title, memberId = 1) => {
+export const postProject = async (title, memberId) => {
   try {
     const data = {
       name: title,

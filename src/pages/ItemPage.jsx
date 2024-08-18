@@ -1,14 +1,16 @@
 import { useEffect } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import ProjectCard from '../components/ItemPage/ProjectCard';
 import { getProjectList } from '../apis/Project/ProjectController';
 import CreateProjectBtn from '../components/ItemPage/CreateProjectBtn';
 import { CreateProjectModalState } from '../store/modalState';
 import { ProjectList } from '../store/projectState';
+import { userInfo } from '../store/userState';
 
 function ItemPage() {
   const setModalState = useSetRecoilState(CreateProjectModalState);
   const [projectData, setProjectData] = useRecoilState(ProjectList);
+  const userData = useRecoilValue(userInfo);
 
   const createProject = () => {
     setModalState(true);
@@ -16,7 +18,7 @@ function ItemPage() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const projects = await getProjectList(1);
+        const projects = await getProjectList(userData.memberId);
         setProjectData(projects);
       } catch (error) {
         console.error(error);
