@@ -21,7 +21,8 @@ function LoginPage() {
       setUserData({
         memberId: member.memberId,
         token: member.token,
-        email,
+        name: member.name,
+        email: member.email,
       });
       setEmail('');
       setPassword('');

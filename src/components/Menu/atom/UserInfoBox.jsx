@@ -5,7 +5,7 @@ function UserInfoBox({ userData }) {
     <Container>
       <UserProfile />
       <RightBox>
-        <UserName>박철현</UserName>
+        <UserName>{userData?.name}</UserName>
         <UserEmail>{userData?.email}</UserEmail>
       </RightBox>
     </Container>
