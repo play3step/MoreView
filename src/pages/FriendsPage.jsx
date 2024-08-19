@@ -17,8 +17,7 @@ function FriendsPage() {
   const [requests, setRequests] = useRecoilState(requestsList);
   const setInviteModal = useSetRecoilState(InviteModalState);
   const userData = useRecoilValue(userInfo);
-  console.log(friendData);
-  console.log(requests);
+
   useEffect(() => {
     const setFriends = async () => {
       try {
