@@ -9,7 +9,12 @@ export const userInfo = atom({
     email: '',
   },
 });
-export const user = atom({
-  key: 'user',
-  default: {},
+export const friendList = atom({
+  key: 'friendList',
+  default: [],
+});
+
+export const requestsList = atom({
+  key: 'requestsList',
+  default: [],
 });

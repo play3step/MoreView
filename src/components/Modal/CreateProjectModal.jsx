@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { CreateProjectModalState } from '../../store/modalState';
 import { postFile, postProject } from '../../apis/Project/ProjectController';
 import SubmitBtn from './atom/SubmitBtn';
 import Cancel from './atom/Cancel';
 import { userInfo } from '../../store/userState';
+import { ProjectList } from '../../store/projectState';
 
 function CreateProjectModal() {
   const [modalValue, setModalValue] = useRecoilState(CreateProjectModalState);
@@ -13,6 +14,7 @@ function CreateProjectModal() {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const userData = useRecoilValue(userInfo);
+  const setProjectData = useSetRecoilState(ProjectList);
 
   if (!modalValue) {
     return null;
@@ -36,9 +38,23 @@ function CreateProjectModal() {
     try {
       const fileUrl = await postFile(file);
 
-      await postProject(title, fileUrl.imageUrl, userData.memberId);
-      setTitle('');
+      const newProject = await postProject(
+        title,
+        fileUrl.imageUrl,
+        userData.memberId,
+      );
 
+      setProjectData((prevData) => ({
+        ...prevData,
+        projects: [...prevData.projects, newProject],
+      }));
+
+      setTitle('');
+      setFile(null);
+      setPreview(null);
+      setModalValue(false);
+      setTitle('');
+      setFile(null);
       setPreview(null);
       setModalValue(false);
     } catch (error) {

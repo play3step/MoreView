@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useEffect } from 'react';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import FriendRequestsContainer from '../components/FriendsPage/FriendRequestsContainer';
 import FriendsContainer from '../components/FriendsPage/FriendsContainer';
 import {
@@ -9,46 +9,71 @@ import {
   rejectFriend,
   requestedFriend,
 } from '../apis/User/FriendController';
-import { userInfo } from '../store/userState';
+import { friendList, requestsList, userInfo } from '../store/userState';
 import { InviteModalState } from '../store/modalState';
 
 function FriendsPage() {
-  const [friendList, setFriendList] = useState([]);
-  const [requests, setRequests] = useState([]);
+  const [friendData, setFriendData] = useRecoilState(friendList);
+  const [requests, setRequests] = useRecoilState(requestsList);
   const setInviteModal = useSetRecoilState(InviteModalState);
   const userData = useRecoilValue(userInfo);
+  console.log(friendData);
+  console.log(requests);
   useEffect(() => {
     const setFriends = async () => {
       try {
         const friendsData = await getFriends(userData.memberId);
         const requestsData = await requestedFriend(userData.memberId);
-        setFriendList(friendsData);
+
+        setFriendData(friendsData);
         setRequests(requestsData);
       } catch (error) {
         console.error(error);
       }
     };
     setFriends();
-  }, []);
+  }, [userData.memberId, setFriendData, setRequests]);
   const accept = async (friendEmail) => {
-    acceptFriend(userData.memberId, friendEmail);
+    try {
+      const newFriend = await acceptFriend(userData.memberId, friendEmail);
+
+      // 친구 리스트에 새로운 친구 추가
+      setFriendData((prevData) => [...prevData, newFriend]);
+
+      // 요청 리스트에서 해당 친구 제거
+      setRequests((prevData) =>
+        prevData.filter((req) => req.friendEmail !== friendEmail),
+      );
+    } catch (error) {
+      console.error('Failed to accept friend request:', error);
+    }
   };
+
   const reject = async (friendEmail) => {
-    rejectFriend(userData.memberId, friendEmail);
+    try {
+      await rejectFriend(userData.memberId, friendEmail);
+
+      // 요청 리스트에서 해당 친구 제거
+      setRequests((prevData) =>
+        prevData.filter((req) => req.friendEmail !== friendEmail),
+      );
+    } catch (error) {
+      console.error('Failed to reject friend request:', error);
+    }
   };
   return (
     <PageContainer>
       <div>
-        <button type="button" onClick={() => setInviteModal(true)}>
+        <AddFriend type="button" onClick={() => setInviteModal(true)}>
           Add Friend
-        </button>
+        </AddFriend>
       </div>
       <FriendRequestsContainer
         requests={requests}
         accept={accept}
         reject={reject}
       />
-      <FriendsContainer friendList={friendList} />
+      <FriendsContainer friendList={friendData} />
     </PageContainer>
   );
 }
@@ -60,4 +85,12 @@ const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4.07vh;
+`;
+
+const AddFriend = styled.button`
+  width: 5.9375vw;
+  height: 3.888vh;
+  border-radius: 8px;
+  background-color: black;
+  color: white;
 `;

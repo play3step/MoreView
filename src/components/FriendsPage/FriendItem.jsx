@@ -5,7 +5,7 @@ import FriendBtn from './atom/FriendBtn';
 function FriendBox({ data, type, accept, reject }) {
   return (
     <FriendContainer>
-      <UserInfoBox name={data.friendName} email={data.friendEmail} />
+      <UserInfoBox name={data?.friendName} email={data?.friendEmail} />
       {type ? (
         <ButtonPosition>
           <FriendBtn text="Accept" onClick={() => accept(data.friendEmail)} />
