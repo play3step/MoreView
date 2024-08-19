@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import FriendBox from './FriendItem';
 
-function FriendsContainer() {
+function FriendsContainer({ friendList }) {
   return (
     <RequestContainer>
       <p>Friends</p>
-      <FriendBox />
-      <FriendBox />
-      <FriendBox />
+      {friendList.map((data, index) => (
+        <FriendBox data={data} key={index} />
+      ))}
     </RequestContainer>
   );
 }

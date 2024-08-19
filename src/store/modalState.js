@@ -39,3 +39,8 @@ export const ShareModalState = atom({
   key: 'ShareModalState',
   default: false,
 });
+
+export const InviteModalState = atom({
+  key: 'InviteModalState',
+  default: false,
+});

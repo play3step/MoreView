@@ -16,7 +16,7 @@ function HeaderMenu() {
           gap: '5vw',
         }}
       >
-        <UserInfoBox userData={userData} />
+        <UserInfoBox name={userData.name} email={userData.email} />
         <LogoutBtn />
       </div>
     </Container>

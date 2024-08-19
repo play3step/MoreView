@@ -1,27 +1,40 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import FriendRequestsContainer from '../components/FriendsPage/FriendRequestsContainer';
 import FriendsContainer from '../components/FriendsPage/FriendsContainer';
-import { requestedFriend } from '../apis/User/FriendController';
+import { getFriends, requestedFriend } from '../apis/User/FriendController';
+import { userInfo } from '../store/userState';
+import { InviteModalState } from '../store/modalState';
 
 function FriendsPage() {
+  const [friendList, setFriendList] = useState([]);
   const [requests, setRequests] = useState([]);
+  const setInviteModal = useSetRecoilState(InviteModalState);
+  const userData = useRecoilValue(userInfo);
   useEffect(() => {
     const setFriends = async () => {
       try {
-        const data = await requestedFriend(1);
-        setRequests(data);
+        const friendsData = await getFriends(userData.memberId);
+        const requestsData = await requestedFriend(userData.memberId);
+        setFriendList(friendsData);
+        setRequests(requestsData);
       } catch (error) {
         console.error(error);
       }
     };
     setFriends();
   }, []);
-  console.log(requests);
+
   return (
     <PageContainer>
-      <FriendRequestsContainer />
-      <FriendsContainer />
+      <div>
+        <button type="button" onClick={() => setInviteModal(true)}>
+          Add Friend
+        </button>
+      </div>
+      <FriendRequestsContainer requests={requests} />
+      <FriendsContainer friendList={friendList} />
     </PageContainer>
   );
 }

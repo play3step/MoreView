@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
-function UserInfoBox({ userData }) {
+function UserInfoBox({ name, email }) {
   return (
     <Container>
       <UserProfile />
       <RightBox>
-        <UserName>{userData?.name}</UserName>
-        <UserEmail>{userData?.email}</UserEmail>
+        <UserName>{name}</UserName>
+        <UserEmail>{email}</UserEmail>
       </RightBox>
     </Container>
   );

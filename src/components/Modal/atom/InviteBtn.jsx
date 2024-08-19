@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-function InviteBtn() {
-  return <InviteButton>초대</InviteButton>;
+function InviteBtn({ onClick }) {
+  return <InviteButton onClick={onClick}>초대</InviteButton>;
 }
 
 export default InviteBtn;

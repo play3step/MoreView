@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../assets/myPage/logo.svg';
 
 function ProjectCard({ data }) {
-  console.log(data);
   const nav = useNavigate();
   return (
     <CardContainer
@@ -13,13 +12,20 @@ function ProjectCard({ data }) {
       }}
     >
       {data.thumbnailUrl ? (
-        <img src={data.thumbnailUrl} alt="이미지" />
+        <img
+          src={data.thumbnailUrl}
+          alt="이미지"
+          style={{
+            width: '17.6vw',
+            height: '16.29vh',
+          }}
+        />
       ) : (
-        <Logo width="17.708333333333336vw" height="17.708333333333336vw" />
+        <Logo width="17.6vw" height="16.29vh" />
       )}
       <CardTextBox>
         <CardTitle>{data.name}</CardTitle>
-        <CardDate>2024-10-16</CardDate>
+        <CardDate>{data.createdAt}</CardDate>
       </CardTextBox>
     </CardContainer>
   );
@@ -41,7 +47,7 @@ const CardContainer = styled.div`
 
 const CardTextBox = styled.div`
   width: 100%;
-  height: 7.407vh;
+  height: 8.407vh;
   padding: 0.625vw;
   border-top: 1px solid rgba(0, 0, 0, 0.25);
   line-height: 1.3vw;

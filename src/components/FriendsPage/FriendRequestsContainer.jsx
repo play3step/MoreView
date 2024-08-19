@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 import FriendBox from './FriendItem';
 
-function FriendRequestsContainer() {
+function FriendRequestsContainer({ requests }) {
+  console.log(requests);
   return (
     <RequestContainer>
       <p>Friend Requests</p>
-      <FriendBox type="Request" />
-      <FriendBox type="Request" />
+      {requests.map((data, index) => (
+        <FriendBox type="Request" data={data} key={index} />
+      ))}
     </RequestContainer>
   );
 }
