@@ -1,13 +1,19 @@
 import styled from 'styled-components';
 import FriendBox from './FriendItem';
 
-function FriendRequestsContainer({ requests }) {
+function FriendRequestsContainer({ requests, accept, reject }) {
   console.log(requests);
   return (
     <RequestContainer>
       <p>Friend Requests</p>
       {requests.map((data, index) => (
-        <FriendBox type="Request" data={data} key={index} />
+        <FriendBox
+          type="Request"
+          data={data}
+          key={index}
+          accept={accept}
+          reject={reject}
+        />
       ))}
     </RequestContainer>
   );

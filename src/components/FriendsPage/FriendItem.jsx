@@ -2,14 +2,14 @@ import styled from 'styled-components';
 import UserInfoBox from '../Menu/atom/UserInfoBox';
 import FriendBtn from './atom/FriendBtn';
 
-function FriendBox({ data, type }) {
+function FriendBox({ data, type, accept, reject }) {
   return (
     <FriendContainer>
       <UserInfoBox name={data.friendName} email={data.friendEmail} />
       {type ? (
         <ButtonPosition>
-          <FriendBtn text="Accept" />
-          <FriendBtn text="Decline" />
+          <FriendBtn text="Accept" onClick={() => accept(data.friendEmail)} />
+          <FriendBtn text="Decline" onClick={() => reject(data.friendEmail)} />
         </ButtonPosition>
       ) : null}
     </FriendContainer>

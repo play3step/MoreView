@@ -3,7 +3,12 @@ import { useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import FriendRequestsContainer from '../components/FriendsPage/FriendRequestsContainer';
 import FriendsContainer from '../components/FriendsPage/FriendsContainer';
-import { getFriends, requestedFriend } from '../apis/User/FriendController';
+import {
+  acceptFriend,
+  getFriends,
+  rejectFriend,
+  requestedFriend,
+} from '../apis/User/FriendController';
 import { userInfo } from '../store/userState';
 import { InviteModalState } from '../store/modalState';
 
@@ -25,7 +30,12 @@ function FriendsPage() {
     };
     setFriends();
   }, []);
-
+  const accept = async (friendEmail) => {
+    acceptFriend(userData.memberId, friendEmail);
+  };
+  const reject = async (friendEmail) => {
+    rejectFriend(userData.memberId, friendEmail);
+  };
   return (
     <PageContainer>
       <div>
@@ -33,7 +43,11 @@ function FriendsPage() {
           Add Friend
         </button>
       </div>
-      <FriendRequestsContainer requests={requests} />
+      <FriendRequestsContainer
+        requests={requests}
+        accept={accept}
+        reject={reject}
+      />
       <FriendsContainer friendList={friendList} />
     </PageContainer>
   );
