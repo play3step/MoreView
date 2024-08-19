@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 function UserInfoBox({ userData }) {
-  console.log(userData);
   return (
     <Container>
       <UserProfile />

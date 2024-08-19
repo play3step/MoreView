@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { CreateProjectModalState } from '../../store/modalState';
-import { postProject } from '../../apis/Project/ProjectController';
+import { postFile, postProject } from '../../apis/Project/ProjectController';
 import SubmitBtn from './atom/SubmitBtn';
 import Cancel from './atom/Cancel';
 import { userInfo } from '../../store/userState';
@@ -24,21 +24,25 @@ function CreateProjectModal() {
       setPreview(URL.createObjectURL(selectedFile));
     }
   };
-
   const handleSummit = async () => {
-    if (file) {
-      try {
-        // const fileUrl = await postFile(file);
-        await postProject(title, userData.memberId);
-        setTitle('');
-        setFile(null);
-        setModalValue(false);
-        setPreview(null);
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
+    if (!file) {
       console.warn('No file selected');
+      return;
+    }
+    if (!title) {
+      console.warn('No title provided');
+      return;
+    }
+    try {
+      const fileUrl = await postFile(file);
+
+      await postProject(title, fileUrl.imageUrl, userData.memberId);
+      setTitle('');
+
+      setPreview(null);
+      setModalValue(false);
+    } catch (error) {
+      console.error('Error while creating project:', error);
     }
   };
 
