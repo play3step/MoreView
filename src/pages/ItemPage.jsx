@@ -27,7 +27,6 @@ function ItemPage() {
 
     fetchProjects();
   }, [setProjectData]);
-  console.log(projectData);
   return (
     <div
       style={{
