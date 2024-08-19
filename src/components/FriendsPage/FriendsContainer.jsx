@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import FriendBox from './FriendItem';
 
-function FriendsContainer() {
+function FriendsContainer({ friendList }) {
   return (
     <RequestContainer>
       <p>Friends</p>
-      <FriendBox />
-      <FriendBox />
-      <FriendBox />
+      {friendList?.map((data, index) => (
+        <FriendBox data={data} key={index} />
+      ))}
     </RequestContainer>
   );
 }
@@ -15,6 +15,8 @@ function FriendsContainer() {
 export default FriendsContainer;
 
 const RequestContainer = styled.div`
+  width: 100%;
+  height: 32.4vh;
   display: flex;
   flex-direction: column;
   gap: 2.22vh;

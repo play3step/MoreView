@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { CreateProjectModalState } from '../../store/modalState';
-import { postProject } from '../../apis/Project/ProjectController';
+import { postFile, postProject } from '../../apis/Project/ProjectController';
 import SubmitBtn from './atom/SubmitBtn';
 import Cancel from './atom/Cancel';
+import { userInfo } from '../../store/userState';
+import { ProjectList } from '../../store/projectState';
 
 function CreateProjectModal() {
   const [modalValue, setModalValue] = useRecoilState(CreateProjectModalState);
   const [title, setTitle] = useState('');
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
+  const userData = useRecoilValue(userInfo);
+  const setProjectData = useSetRecoilState(ProjectList);
 
   if (!modalValue) {
     return null;
@@ -22,21 +26,39 @@ function CreateProjectModal() {
       setPreview(URL.createObjectURL(selectedFile));
     }
   };
-
   const handleSummit = async () => {
-    if (file) {
-      try {
-        // const fileUrl = await postFile(file);
-        await postProject(title);
-        setTitle('');
-        setFile(null);
-        setModalValue(false);
-        setPreview(null);
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
+    if (!file) {
       console.warn('No file selected');
+      return;
+    }
+    if (!title) {
+      console.warn('No title provided');
+      return;
+    }
+    try {
+      const fileUrl = await postFile(file);
+
+      const newProject = await postProject(
+        title,
+        fileUrl.imageUrl,
+        userData.memberId,
+      );
+
+      setProjectData((prevData) => ({
+        ...prevData,
+        projects: [...prevData.projects, newProject],
+      }));
+
+      setTitle('');
+      setFile(null);
+      setPreview(null);
+      setModalValue(false);
+      setTitle('');
+      setFile(null);
+      setPreview(null);
+      setModalValue(false);
+    } catch (error) {
+      console.error('Error while creating project:', error);
     }
   };
 

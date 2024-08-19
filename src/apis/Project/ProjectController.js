@@ -16,26 +16,26 @@ export const getProjectList = async (memberId, page = 0) => {
 };
 
 export const postFile = async (file) => {
-  const formData = FormData();
+  const formData = new FormData();
   formData.append('file', file);
   try {
-    const response = await basicApi.post(`file`, formData, {
+    const response = await basicApi.post(`api/file`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     });
     return response.data;
   } catch (error) {
-    console.error(error);
+    console.error('Error uploading image:', error);
     throw error;
   }
 };
 
-export const postProject = async (title, memberId = 1) => {
+export const postProject = async (title, fileUrl, memberId) => {
   try {
     const data = {
       name: title,
-      thumbnailUrl: '111',
+      thumbnailUrl: fileUrl,
       memberId,
     };
     const response = await basicApi.post('api/project', data, {
@@ -43,7 +43,6 @@ export const postProject = async (title, memberId = 1) => {
         'Content-Type': 'application/json',
       },
     });
-    getProjectList(1);
     return response.data;
   } catch (error) {
     console.error(error);

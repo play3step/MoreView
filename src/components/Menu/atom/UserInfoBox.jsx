@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
-function UserInfoBox() {
+function UserInfoBox({ name, email }) {
   return (
     <Container>
       <UserProfile />
       <RightBox>
-        <UserName>박철현</UserName>
-        <UserEmail>play3step@naver.com</UserEmail>
+        <UserName>{name}</UserName>
+        <UserEmail>{email}</UserEmail>
       </RightBox>
     </Container>
   );

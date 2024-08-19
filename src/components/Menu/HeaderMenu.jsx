@@ -1,9 +1,12 @@
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 import { ReactComponent as MainLogo } from '../../assets/logo.svg';
 import LogoutBtn from './atom/LogoutBtn';
 import UserInfoBox from './atom/UserInfoBox';
+import { userInfo } from '../../store/userState';
 
 function HeaderMenu() {
+  const userData = useRecoilValue(userInfo);
   return (
     <Container>
       <MainLogo width="11.97vw" height="4.81vh" />
@@ -13,7 +16,7 @@ function HeaderMenu() {
           gap: '5vw',
         }}
       >
-        <UserInfoBox />
+        <UserInfoBox name={userData.name} email={userData.email} />
         <LogoutBtn />
       </div>
     </Container>
