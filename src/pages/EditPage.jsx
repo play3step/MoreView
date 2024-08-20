@@ -3,6 +3,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
+import { useParams } from 'react-router-dom';
 import EditHeader from '../components/EditPage/EditHeader';
 import PreviewSlide from '../components/EditPage/PreviewSlide/PreviewSlide';
 import Edit2d from '../components/EditPage/PageData/Edit2d';
@@ -22,6 +23,7 @@ import useKeyboardNavigation from '../hooks/EditPage/useKeyboardNavigation';
 import useDeleteItem from '../hooks/EditPage/useDeleteItem';
 import useHistory from '../hooks/EditPage/Handlers/useHistory';
 import ControllerItem from '../components/EditPage/ItemListBox/3D/ControllerItem';
+import { ProjectInfo } from '../store/projectState';
 
 function EditPage() {
   const {
@@ -47,6 +49,8 @@ function EditPage() {
   const isEditing = useRecoilValue(editState);
   const [menu, setMenu] = useRecoilState(itemState);
   const setMeshyState = useSetRecoilState(meshyLoadingState);
+  const { code } = useParams();
+  const setCode = useSetRecoilState(ProjectInfo);
 
   const menuRef = useRef();
 
@@ -150,7 +154,9 @@ function EditPage() {
       eventSource.close();
     };
   }, []);
-
+  useEffect(() => {
+    setCode(code);
+  }, [code, setCode]);
   return (
     <EditContainer>
       <EditHeader

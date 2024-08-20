@@ -1,14 +1,42 @@
 import styled from 'styled-components';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { useEffect } from 'react';
 import CancelBtn from './atom/CancelBtn';
 import { ShareModalState } from '../../store/modalState';
 import ShareFriendItem from './atom/ShareFriendItem';
 import InviteBtn from './atom/InviteBtn';
+import { friendList, userInfo } from '../../store/userState';
+import { ProjectInfo } from '../../store/projectState';
+import { inviteProject } from '../../apis/Project/ProjectController';
+import { getFriends } from '../../apis/User/FriendController';
 
 function ShareModal() {
   const [modalValue, setModalValue] = useRecoilState(ShareModalState);
+  const [friendData, setFriendData] = useRecoilState(friendList);
+  const code = useRecoilValue(ProjectInfo);
+  const userData = useRecoilValue(userInfo);
 
   const CancelHandler = () => {
+    setModalValue(false);
+  };
+
+  useEffect(() => {
+    const setFriends = async () => {
+      try {
+        const friendsData = await getFriends(userData.memberId);
+
+        setFriendData(friendsData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    if (!friendData || friendData.length === 0) {
+      setFriends();
+    }
+  }, [modalValue]);
+
+  const inviteHandler = async (memberId) => {
+    await inviteProject(code, memberId);
     setModalValue(false);
   };
 
@@ -32,11 +60,15 @@ function ShareModal() {
             <InviteBtn />
           </InputBox>
         </InviteBox>
+        <SubText>친구목록</SubText>
         <FriendListBox>
-          <SubText>친구목록</SubText>
-          <ShareFriendItem />
-          <ShareFriendItem />
-          <ShareFriendItem />
+          {friendData?.map((data, index) => (
+            <ShareFriendItem
+              data={data}
+              key={index}
+              inviteHandler={inviteHandler}
+            />
+          ))}
         </FriendListBox>
       </ModalBox>
     </ModalBackdrop>
@@ -96,6 +128,10 @@ const InviteBox = styled.div`
 const FriendListBox = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
+  height: 18.33vh;
+  overflow-y: auto;
+  margin-top: -2vh;
   gap: 1.1vh;
 `;
 

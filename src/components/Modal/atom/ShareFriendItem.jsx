@@ -1,17 +1,17 @@
 import styled from 'styled-components';
 import InviteBtn from './InviteBtn';
 
-function ShareFriendItem() {
+function ShareFriendItem({ data, inviteHandler }) {
   return (
     <Container>
       <UserInfo>
         <UserProfile />
         <RightBox>
-          <UserName>박철현</UserName>
-          <UserEmail>play3step@naver.com</UserEmail>
+          <UserName>{data.friendName}</UserName>
+          <UserEmail>{data.friendEmail}</UserEmail>
         </RightBox>
       </UserInfo>
-      <InviteBtn />
+      <InviteBtn onClick={() => inviteHandler(data.friendId)} />
     </Container>
   );
 }

@@ -49,3 +49,23 @@ export const postProject = async (title, fileUrl, memberId) => {
     throw error;
   }
 };
+
+// 그룹 초대
+
+export const inviteProject = async (roomId, memberId) => {
+  try {
+    const data = {
+      roomId,
+      memberId,
+    };
+    const response = await basicApi.post(`api/project/member`, data, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
