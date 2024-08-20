@@ -65,7 +65,6 @@ export const acceptFriend = async (memberId, friendEmail) => {
     memberId,
     friendEmail,
   };
-  console.log('Data being sent:', data); // data 객체를 확인
 
   try {
     const response = await basicApi.post(`api/friend/accept`, data);

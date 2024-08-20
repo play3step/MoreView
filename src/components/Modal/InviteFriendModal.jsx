@@ -19,6 +19,8 @@ function InviteFriendModal() {
   const addFriend = () => {
     try {
       postFriend(userData.memberId, email);
+      setEmail(null);
+      setModalValue(false);
     } catch (error) {
       console.error(error);
     }
