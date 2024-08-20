@@ -9,3 +9,8 @@ export const ProjectState = atom({
   key: 'ProjectState',
   default: {},
 });
+
+export const ProjectInfo = atom({
+  key: 'ProjectInfo',
+  default: {},
+});

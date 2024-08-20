@@ -17,28 +17,27 @@ function FriendsPage() {
   const [requests, setRequests] = useRecoilState(requestsList);
   const setInviteModal = useSetRecoilState(InviteModalState);
   const userData = useRecoilValue(userInfo);
-  console.log(friendData);
-  console.log(requests);
-  useEffect(() => {
-    const setFriends = async () => {
-      try {
-        const friendsData = await getFriends(userData.memberId);
-        const requestsData = await requestedFriend(userData.memberId);
 
-        setFriendData(friendsData);
-        setRequests(requestsData);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  const setFriends = async () => {
+    try {
+      const friendsData = await getFriends(userData.memberId);
+      const requestsData = await requestedFriend(userData.memberId);
+
+      setFriendData(friendsData);
+      setRequests(requestsData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
     setFriends();
   }, [userData.memberId, setFriendData, setRequests]);
   const accept = async (friendEmail) => {
     try {
-      const newFriend = await acceptFriend(userData.memberId, friendEmail);
+      await acceptFriend(userData.memberId, friendEmail);
 
-      // 친구 리스트에 새로운 친구 추가
-      setFriendData((prevData) => [...prevData, newFriend]);
+      // 친구 리스트에 새로운 친구 추가 하려고 햇는데 req 가 없음
+      setFriends();
 
       // 요청 리스트에서 해당 친구 제거
       setRequests((prevData) =>
