@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import { useParams } from 'react-router-dom';
@@ -24,6 +24,8 @@ import useDeleteItem from '../hooks/EditPage/useDeleteItem';
 import useHistory from '../hooks/EditPage/Handlers/useHistory';
 import ControllerItem from '../components/EditPage/ItemListBox/3D/ControllerItem';
 import { ProjectInfo } from '../store/projectState';
+
+export const WEBSOCKET_URL = process.env.REACT_APP_WEBSOCKET_URL;
 
 function EditPage() {
   const {
@@ -56,6 +58,71 @@ function EditPage() {
 
   const fullScreenHandle = useFullScreenHandle();
   const isFullScreen = fullScreenHandle.active;
+
+  const [socket, setSocket] = useState(null);
+
+  useEffect(() => {
+    // WebSocket 연결
+    const ws = new WebSocket(WEBSOCKET_URL);
+
+    ws.onopen = () => {
+      console.log('Connected to WebSocket');
+
+      const enterMessage = JSON.stringify({
+        saveType: 'enter',
+        roomId: code,
+      });
+      ws.send(enterMessage);
+    };
+
+    ws.onmessage = (event) => {
+      const message = JSON.parse(event.data);
+      console.log('Received:', message);
+    };
+
+    ws.onerror = (error) => {
+      console.error('WebSocket Error:', error);
+    };
+
+    ws.onclose = () => {
+      console.log('WebSocket connection closed');
+    };
+
+    setSocket(ws);
+
+    // 컴포넌트가 언마운트될 때 WebSocket 닫기
+    return () => {
+      ws.close();
+    };
+  }, []);
+
+  const sendRectangleData = () => {
+    if (socket && socket.readyState === WebSocket.OPEN) {
+      const rectangleData = {
+        saveType: 'saveRectangle',
+        editType: '0',
+        deleteType: '0',
+        roomId: code,
+        rectangle: {
+          projectId: 123,
+          pageId: 1,
+          id: 'rect1',
+          x: 100,
+          y: 150,
+          width: 200,
+          height: 100,
+          fill: '#ff0000',
+          type: 'rectangle',
+        },
+      };
+
+      // 서버에 데이터 전송
+      socket.send(JSON.stringify(rectangleData));
+      console.log('Rectangle data sent:', rectangleData);
+    } else {
+      console.error('WebSocket is not open');
+    }
+  };
 
   const toggleFullScreen = () => {
     fullScreenHandle.enter();
@@ -172,7 +239,9 @@ function EditPage() {
         imgValue={imgValue}
         addSlide={addSlide}
       />
-
+      <button type="button" onClick={sendRectangleData}>
+        버튼
+      </button>
       <CanvasContainer>
         <FullScreen handle={fullScreenHandle}>
           <div>
