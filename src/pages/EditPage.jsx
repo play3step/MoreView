@@ -24,6 +24,7 @@ import useDeleteItem from '../hooks/EditPage/useDeleteItem';
 import useHistory from '../hooks/EditPage/Handlers/useHistory';
 import ControllerItem from '../components/EditPage/ItemListBox/3D/ControllerItem';
 import { ProjectInfo } from '../store/projectState';
+import useText from '../hooks/AddItem/useText';
 
 export const WEBSOCKET_URL = process.env.REACT_APP_WEBSOCKET_URL;
 
@@ -60,6 +61,7 @@ function EditPage() {
   const isFullScreen = fullScreenHandle.active;
 
   const [socket, setSocket] = useState(null);
+  const { addText } = useText(socket, code);
 
   useEffect(() => {
     // WebSocket 연결
@@ -78,8 +80,9 @@ function EditPage() {
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data);
       console.log('Received:', message);
-    };
 
+      addText(message);
+    };
     ws.onerror = (error) => {
       console.error('WebSocket Error:', error);
     };
@@ -95,34 +98,6 @@ function EditPage() {
       ws.close();
     };
   }, []);
-
-  const sendRectangleData = () => {
-    if (socket && socket.readyState === WebSocket.OPEN) {
-      const rectangleData = {
-        saveType: 'saveRectangle',
-        editType: '0',
-        deleteType: '0',
-        roomId: code,
-        rectangle: {
-          projectId: 123,
-          pageId: 1,
-          id: 'rect1',
-          x: 100,
-          y: 150,
-          width: 200,
-          height: 100,
-          fill: '#ff0000',
-          type: 'rectangle',
-        },
-      };
-
-      // 서버에 데이터 전송
-      socket.send(JSON.stringify(rectangleData));
-      console.log('Rectangle data sent:', rectangleData);
-    } else {
-      console.error('WebSocket is not open');
-    }
-  };
 
   const toggleFullScreen = () => {
     fullScreenHandle.enter();
@@ -232,6 +207,8 @@ function EditPage() {
         fullScreen={toggleFullScreen}
         redo={redo}
         undo={undo}
+        socket={socket}
+        code={code}
       />
       <PreviewSlide
         textValue={textValue}
@@ -239,9 +216,7 @@ function EditPage() {
         imgValue={imgValue}
         addSlide={addSlide}
       />
-      <button type="button" onClick={sendRectangleData}>
-        버튼
-      </button>
+
       <CanvasContainer>
         <FullScreen handle={fullScreenHandle}>
           <div>
