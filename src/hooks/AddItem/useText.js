@@ -10,7 +10,6 @@ const useText = (socket, code) => {
   const textCountInCurrentPage = currentTextList.length;
 
   const addText = (data) => {
-    console.log(data);
     const newTextBox = {
       x: data.x,
       y: data.y,
@@ -47,7 +46,6 @@ const useText = (socket, code) => {
 
     if (socket && socket.readyState === WebSocket.OPEN) {
       socket.send(JSON.stringify(textData));
-      console.log('Text data sent:', textData);
     } else {
       console.error('WebSocket is not open');
     }

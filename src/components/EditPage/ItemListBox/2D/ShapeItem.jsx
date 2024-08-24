@@ -2,11 +2,11 @@ import styled from 'styled-components';
 import SvgLargeIcon from '../../atom/SvgLargeIcon';
 import useShapes from '../../../../hooks/AddItem/useShapes';
 
-function ShapeItem({ menuRef }) {
-  const { addShape } = useShapes();
+function ShapeItem({ menuRef, socket, code }) {
+  const { sendShape } = useShapes(socket, code);
 
   const handleAddShape = (shapeType) => () => {
-    addShape(shapeType);
+    sendShape(shapeType);
   };
 
   return (

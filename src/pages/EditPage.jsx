@@ -25,6 +25,7 @@ import useHistory from '../hooks/EditPage/Handlers/useHistory';
 import ControllerItem from '../components/EditPage/ItemListBox/3D/ControllerItem';
 import { ProjectInfo } from '../store/projectState';
 import useText from '../hooks/AddItem/useText';
+import useShapes from '../hooks/AddItem/useShapes';
 
 export const WEBSOCKET_URL = process.env.REACT_APP_WEBSOCKET_URL;
 
@@ -62,6 +63,7 @@ function EditPage() {
 
   const [socket, setSocket] = useState(null);
   const { addText } = useText(socket, code);
+  const { addShape } = useShapes(socket, code);
 
   useEffect(() => {
     // WebSocket 연결
@@ -80,8 +82,15 @@ function EditPage() {
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data);
       console.log('Received:', message);
-
-      addText(message);
+      if (message.textId) {
+        addText(message);
+      }
+      if (message.rectangleId) {
+        addShape('Rectangle', message);
+      }
+      if (message.circleId) {
+        addShape('Circle', message);
+      }
     };
     ws.onerror = (error) => {
       console.error('WebSocket Error:', error);
@@ -272,7 +281,9 @@ function EditPage() {
       </CanvasContainer>
 
       <ItemListPosition>
-        {menu === 1 && <ShapeItem menuRef={menuRef} />}
+        {menu === 1 && (
+          <ShapeItem menuRef={menuRef} socket={socket} code={code} />
+        )}
         {menu === 2 && <ImageItem menuRef={menuRef} />}
       </ItemListPosition>
       <ToolPosition>
