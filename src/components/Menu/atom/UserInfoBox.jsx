@@ -1,9 +1,18 @@
 import styled from 'styled-components';
+import { ReactComponent as User } from '../../../assets/user.svg';
 
 function UserInfoBox({ name, email }) {
   return (
     <Container>
-      <UserProfile />
+      <User
+        style={{
+          width: '1.979vw',
+          height: '1.979vw',
+          marginRight: '0.6vw',
+          borderRadius: '25px',
+          flexShrink: 0,
+        }}
+      />
       <RightBox>
         <UserName>{name}</UserName>
         <UserEmail>{email}</UserEmail>
@@ -21,14 +30,14 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const UserProfile = styled.div`
-  width: 1.979vw;
-  height: 1.979vw;
-  border-radius: 25px;
-  background-color: gray;
-  margin-right: 1.25vw;
-  flex-shrink: 0;
-`;
+// const UserProfile = styled.img`
+//   width: 1.979vw;
+//   height: 1.979vw;
+//   border-radius: 25px;
+//   background-color: gray;
+//   margin-right: 1.25vw;
+//   flex-shrink: 0;
+// `;
 
 const RightBox = styled.div`
   display: flex;

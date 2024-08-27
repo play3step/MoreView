@@ -26,7 +26,7 @@ function LoginPage() {
       });
       setEmail('');
       setPassword('');
-      nav('/list');
+      nav('/Projects');
     } catch (error) {
       console.error('Login failed:', error);
     }
