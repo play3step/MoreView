@@ -94,12 +94,14 @@ function EditPage() {
       if (message.crudType === 'update') {
         if (message.rectangleId) {
           setShapeValue((prevState) => {
-            const updatedShapes = prevState[pageRendering].map((shape) => {
+            const updatedShapes = prevState[pageRendering]?.map((shape) => {
               if (shape.id === message.id) {
                 return {
                   ...shape,
                   x: message.x,
                   y: message.y,
+                  width: message.width,
+                  height: message.width,
                   fill: message.fill,
                   type: message.type,
                 };
@@ -111,7 +113,7 @@ function EditPage() {
         }
         if (message.circleId) {
           setShapeValue((prevState) => {
-            const updatedShapes = prevState[pageRendering].map((shape) => {
+            const updatedShapes = prevState[pageRendering]?.map((shape) => {
               if (shape.id === message.id) {
                 return {
                   ...shape,

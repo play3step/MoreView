@@ -24,8 +24,8 @@ const useShapeHandlers = (
               projectId: shape.projectId,
               pageId: shape.pageId,
               id: shape.id,
-              width: shape.width,
-              height: shape.height,
+              width: newAttrs.width,
+              height: newAttrs.height,
               x: newAttrs.x,
               y: newAttrs.y,
               fill: shape.fill,
@@ -53,7 +53,6 @@ const useShapeHandlers = (
           };
         }
 
-        console.log(shapeData);
         // WebSocket 메시지 전송
         if (socket && socket.readyState === WebSocket.OPEN) {
           socket.send(JSON.stringify(shapeData));
