@@ -14,23 +14,29 @@ function useShapes(socket, code) {
   const addShape = (shapeType, data) => {
     if (shapeType === 'Rectangle') {
       newShape = {
-        type: data.type,
+        rectangleId: data.rectangleId,
+        projectId: data.projectId,
+        pageId: data.projectId,
+        id: data.id,
         x: data.x,
         y: data.y,
         width: data.width,
         height: data.height,
         fill: data.fill,
-        id: data.id,
+        type: data.type,
       };
     } else if (shapeType === 'Circle') {
       newShape = {
-        type: data.type,
+        circleId: data.circleId,
+        projectId: data.projectId,
+        pageId: data.projectId,
+        id: data.id,
         x: data.x,
         y: data.y,
         radiusX: data.radiusX,
         radiusY: data.radiusY,
         fill: data.fill,
-        id: data.id,
+        type: data.type,
       };
     } else if (shapeType === 'Line') {
       const startPointX = randomX - 100; // 시작점 X 좌표

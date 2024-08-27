@@ -82,14 +82,50 @@ function EditPage() {
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data);
       console.log('Received:', message);
-      if (message.textId) {
+      if (message.textId && message.crudType === 'create') {
         addText(message);
       }
-      if (message.rectangleId) {
+      if (message.rectangleId && message.crudType === 'create') {
         addShape('Rectangle', message);
       }
-      if (message.circleId) {
+      if (message.circleId && message.crudType === 'create') {
         addShape('Circle', message);
+      }
+      if (message.crudType === 'update') {
+        if (message.rectangleId) {
+          setShapeValue((prevState) => {
+            const updatedShapes = prevState[pageRendering].map((shape) => {
+              if (shape.id === message.id) {
+                return {
+                  ...shape,
+                  x: message.x,
+                  y: message.y,
+                  fill: message.fill,
+                  type: message.type,
+                };
+              }
+              return shape;
+            });
+            return { ...prevState, [pageRendering]: updatedShapes };
+          });
+        }
+        if (message.circleId) {
+          setShapeValue((prevState) => {
+            const updatedShapes = prevState[pageRendering].map((shape) => {
+              if (shape.id === message.id) {
+                return {
+                  ...shape,
+                  x: message.x,
+                  y: message.y,
+                  fill: message.fill,
+                  type: message.type,
+                };
+              }
+              return shape;
+            });
+            return { ...prevState, [pageRendering]: updatedShapes };
+          });
+        }
       }
     };
     ws.onerror = (error) => {
@@ -123,6 +159,7 @@ function EditPage() {
     imgValue,
     setImgValue,
     pageRendering,
+    socket,
   );
 
   const { handleTextDragEnd, handleTextChange } = useTextHandlers(
@@ -142,6 +179,8 @@ function EditPage() {
     shapeValue,
     pageRendering,
     setShapeValue,
+    socket,
+    code,
   );
 
   useDeleteItem(
