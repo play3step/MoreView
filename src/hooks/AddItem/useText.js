@@ -11,12 +11,15 @@ const useText = (socket, code) => {
 
   const addText = (data) => {
     const newTextBox = {
+      textId: data.textId,
+      projectId: data.projectId,
+      pageId: data.pageId,
+      id: data.textId,
+      text: data.text,
       x: data.x,
       y: data.y,
-      text: data.text,
       size: data.size,
       color: data.color,
-      id: data.textId,
     };
     setTextValue((prevTextValue) => {
       const updatedTextList = prevTextValue[data.projectId] || [];

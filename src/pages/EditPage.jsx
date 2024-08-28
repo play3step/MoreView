@@ -101,7 +101,7 @@ function EditPage() {
                   x: message.x,
                   y: message.y,
                   width: message.width,
-                  height: message.width,
+                  height: message.height,
                   fill: message.fill,
                   type: message.type,
                 };
@@ -119,6 +119,8 @@ function EditPage() {
                   ...shape,
                   x: message.x,
                   y: message.y,
+                  radiusX: message.radiusX,
+                  radiusY: message.radiusY,
                   fill: message.fill,
                   type: message.type,
                 };
@@ -126,6 +128,24 @@ function EditPage() {
               return shape;
             });
             return { ...prevState, [pageRendering]: updatedShapes };
+          });
+        }
+        if (message.textId) {
+          setTextValue((prevState) => {
+            const updatedTexts = prevState[pageRendering]?.map((text) => {
+              if (String(text.id) === String(message.id)) {
+                return {
+                  ...text,
+                  text: message.text,
+                  x: message.x,
+                  y: message.y,
+                  size: message.size,
+                  color: message.color,
+                };
+              }
+              return text;
+            });
+            return { ...prevState, [pageRendering]: updatedTexts };
           });
         }
       }
@@ -165,8 +185,11 @@ function EditPage() {
   );
 
   const { handleTextDragEnd, handleTextChange } = useTextHandlers(
+    textValue,
     setTextValue,
     pageRendering,
+    socket,
+    code,
   );
 
   const addSlide = (type) => {

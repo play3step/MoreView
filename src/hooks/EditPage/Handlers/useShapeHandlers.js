@@ -52,7 +52,7 @@ const useShapeHandlers = (
             },
           };
         }
-
+        console.log(shapeData);
         // WebSocket 메시지 전송
         if (socket && socket.readyState === WebSocket.OPEN) {
           socket.send(JSON.stringify(shapeData));
