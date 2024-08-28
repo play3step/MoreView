@@ -9,7 +9,6 @@ const useTextHandlers = (
     const currentItem = textValue[pageRendering].find(
       (item) => item.id === textId,
     );
-    console.log(currentItem);
     setTextValue((prevTextValue) => ({
       ...prevTextValue,
       [pageRendering]: prevTextValue[pageRendering].map((item) =>
