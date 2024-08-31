@@ -15,8 +15,16 @@ import ShareBtn from './PreviewSlide/atom/ShareBtn';
 import { meshyLoadingState } from '../../store/toolState';
 import Spinner from '../Modal/atom/Spinner';
 
-function EditHeader({ pageValue, setMenu, fullScreen, redo, undo }) {
-  const { addText } = useText();
+function EditHeader({
+  pageValue,
+  setMenu,
+  fullScreen,
+  redo,
+  undo,
+  socket,
+  code,
+}) {
+  const { sendText } = useText(socket, code);
   const is3dDisabled = pageValue.type !== '3d';
   const is2dDisabled = pageValue.type !== '2d';
   const setModal = useSetRecoilState(CreateModalState);
@@ -61,7 +69,10 @@ function EditHeader({ pageValue, setMenu, fullScreen, redo, undo }) {
       <CenterSection>
         {pageValue.type !== '3d' ? (
           <EditorBox>
-            <SvgIcon type="Text" onClick={is3dDisabled ? addText : undefined} />
+            <SvgIcon
+              type="Text"
+              onClick={is3dDisabled ? sendText : undefined}
+            />
             <SvgIcon
               type="Shape"
               onClick={() => (is3dDisabled ? setMenu(1) : null)}

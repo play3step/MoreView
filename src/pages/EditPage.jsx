@@ -24,6 +24,8 @@ import useDeleteItem from '../hooks/EditPage/useDeleteItem';
 import useHistory from '../hooks/EditPage/Handlers/useHistory';
 import ControllerItem from '../components/EditPage/ItemListBox/3D/ControllerItem';
 import { ProjectInfo } from '../store/projectState';
+import useText from '../hooks/AddItem/useText';
+import useShapes from '../hooks/AddItem/useShapes';
 
 export const WEBSOCKET_URL = process.env.REACT_APP_WEBSOCKET_URL;
 
@@ -60,6 +62,8 @@ function EditPage() {
   const isFullScreen = fullScreenHandle.active;
 
   const [socket, setSocket] = useState(null);
+  const { addText } = useText(socket, code);
+  const { addShape } = useShapes(socket, code);
 
   useEffect(() => {
     // WebSocket 연결
@@ -78,8 +82,74 @@ function EditPage() {
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data);
       console.log('Received:', message);
+      if (message.textId && message.crudType === 'create') {
+        addText(message);
+      }
+      if (message.rectangleId && message.crudType === 'create') {
+        addShape('Rectangle', message);
+      }
+      if (message.circleId && message.crudType === 'create') {
+        addShape('Circle', message);
+      }
+      if (message.crudType === 'update') {
+        if (message.rectangleId) {
+          setShapeValue((prevState) => {
+            const updatedShapes = prevState[pageRendering]?.map((shape) => {
+              if (shape.id === message.id) {
+                return {
+                  ...shape,
+                  x: message.x,
+                  y: message.y,
+                  width: message.width,
+                  height: message.height,
+                  fill: message.fill,
+                  type: message.type,
+                };
+              }
+              return shape;
+            });
+            return { ...prevState, [pageRendering]: updatedShapes };
+          });
+        }
+        if (message.circleId) {
+          setShapeValue((prevState) => {
+            const updatedShapes = prevState[pageRendering]?.map((shape) => {
+              if (shape.id === message.id) {
+                return {
+                  ...shape,
+                  x: message.x,
+                  y: message.y,
+                  radiusX: message.radiusX,
+                  radiusY: message.radiusY,
+                  fill: message.fill,
+                  type: message.type,
+                };
+              }
+              return shape;
+            });
+            return { ...prevState, [pageRendering]: updatedShapes };
+          });
+        }
+        if (message.textId) {
+          setTextValue((prevState) => {
+            const updatedTexts = prevState[pageRendering]?.map((text) => {
+              if (String(text.id) === String(message.id)) {
+                return {
+                  ...text,
+                  text: message.text,
+                  x: message.x,
+                  y: message.y,
+                  size: message.size,
+                  color: message.color,
+                };
+              }
+              return text;
+            });
+            return { ...prevState, [pageRendering]: updatedTexts };
+          });
+        }
+      }
     };
-
     ws.onerror = (error) => {
       console.error('WebSocket Error:', error);
     };
@@ -96,34 +166,6 @@ function EditPage() {
     };
   }, []);
 
-  const sendRectangleData = () => {
-    if (socket && socket.readyState === WebSocket.OPEN) {
-      const rectangleData = {
-        saveType: 'saveRectangle',
-        editType: '0',
-        deleteType: '0',
-        roomId: code,
-        rectangle: {
-          projectId: 123,
-          pageId: 1,
-          id: 'rect1',
-          x: 100,
-          y: 150,
-          width: 200,
-          height: 100,
-          fill: '#ff0000',
-          type: 'rectangle',
-        },
-      };
-
-      // 서버에 데이터 전송
-      socket.send(JSON.stringify(rectangleData));
-      console.log('Rectangle data sent:', rectangleData);
-    } else {
-      console.error('WebSocket is not open');
-    }
-  };
-
   const toggleFullScreen = () => {
     fullScreenHandle.enter();
   };
@@ -139,11 +181,15 @@ function EditPage() {
     imgValue,
     setImgValue,
     pageRendering,
+    socket,
   );
 
   const { handleTextDragEnd, handleTextChange } = useTextHandlers(
+    textValue,
     setTextValue,
     pageRendering,
+    socket,
+    code,
   );
 
   const addSlide = (type) => {
@@ -158,6 +204,8 @@ function EditPage() {
     shapeValue,
     pageRendering,
     setShapeValue,
+    socket,
+    code,
   );
 
   useDeleteItem(
@@ -232,6 +280,8 @@ function EditPage() {
         fullScreen={toggleFullScreen}
         redo={redo}
         undo={undo}
+        socket={socket}
+        code={code}
       />
       <PreviewSlide
         textValue={textValue}
@@ -239,9 +289,7 @@ function EditPage() {
         imgValue={imgValue}
         addSlide={addSlide}
       />
-      <button type="button" onClick={sendRectangleData}>
-        버튼
-      </button>
+
       <CanvasContainer>
         <FullScreen handle={fullScreenHandle}>
           <div>
@@ -297,7 +345,9 @@ function EditPage() {
       </CanvasContainer>
 
       <ItemListPosition>
-        {menu === 1 && <ShapeItem menuRef={menuRef} />}
+        {menu === 1 && (
+          <ShapeItem menuRef={menuRef} socket={socket} code={code} />
+        )}
         {menu === 2 && <ImageItem menuRef={menuRef} />}
       </ItemListPosition>
       <ToolPosition>
