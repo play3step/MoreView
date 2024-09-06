@@ -1,15 +1,19 @@
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useNavigate } from 'react-router-dom';
 import ProjectCard from '../components/ItemPage/ProjectCard';
 import { getProjectList } from '../apis/Project/ProjectController';
 import CreateProjectBtn from '../components/ItemPage/CreateProjectBtn';
 import { CreateProjectModalState } from '../store/modalState';
-import { ProjectList } from '../store/projectState';
+import { ProjectInfo, ProjectList } from '../store/projectState';
 import { userInfo } from '../store/userState';
 
 function ItemPage() {
   const setModalState = useSetRecoilState(CreateProjectModalState);
   const [projectData, setProjectData] = useRecoilState(ProjectList);
+  const setPrjoejctId = useSetRecoilState(ProjectInfo);
+  const nav = useNavigate();
+
   const userData = useRecoilValue(userInfo);
 
   const createProject = () => {
@@ -27,6 +31,15 @@ function ItemPage() {
 
     fetchProjects();
   }, [setProjectData]);
+
+  const projectHandler = (data) => {
+    setPrjoejctId({
+      projectId: data.projectId,
+      code: data.roomId,
+    });
+    nav(`/Edit/${data.roomId}`);
+  };
+
   return (
     <div
       style={{
@@ -55,7 +68,11 @@ function ItemPage() {
         }}
       >
         {projectData.projects?.map((data, index) => (
-          <ProjectCard data={data} key={index} />
+          <ProjectCard
+            data={data}
+            key={index}
+            projectHandler={projectHandler}
+          />
         ))}
       </div>
     </div>

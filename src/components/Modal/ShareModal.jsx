@@ -36,7 +36,7 @@ function ShareModal() {
   }, [modalValue]);
 
   const inviteHandler = async (memberId) => {
-    await inviteProject(code, memberId);
+    await inviteProject(code.code, memberId);
     setModalValue(false);
   };
 

@@ -23,7 +23,6 @@ import useKeyboardNavigation from '../hooks/EditPage/useKeyboardNavigation';
 import useDeleteItem from '../hooks/EditPage/useDeleteItem';
 import useHistory from '../hooks/EditPage/Handlers/useHistory';
 import ControllerItem from '../components/EditPage/ItemListBox/3D/ControllerItem';
-import { ProjectInfo } from '../store/projectState';
 import useText from '../hooks/AddItem/useText';
 import useShapes from '../hooks/AddItem/useShapes';
 
@@ -54,7 +53,6 @@ function EditPage() {
   const [menu, setMenu] = useRecoilState(itemState);
   const setMeshyState = useSetRecoilState(meshyLoadingState);
   const { code } = useParams();
-  const setCode = useSetRecoilState(ProjectInfo);
 
   const menuRef = useRef();
 
@@ -269,9 +267,7 @@ function EditPage() {
       eventSource.close();
     };
   }, []);
-  useEffect(() => {
-    setCode(code);
-  }, [code, setCode]);
+
   return (
     <EditContainer>
       <EditHeader
