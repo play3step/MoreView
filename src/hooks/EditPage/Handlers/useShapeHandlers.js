@@ -9,7 +9,7 @@ const useShapeHandlers = (
     const currentPageShapes = shapeValue[pageRendering]
       ? [...shapeValue[pageRendering]]
       : [];
-    const updatedShapes = currentPageShapes.map((shape) => {
+    currentPageShapes.forEach((shape) => {
       if (shape.id === shapeId) {
         let shapeData = null;
 
@@ -58,12 +58,9 @@ const useShapeHandlers = (
         } else {
           console.error('WebSocket is not open');
         }
-
-        return { ...shape, ...newAttrs };
       }
       return shape;
     });
-    setShapeValue({ ...shapeValue, [pageRendering]: updatedShapes });
   };
   const onLineUpdate = (shapeId, newPoints) => {
     const currentPageShapes = Array.isArray(shapeValue[pageRendering])
