@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text } from 'react-konva';
 import { useSetRecoilState } from 'recoil';
 
@@ -15,6 +15,9 @@ function EditableText({ id, initialText, onTextChange, onDragEnd, x, y }) {
     const newY = e.target.y();
     onDragEnd(id, { x: newX, y: newY });
   };
+  useEffect(() => {
+    setText(initialText.text); // 텍스트 변경 시 업데이트
+  }, [initialText.text]);
 
   const handleDoubleClick = (e) => {
     const stage = e.target.getStage();

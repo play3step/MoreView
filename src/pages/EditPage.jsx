@@ -79,7 +79,7 @@ function EditPage() {
 
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data);
-      console.log('Received:', message);
+
       if (message.textId && message.crudType === 'create') {
         addText(message);
       }
