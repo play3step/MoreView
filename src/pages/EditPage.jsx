@@ -23,7 +23,6 @@ import useKeyboardNavigation from '../hooks/EditPage/useKeyboardNavigation';
 import useDeleteItem from '../hooks/EditPage/useDeleteItem';
 import useHistory from '../hooks/EditPage/Handlers/useHistory';
 import ControllerItem from '../components/EditPage/ItemListBox/3D/ControllerItem';
-import { ProjectInfo } from '../store/projectState';
 import useText from '../hooks/AddItem/useText';
 import useShapes from '../hooks/AddItem/useShapes';
 
@@ -54,7 +53,6 @@ function EditPage() {
   const [menu, setMenu] = useRecoilState(itemState);
   const setMeshyState = useSetRecoilState(meshyLoadingState);
   const { code } = useParams();
-  const setCode = useSetRecoilState(ProjectInfo);
 
   const menuRef = useRef();
 
@@ -63,7 +61,7 @@ function EditPage() {
 
   const [socket, setSocket] = useState(null);
   const { addText } = useText(socket, code);
-  const { addShape } = useShapes(socket, code);
+  const { addShape } = useShapes(socket);
 
   useEffect(() => {
     // WebSocket 연결
@@ -81,7 +79,7 @@ function EditPage() {
 
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data);
-      console.log('Received:', message);
+
       if (message.textId && message.crudType === 'create') {
         addText(message);
       }
@@ -269,9 +267,7 @@ function EditPage() {
       eventSource.close();
     };
   }, []);
-  useEffect(() => {
-    setCode(code);
-  }, [code, setCode]);
+
   return (
     <EditContainer>
       <EditHeader

@@ -1,17 +1,10 @@
 import styled from 'styled-components';
 
-import { useNavigate } from 'react-router-dom';
-
 import { ReactComponent as Logo } from '../../assets/myPage/logo.svg';
 
-function ProjectCard({ data }) {
-  const nav = useNavigate();
+function ProjectCard({ data, projectHandler }) {
   return (
-    <CardContainer
-      onClick={() => {
-        nav(`/Edit/${data.roomId}`);
-      }}
-    >
+    <CardContainer onClick={() => projectHandler(data)}>
       {data.thumbnailUrl ? (
         <img
           src={data.thumbnailUrl}

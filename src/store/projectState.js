@@ -12,5 +12,8 @@ export const ProjectState = atom({
 
 export const ProjectInfo = atom({
   key: 'ProjectInfo',
-  default: {},
+  default: {
+    code: null,
+    projectId: null,
+  },
 });

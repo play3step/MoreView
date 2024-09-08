@@ -9,12 +9,6 @@ const useTextHandlers = (
     const currentItem = textValue[pageRendering].find(
       (item) => item.id === textId,
     );
-    setTextValue((prevTextValue) => ({
-      ...prevTextValue,
-      [pageRendering]: prevTextValue[pageRendering].map((item) =>
-        item.id === textId ? { ...item, ...newAttrs } : item,
-      ),
-    }));
     const textData = {
       saveType: 'saveText',
       editType: '0',
@@ -43,12 +37,7 @@ const useTextHandlers = (
     const currentItem = textValue[pageRendering].find(
       (item) => item.id === textId,
     );
-    setTextValue((prevTextValue) => ({
-      ...prevTextValue,
-      [pageRendering]: prevTextValue[pageRendering].map((item) =>
-        item.id === textId ? { ...item, text: newText } : item,
-      ),
-    }));
+
     const textData = {
       saveType: 'saveText',
       editType: '0',

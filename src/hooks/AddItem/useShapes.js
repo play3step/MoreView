@@ -1,12 +1,14 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { pageState, shapeList } from '../../store/recoil';
+import { ProjectInfo } from '../../store/projectState';
 
-function useShapes(socket, code) {
+function useShapes(socket) {
+  const prjoectData = useRecoilValue(ProjectInfo);
+
   const [shapeValue, setShapeValue] = useRecoilState(shapeList);
   const pageData = useRecoilValue(pageState);
   const currentPageList = shapeValue[pageData] || [];
   const shapeCountInCurrentPage = currentPageList.length;
-
   let newShape;
   const randomX = 600 + (Math.random() * 60 - 30);
   const randomY = 300 + (Math.random() * 60 - 30);
@@ -16,7 +18,7 @@ function useShapes(socket, code) {
       newShape = {
         rectangleId: data.rectangleId,
         projectId: data.projectId,
-        pageId: data.projectId,
+        pageId: data.pageId,
         id: data.id,
         x: data.x,
         y: data.y,
@@ -29,7 +31,7 @@ function useShapes(socket, code) {
       newShape = {
         circleId: data.circleId,
         projectId: data.projectId,
-        pageId: data.projectId,
+        pageId: data.pageId,
         id: data.id,
         x: data.x,
         y: data.y,
@@ -70,10 +72,10 @@ function useShapes(socket, code) {
         id: `line${shapeCountInCurrentPage + 3}`,
       };
       setShapeValue((prevShapeValue) => {
-        const updatedShapeList = prevShapeValue[data.projectId] || [];
+        const updatedShapeList = prevShapeValue[data.pageId] || [];
         return {
           ...prevShapeValue,
-          [data.projectId]: [
+          [data.pageId]: [
             ...updatedShapeList,
             startAnchor,
             endAnchor,
@@ -86,10 +88,10 @@ function useShapes(socket, code) {
     }
 
     setShapeValue((prevShapeValue) => {
-      const updatedShapeList = prevShapeValue[data.projectId] || [];
+      const updatedShapeList = prevShapeValue[data.pageId] || [];
       return {
         ...prevShapeValue,
-        [data.projectId]: [...updatedShapeList, newShape],
+        [data.pageId]: [...updatedShapeList, newShape],
       };
     });
   };
@@ -99,9 +101,9 @@ function useShapes(socket, code) {
         saveType: 'saveRectangle',
         editType: '0',
         deleteType: '0',
-        roomId: code,
+        roomId: prjoectData.code,
         rectangle: {
-          projectId: pageData,
+          projectId: prjoectData.projectId,
           pageId: pageData,
           id: `rect${shapeCountInCurrentPage + 1}`,
           x: randomX,
@@ -117,9 +119,9 @@ function useShapes(socket, code) {
         saveType: 'saveCircle',
         editType: '0',
         deleteType: '0',
-        roomId: code,
+        roomId: prjoectData.code,
         circle: {
-          projectId: pageData,
+          projectId: prjoectData.projectId,
           pageId: pageData,
           id: `circle${shapeCountInCurrentPage + 1}`,
           x: randomX,

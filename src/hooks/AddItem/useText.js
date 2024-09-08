@@ -1,9 +1,12 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { pageState, textList } from '../../store/recoil';
+import { ProjectInfo } from '../../store/projectState';
 
-const useText = (socket, code) => {
+const useText = (socket) => {
   const [textValue, setTextValue] = useRecoilState(textList);
   const pageData = useRecoilValue(pageState);
+  const prjoectData = useRecoilValue(ProjectInfo);
+
   const currentTextList = textValue[pageData] || [];
   const randomX = 600 + (Math.random() * 60 - 30);
   const randomY = 300 + (Math.random() * 60 - 30);
@@ -22,10 +25,10 @@ const useText = (socket, code) => {
       color: data.color,
     };
     setTextValue((prevTextValue) => {
-      const updatedTextList = prevTextValue[data.projectId] || [];
+      const updatedTextList = prevTextValue[data.pageId] || [];
       return {
         ...prevTextValue,
-        [data.projectId]: [...updatedTextList, newTextBox],
+        [data.pageId]: [...updatedTextList, newTextBox],
       };
     });
   };
@@ -34,9 +37,9 @@ const useText = (socket, code) => {
       saveType: 'saveText',
       editType: '0',
       deleteType: '0',
-      roomId: code,
+      roomId: prjoectData.code,
       text: {
-        projectId: pageData,
+        projectId: prjoectData.projectId,
         pageId: pageData,
         id: `textBox${textCountInCurrentPage + 1}`,
         text: 'New Text',
