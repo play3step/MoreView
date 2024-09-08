@@ -61,7 +61,7 @@ function EditPage() {
 
   const [socket, setSocket] = useState(null);
   const { addText } = useText(socket, code);
-  const { addShape } = useShapes(socket, code);
+  const { addShape } = useShapes(socket);
 
   useEffect(() => {
     // WebSocket 연결
