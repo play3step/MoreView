@@ -100,7 +100,9 @@ function Edit2d({
                 shapeProps={shape}
                 isSelected={shape.id === selectedId}
                 onSelect={() => selectShape(shape.id)}
-                onChange={(newAttrs) => handleDragEnd(shape.id, newAttrs)}
+                onChange={(newAttrs) =>
+                  handleDragEnd(shape.rectangleId, newAttrs)
+                }
               />
             );
           }
@@ -111,7 +113,7 @@ function Edit2d({
                 shapeProps={shape}
                 isSelected={shape.id === selectedId}
                 onSelect={() => selectShape(shape.id)}
-                onChange={(newAttrs) => handleDragEnd(shape.id, newAttrs)}
+                onChange={(newAttrs) => handleDragEnd(shape.circleId, newAttrs)}
               />
             );
           }

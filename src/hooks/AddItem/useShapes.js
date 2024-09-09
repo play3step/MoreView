@@ -8,7 +8,7 @@ function useShapes(socket) {
   const [shapeValue, setShapeValue] = useRecoilState(shapeList);
   const pageData = useRecoilValue(pageState);
   const currentPageList = shapeValue[pageData] || [];
-  const shapeCountInCurrentPage = currentPageList.length;
+  const shapeCountInCurrentPage = currentPageList?.length;
   let newShape;
   const randomX = 600 + (Math.random() * 60 - 30);
   const randomY = 300 + (Math.random() * 60 - 30);

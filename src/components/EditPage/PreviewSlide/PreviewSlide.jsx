@@ -16,7 +16,7 @@ function PreviewSlide({ textValue, shapeValue, imgValue, addSlide }) {
       <SlideContainer>
         <SlideBoxContainer>
           {pageValue.map((page, index) =>
-            page.type === '2d' ? (
+            page.type === '2D' ? (
               <Preview2d
                 key={index} // key 추가
                 id={index}

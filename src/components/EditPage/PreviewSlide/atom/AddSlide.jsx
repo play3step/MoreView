@@ -4,10 +4,10 @@ import SvgMiddleIcon from '../../atom/SvgMiddleIcon';
 function AddSlide({ onClick }) {
   return (
     <AddSlideBox>
-      <Button onClick={() => onClick('2d')}>
+      <Button onClick={() => onClick('2D')}>
         <SvgMiddleIcon type="2D" />
       </Button>
-      <Button onClick={() => onClick('3d')}>
+      <Button onClick={() => onClick('3D')}>
         <SvgMiddleIcon type="3D" />
       </Button>
     </AddSlideBox>

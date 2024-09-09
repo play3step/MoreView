@@ -10,7 +10,7 @@ const useShapeHandlers = (
       ? [...shapeValue[pageRendering]]
       : [];
     currentPageShapes.forEach((shape) => {
-      if (shape.id === shapeId) {
+      if (shape?.circleId === shapeId || shape?.rectangleId === shapeId) {
         let shapeData = null;
 
         if (shape.type === 'Rectangle') {
@@ -52,7 +52,7 @@ const useShapeHandlers = (
             },
           };
         }
-        // WebSocket 메시지 전송
+
         if (socket && socket.readyState === WebSocket.OPEN) {
           socket.send(JSON.stringify(shapeData));
         } else {
