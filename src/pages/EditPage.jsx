@@ -25,6 +25,7 @@ import useHistory from '../hooks/EditPage/Handlers/useHistory';
 import ControllerItem from '../components/EditPage/ItemListBox/3D/ControllerItem';
 import useText from '../hooks/AddItem/useText';
 import useShapes from '../hooks/AddItem/useShapes';
+import { ProjectInfo } from '../store/projectState';
 
 export const WEBSOCKET_URL = process.env.REACT_APP_WEBSOCKET_URL;
 
@@ -52,6 +53,8 @@ function EditPage() {
   const isEditing = useRecoilValue(editState);
   const [menu, setMenu] = useRecoilState(itemState);
   const setMeshyState = useSetRecoilState(meshyLoadingState);
+  const prjoectData = useRecoilValue(ProjectInfo);
+
   const { code } = useParams();
 
   const menuRef = useRef();
@@ -76,9 +79,16 @@ function EditPage() {
       });
       ws.send(enterMessage);
     };
-
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data);
+
+      if (message.crudType === 'create' && message.pageDBId) {
+        const newPageData = {
+          id: message.pageId,
+          type: message.pageType,
+        };
+        setPageValue((oldPageData) => [...oldPageData, newPageData]);
+      }
 
       if (message.textId && message.crudType === 'create') {
         addText(message);
@@ -112,7 +122,7 @@ function EditPage() {
         if (message.circleId) {
           setShapeValue((prevState) => {
             const updatedShapes = prevState[pageRendering]?.map((shape) => {
-              if (shape.id === message.id) {
+              if (shape.circleId === message.circleId) {
                 return {
                   ...shape,
                   x: message.x,
@@ -162,7 +172,7 @@ function EditPage() {
     return () => {
       ws.close();
     };
-  }, []);
+  }, [pageRendering]);
 
   const toggleFullScreen = () => {
     fullScreenHandle.enter();
@@ -191,11 +201,24 @@ function EditPage() {
   );
 
   const addSlide = (type) => {
-    setPageValue((oldPageData) => {
-      const newId = oldPageData.length > 0 ? oldPageData.length : 0;
-      const newPage = { id: newId, type };
-      return [...oldPageData, newPage];
-    });
+    const newId = pageValue.length > 0 ? pageValue.length : 0;
+    const newPage = {
+      saveType: `save${type}Page`,
+      editType: '0',
+      deleteType: '0',
+      roomId: prjoectData.code,
+      page: {
+        projectId: prjoectData.projectId,
+        pageId: newId,
+        pageType: type,
+      },
+    };
+
+    if (socket && socket.readyState === WebSocket.OPEN) {
+      socket.send(JSON.stringify(newPage));
+    } else {
+      console.error('WebSocket is not open');
+    }
   };
 
   const { handleDragEnd, onLineUpdate } = useShapeHandlers(
@@ -291,7 +314,7 @@ function EditPage() {
           <div>
             {pageValue.map((page) => {
               if (page.id === pageRendering) {
-                return page.type === '2d' ? (
+                return page.type === '2D' ? (
                   <Edit2d
                     key={page.id}
                     pageRendering={pageRendering}

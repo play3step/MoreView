@@ -25,8 +25,8 @@ function EditHeader({
   code,
 }) {
   const { sendText } = useText(socket, code);
-  const is3dDisabled = pageValue.type !== '3d';
-  const is2dDisabled = pageValue.type !== '2d';
+  const is3dDisabled = pageValue.type !== '3D';
+  const is2dDisabled = pageValue.type !== '2D';
   const setModal = useSetRecoilState(CreateModalState);
   const setSearchModal = useSetRecoilState(SearchModalState);
   const setMeshyModal = useSetRecoilState(MeshyModalState);
@@ -67,7 +67,7 @@ function EditHeader({
         <SvgIcon type="Redo" onClick={redo} />
       </LeftSection>
       <CenterSection>
-        {pageValue.type !== '3d' ? (
+        {pageValue.type !== '3D' ? (
           <EditorBox>
             <SvgIcon
               type="Text"

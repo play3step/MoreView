@@ -1,4 +1,4 @@
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import { useEffect, useState } from 'react';
@@ -10,11 +10,14 @@ import { getMeshList } from '../../apis/MeshyAi/MeshyAiContreoller';
 
 import useObject from '../../hooks/AddItem/useObject';
 import PreviewGltf from '../EditPage/PreviewSlide/atom/PreviewGltf';
+import { userInfo } from '../../store/userState';
 
 function MeshObjectModal() {
   const [modalValue, setModalValue] = useRecoilState(MeshyModalState);
+  const userData = useRecoilValue(userInfo);
   const [listData, setListData] = useState([]);
   const { addObject } = useObject();
+  console.log(userData.memberId);
 
   const handlePreviewClick = (object) => {
     const glbUrl = `${process.env.REACT_APP_API_URL}/${object.glb}`;
