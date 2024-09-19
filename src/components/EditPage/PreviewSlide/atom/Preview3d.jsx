@@ -30,7 +30,7 @@ function Preview3d({ objecturl }) {
             y={url.y}
             z={url.z}
           />
-        ) : url?.extension === 'gltf' ? (
+        ) : url?.extension === 'gltf' || url?.extension === 'glb' ? (
           <PreviewGltf
             key={index}
             objecturl={url}
