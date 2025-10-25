@@ -66,6 +66,67 @@ function EditPage() {
   const { addText } = useText(socket, code);
   const { addShape } = useShapes(socket);
 
+  const handleUpdateMessage = (message) => {
+    if (message.rectangleId) {
+      setShapeValue((prevState) => {
+        const updatedShapes = prevState[pageRendering]?.map((shape) => {
+          if (shape.id === message.id) {
+            return {
+              ...shape,
+              x: message.x,
+              y: message.y,
+              width: message.width,
+              height: message.height,
+              fill: message.fill,
+              type: message.type,
+            };
+          }
+          return shape;
+        });
+        return { ...prevState, [pageRendering]: updatedShapes };
+      });
+    }
+
+    if (message.circleId) {
+      setShapeValue((prevState) => {
+        const updatedShapes = prevState[pageRendering]?.map((shape) => {
+          if (shape.circleId === message.circleId) {
+            return {
+              ...shape,
+              x: message.x,
+              y: message.y,
+              radiusX: message.radiusX,
+              radiusY: message.radiusY,
+              fill: message.fill,
+              type: message.type,
+            };
+          }
+          return shape;
+        });
+        return { ...prevState, [pageRendering]: updatedShapes };
+      });
+    }
+
+    if (message.textId) {
+      setTextValue((prevState) => {
+        const updatedTexts = prevState[pageRendering]?.map((text) => {
+          if (String(text.id) === String(message.id)) {
+            return {
+              ...text,
+              text: message.text,
+              x: message.x,
+              y: message.y,
+              size: message.size,
+              color: message.color,
+            };
+          }
+          return text;
+        });
+        return { ...prevState, [pageRendering]: updatedTexts };
+      });
+    }
+  };
+
   useEffect(() => {
     // WebSocket 연결
     const ws = new WebSocket(WEBSOCKET_URL);
@@ -93,71 +154,19 @@ function EditPage() {
       if (message.textId && message.crudType === 'create') {
         addText(message);
       }
+
       if (message.rectangleId && message.crudType === 'create') {
         addShape('Rectangle', message);
       }
       if (message.circleId && message.crudType === 'create') {
         addShape('Circle', message);
       }
+
       if (message.crudType === 'update') {
-        if (message.rectangleId) {
-          setShapeValue((prevState) => {
-            const updatedShapes = prevState[pageRendering]?.map((shape) => {
-              if (shape.id === message.id) {
-                return {
-                  ...shape,
-                  x: message.x,
-                  y: message.y,
-                  width: message.width,
-                  height: message.height,
-                  fill: message.fill,
-                  type: message.type,
-                };
-              }
-              return shape;
-            });
-            return { ...prevState, [pageRendering]: updatedShapes };
-          });
-        }
-        if (message.circleId) {
-          setShapeValue((prevState) => {
-            const updatedShapes = prevState[pageRendering]?.map((shape) => {
-              if (shape.circleId === message.circleId) {
-                return {
-                  ...shape,
-                  x: message.x,
-                  y: message.y,
-                  radiusX: message.radiusX,
-                  radiusY: message.radiusY,
-                  fill: message.fill,
-                  type: message.type,
-                };
-              }
-              return shape;
-            });
-            return { ...prevState, [pageRendering]: updatedShapes };
-          });
-        }
-        if (message.textId) {
-          setTextValue((prevState) => {
-            const updatedTexts = prevState[pageRendering]?.map((text) => {
-              if (String(text.id) === String(message.id)) {
-                return {
-                  ...text,
-                  text: message.text,
-                  x: message.x,
-                  y: message.y,
-                  size: message.size,
-                  color: message.color,
-                };
-              }
-              return text;
-            });
-            return { ...prevState, [pageRendering]: updatedTexts };
-          });
-        }
+        handleUpdateMessage(message);
       }
     };
+
     ws.onerror = (error) => {
       console.error('WebSocket Error:', error);
     };
@@ -168,11 +177,21 @@ function EditPage() {
 
     setSocket(ws);
 
-    // 컴포넌트가 언마운트될 때 WebSocket 닫기
     return () => {
       ws.close();
     };
-  }, [pageRendering]);
+  }, []);
+
+  useEffect(() => {
+    if (socket && socket.readyState === WebSocket.OPEN) {
+      const pageChangeMessage = JSON.stringify({
+        type: 'page-change',
+        pageId: pageRendering,
+        roomId: code,
+      });
+      socket.send(pageChangeMessage);
+    }
+  }, [pageRendering, socket, code]);
 
   const toggleFullScreen = () => {
     fullScreenHandle.enter();
