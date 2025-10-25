@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
+import { isEqual } from 'lodash';
 import { historyState } from '../../../store/recoil';
 
 function useHistory(
@@ -24,8 +25,11 @@ function useHistory(
 
   useEffect(() => {
     const currentState = { shapeValue, textValue, imgValue };
-    if (JSON.stringify(history[currentStep]) !== JSON.stringify(currentState)) {
-      const newHistory = [...history.slice(0, currentStep + 1), currentState];
+    if (!isEqual(history[currentStep], currentState)) {
+      const newHistory = [
+        ...history.slice(Math.max(0, currentStep - 49), currentStep + 1),
+        currentState,
+      ];
       setHistoryState({
         history: newHistory,
         currentStep: newHistory.length - 1,
